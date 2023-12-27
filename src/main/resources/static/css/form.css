@@ -1,0 +1,82 @@
+h1 {
+    text-align: center;
+}
+
+/* Stili di base per il form */
+.registration-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #FFFFFF; /* Sfondo bianco del form */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    color: #333333; /* Colore del testo principale */
+    margin-bottom: 20px; /* Aggiungi spazio sotto il form */
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333333; /* Colore del testo delle label abbinato a quello dell'homepage */
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #333333; /* Colore del testo degli input abbinato a quello dell'homepage */
+    background-color: #FFFFFF; /* Colore di sfondo degli input abbinato a quello dell'homepage */
+}
+
+button[type="submit"] {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px 20px; /* Aggiungi spazio orizzontale (sinistra e destra) */
+    font-size: 16px;
+    text-align: center; /* Allinea il testo al centro */
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    background-image: linear-gradient(to right, #FFFFFF, #404040);
+    color: #000000;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: #f5f5dc; /* Colore di sfondo abbinato a quello dell'homepage */
+}
+
+
+button:hover {
+    transform: translateY(-2px); /* Effetto di sollevamento */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Media query per schermi più piccoli */
+@media (max-width: 768px) {
+    .registration-form {
+        padding: 10px; /* Riduci il padding del form su schermi più piccoli */
+    }
+
+    button {
+        width: calc(100% - 20px); /* Larghezza del 100% su schermi più piccoli */
+        margin: 5px 0; /* Aggiusta lo spaziamento tra i bottoni */
+    }
+}

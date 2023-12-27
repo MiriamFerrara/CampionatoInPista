@@ -1,0 +1,53 @@
+/* Stile per il body */
+body {
+    background-color: #FF6F61;
+    margin: 0;
+    padding: 0;
+}
+/* Stili per i bottoni */
+.buttons-container {
+    padding: 20px;
+    text-align: center; /* Centra i bottoni */
+}
+
+button {
+       width: 100%;
+       margin: 10px 0;
+       padding: 10px 20px; /* Aggiungi spazio orizzontale (sinistra e destra) */
+       font-size: 16px;
+       text-align: left; /* Allinea il testo a sinistra */
+       font-weight: bold;
+       border: none;
+       border-radius: 25px;
+       background-image: linear-gradient(to right, #FFFFFF, #404040);
+       color: #000000;
+       cursor: pointer;
+       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+       transition: transform 0.2s, box-shadow 0.2s;
+       background-color: #f5f5dc;
+   }
+}
+
+button:hover {
+    transform: translateY(-2px); /* Effetto di sollevamento */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Effetto quando il pulsante è premuto */
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Media query per schermi più piccoli */
+@media (max-width: 768px) {
+    .buttons-container {
+        padding: 10px; /* Riduci lo spazio tra i bottoni */
+    }
+
+    button {
+        width: calc(100% - 20px); /* Larghezza del 100% su schermi più piccoli */
+        margin: 5px 0; /* Aggiusta lo spaziamento tra i bottoni */
+    }
+}
+

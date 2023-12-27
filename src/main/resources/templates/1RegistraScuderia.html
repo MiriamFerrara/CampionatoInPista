@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CampionatoInPista | Registrazione Scuderia</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+</head>
+
+<body>
+<div id="header-placeholder"></div>
+<h1>1.Registrazione Scuderia</h1>
+
+<div class="registration-form">
+    <form th:action="@{/CampionatoInPista/1RegistraScuderia}" th:object="${scuderia}" method="post">
+
+    <div class="form-group">
+            <label for="nome">Nome Scuderia:</label>
+            <input type="text" id="nome" name="nome" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="sede">Sede:</label>
+            <input type="text" id="sede" name="sede" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="paese">Paese:</label>
+            <input type="text" id="paese" name="paese" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="numFinanziamenti">Numero Finanziamenti:</label>
+            <input type="number" id="numFinanziamenti" name="numFinanziamenti" required/>
+        </div>
+
+        <label for="targa">Seleziona Targa:</label>
+        <select id="targa" name="targa" >
+            <option th:each="targa : ${targa}" th:value="${targa}" th:text="${targa}"></option>
+        </select><br><br>
+
+        <button type="submit">Registra Scuderia</button>
+    </form>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script src="/static/js/struttura.js"></script>
+
+</body>
+</html>

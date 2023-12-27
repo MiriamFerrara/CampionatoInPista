@@ -1,0 +1,51 @@
+header {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background-color: #FFFFFF;
+}
+
+/* Stile per l'immagine logo */
+.logo {
+    width: 250px;
+    height: auto;
+}
+/* Stile per il menu */
+.menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #f5f5dc;
+    text-align: center;
+    border-bottom: 2px solid #FF6F61; /* Aggiungi una linea sotto il menu */
+}
+
+.menu li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.menu li a {
+    text-decoration: none;
+    color: #404040;
+    font-weight: bold;
+    transition: color 0.3s;
+    padding: 8px 12px; /* Aggiungi spaziatura al testo */
+    border-radius: 5px; /* Bordo arrotondato */
+}
+
+.menu li a:hover {
+    color: #FF6F61;
+    background-color: #FFFFFF; /* Cambia il colore di sfondo al passaggio del mouse */
+}
+
+/* Sfondo corallo dietro al form */
+body {
+    background-color: #FF6F61;
+    margin: 0;
+    padding: 0;
+}
