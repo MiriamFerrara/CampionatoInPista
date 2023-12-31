@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CampionatoInPista | Aggiungi Pilota</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+</head>
+
+<body>
+<div id="header-placeholder"></div>
+<h1> 2.Inserimento dei dati di un’autovettura, compresi i componenti di cui è composta.</h1>
+
+<div class="registration-form">
+<form action="#" th:action="@{/aggiungiPilota}" th:object="${pilota}" method="post">
+
+    <div class="form-group">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required/><br/>
+
+    <label for="cognome">Cognome:</label>
+    <input type="text" id="cognome" name="cognome" required/><br/>
+
+    <label for="dataNascita">Data di Nascita:</label>
+    <input type="date" id="dataNascita" name="dataNascita" required/><br/>
+
+    <label for="nazionalita">Nazionalità:</label>
+    <input type="text" id="nazionalita" name="nazionalita" required/><br/>
+
+    <label for="tipoPilota">Tipo di Pilota:</label>
+    <input type="text" id="tipoPilota" name="tipoPilota" required/><br/>
+
+    <label for="licenzePossedute">Licenze Possedute:</label>
+    <input type="number" id="licenzePossedute" name="licenzePossedute" required/><br/>
+
+    <label for="dataLicenza">Data della Licenza:</label>
+    <input type="date" id="dataLicenza" name="dataLicenza" required/><br/>
+
+    <label for="finanziatoreGD">Finanziatore di Grande Design:</label>
+    <select id="finanziatoreGD" name="finanziatoreGD" required>
+        <option value="SI">SI</option>
+        <option value="NO">NO</option>
+    </select><br/>
+
+    <label for="targa">Targa Vettura:</label>
+    <input type="text" id="targa" name="targa" required/><br/>
+
+    <label for="numComponenti">Numero Componenti Piloti:</label>
+    <input type="number" id="numComponenti" name="numComponenti" required/><br/>
+
+    <input type="submit" value="Aggiungi Pilota"/>
+
+    </div>
+</form>
+</div>
+
+<div id="footer-placeholder"></div>
+<script src="/static/js/struttura.js"></script>
+</body>
+</html>

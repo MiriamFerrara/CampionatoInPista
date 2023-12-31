@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CampionatoInPista | Registrazione Vettura</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+</head>
+
+<body>
+<div id="header-placeholder"></div>
+<h1> 2.Inserimento dei dati di un’autovettura, compresi i componenti di cui è composta.</h1>
+
+<div class="registration-form">
+    <form th:action="@{/CampionatoInPista/2RegistraVettura}" th:object="${costruttore}" method="post">
+
+        <div class="form-group">
+            <label for="targa">Targa:</label>
+            <input type="text" id="targa" name="targa"  placeholder="ABC123" required><br><br>
+
+            <label for="numGara">Numero Gara:</label>
+            <input type="number" id="numGara" name="numGara" min="0" placeholder="3"><br><br>
+
+            <label for="modello">Modello dell'autovettura:</label>
+            <input type="text" id="modello" name="modello" placeholder="Ferrari" required><br><br>
+
+     <label for="dataInstallazione">Data Installazione:</label>
+            <input type="date" id="dataInstallazione" name="dataInstallazione" required><br><br>
+
+            <label for="costo">Costo:</label>
+            <input type="number" id="costo" name="costo" step="0.01" placeholder="10.0" required><br><br>
+
+            <label for="tipoComponente">Tipo Componente:</label>
+            <select id="tipoComponente" name="tipoComponente" required>
+                <option value="Telaio">Telaio</option>
+                <option value="Cambio">Cambio</option>
+                <option value="Motore">Motore</option>
+            </select><br><br>
+
+            <!-- Campi per Telaio -->
+            <div id="campiTelaio" style="display: none;">
+                <label for="tipoMateriale">Tipo Materiale:</label>
+                <input type="text" id="tipoMateriale" name="tipoMateriale" placeholder="Alluminio"><br><br>
+
+                <label for="peso">Peso:</label>
+                <input type="number" id="peso" name="peso" step="10"><br><br>
+            </div>
+
+            <!-- Campi per Cambio -->
+            <div id="campiCambio" style="display: none;">
+                <label for="numMarce">Numero Marce:</label>
+                <select id="numMarce" name="numMarce">
+                    <option value="Scegli">Scegli</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select><br><br>
+            </div>
+
+            <!-- Campi per Motore -->
+            <div id="campiMotore" style="display: none;">
+                <label for="cilindrata">Cilindrata:</label>
+                <input type="text" id="cilindrata" name="cilindrata" placeholder="2000 cc"><br><br>
+
+                <label for="tipoMotore">Tipo Motore:</label>
+                <select id="tipoMotore" name="tipoMotore">
+                    <option value="Scegli">Scegli</option>
+                    <option value="Turbo">Turbo</option>
+                    <option value="Aspirato">Aspirato</option>
+                </select><br><br>
+
+                <label for="numCilindri">Numero Cilindri:</label>
+                <input type="number" id="numCilindri" name="numCilindri" min="1" max="12" placeholder="max 12">
+
+            </div>
+
+            <label>Seleziona o inserisci il Nome Costruttore:</label><br>
+
+            <label for="existing">
+                <input type="radio" id="existing" name="costruttoreType" value="existing" checked>Seleziona un costruttore esistente</label><br>
+            <label for="new">
+                <input type="radio" id="new" name="costruttoreType" value="new">Inserisci un nuovo costruttore</label><br>
+
+            <div id="existingCostruttore">
+                <label for="nomeCostruttore">Seleziona Nome Costruttore:</label>
+                <select id="nomeCostruttore" name="nomeCostruttore">
+                    <option th:each="nomeCostruttore : ${nomeCostruttore}" th:value="${nomeCostruttore}" th:text="${nomeCostruttore}"></option>
+                </select><br><br>
+            </div>
+
+            <div id="newCostruttore" style="display: none;">
+                <label for="nomeNuovoCostruttore">Nome Nuovo Costruttore:</label>
+                <input type="text" id="nomeNuovoCostruttore" name="nomeNuovoCostruttore" placeholder="Porsche"><br><br>
+                <label for="ragioneSociale">Ragione Sociale:</label>
+                <input type="text" id="ragioneSociale" name="ragioneSociale" placeholder="Porsche S.p.A."><br><br>
+                <label for="sedeFabbrica">Sede Fabbrica:</label>
+                <input type="text" id="sedeFabbrica" name="sedeFabbrica" placeholder="Torino"><br><br>
+                <label for="numComponenti">Numero Componenti:</label>
+                <input type="number" id="numComponenti" name="numComponenti" min="1" max="50000" placeholder="11"><br><br>
+
+            </div>
+
+
+
+            <button type="submit">Registra Vettura</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Codice JavaScript per mostrare/nascondere campi in base al tipo di componente selezionato
+    document.getElementById("tipoComponente").addEventListener("change", function() {
+        var tipoComponente = this.value;
+
+        var campiTelaio = document.getElementById("campiTelaio");
+        var campiCambio = document.getElementById("campiCambio");
+        var campiMotore = document.getElementById("campiMotore");
+
+        campiTelaio.style.display = "none";
+        campiCambio.style.display = "none";
+        campiMotore.style.display = "none";
+
+        if (tipoComponente === "Telaio") {
+            campiTelaio.style.display = "block";
+        } else if (tipoComponente === "Cambio") {
+            campiCambio.style.display = "block";
+        } else if (tipoComponente === "Motore") {
+            campiMotore.style.display = "block";
+        }
+    });
+
+
+     document.querySelectorAll('input[name="costruttoreType"]').forEach(function (element) {
+            element.addEventListener('change', function () {
+                var existingCostruttore = document.getElementById('existingCostruttore');
+                var newCostruttore = document.getElementById('newCostruttore');
+
+                if (this.value === 'existing') {
+                    existingCostruttore.style.display = 'block';
+                    newCostruttore.style.display = 'none';
+                } else if (this.value === 'new') {
+                    existingCostruttore.style.display = 'none';
+                    newCostruttore.style.display = 'block';
+                }
+            });
+        });
+</script>
+
+
+<div id="footer-placeholder"></div>
+
+<script src="/static/js/struttura.js"></script>
+
+</body>
+</html>

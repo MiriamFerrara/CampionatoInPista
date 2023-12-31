@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/CampionatoInPista")
-public class RegistraScuderiaController {
+public class ARegistraScuderiaController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
@@ -31,9 +31,9 @@ public class RegistraScuderiaController {
                 targhe.add(resultSet.getString("Targa"));
             }
             model.addAttribute("targa", targhe);
-            for(int i=0; i< targhe.size(); i++) {
+           /* for(int i=0; i< targhe.size(); i++) {
                 System.out.println("Lista Vetture: " + targhe.get(i));
-            }
+            }*/
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -52,7 +52,7 @@ public class RegistraScuderiaController {
             preparedStatement.setString(2, scuderia.getSede());
             preparedStatement.setString(3, scuderia.getPaese());
             preparedStatement.setInt(4, scuderia.getNumFinanziamenti());
-            preparedStatement.setString(5, scuderia.getTargaVettura());
+            preparedStatement.setString(5, targa);
             preparedStatement.executeUpdate();
 
 

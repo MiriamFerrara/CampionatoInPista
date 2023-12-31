@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+        <meta charset="UTF-8">
+        <title>CampionatoInPista | Visualizza Scuderie</title>
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+</head>
+<body>
+<h1> Elenco delle Scuderie</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Sede</th>
+        <th>Paese</th>
+        <th>Numero di Finanziamenti</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Itera attraverso le scuderie e visualizza i dati -->
+    <tr th:each="scuderia : ${scuderie}">
+        <td th:text="${scuderia.id}"></td>
+        <td th:text="${scuderia.nome}"></td>
+        <td th:text="${scuderia.sede}"></td>
+        <td th:text="${scuderia.paese}"></td>
+        <td th:text="${scuderia.numFinanziamenti}"></td>
+        <td th:text="${scuderia.targa}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
