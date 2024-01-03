@@ -37,7 +37,8 @@
         </div>
 
         <label for="targa">Seleziona Targa:</label>
-        <select id="targa" name="targa" >
+        <select id="targa" name="targa" required>
+            <option value="Scegli">Scegli</option>
             <option th:each="targa : ${targa}" th:value="${targa}" th:text="${targa}"></option>
         </select><br><br>
 

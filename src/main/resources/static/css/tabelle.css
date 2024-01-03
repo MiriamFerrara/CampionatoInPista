@@ -1,0 +1,34 @@
+
+ /* Stili per le tabelle */
+    .custom-table {
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        background-color: #fff; /* Sfondo bianco */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombra per evidenziare */
+        margin-bottom: 20px; /* Margine inferiore */
+        width: 60%; /* Larghezza del 80% del contenitore genitore */
+            margin-right: auto;
+            margin-left: auto;
+    }
+
+    .custom-table th, .custom-table td {
+        border: 1px solid #ddd;
+        padding: 8px; /* padding standard */
+        text-align: center; /* testo centrato */
+    }
+
+    .custom-table th {
+        background-color: #f2f2f2; /* Sfondo grigio per l'header */
+        font-weight: bold;
+    }
+
+    .custom-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9; /* Sfondo grigio chiaro */
+    }
+
+    /* Stili per gli header delle sezioni */
+    .section-header {
+        text-align: center; /* Allinea il testo al centro */
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }

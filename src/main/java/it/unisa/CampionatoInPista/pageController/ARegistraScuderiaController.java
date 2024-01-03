@@ -36,8 +36,10 @@ public class ARegistraScuderiaController {
             }*/
             resultSet.close();
             preparedStatement.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return "errore";
         }
 
         return "1RegistraScuderia";
@@ -54,12 +56,12 @@ public class ARegistraScuderiaController {
             preparedStatement.setInt(4, scuderia.getNumFinanziamenti());
             preparedStatement.setString(5, targa);
             preparedStatement.executeUpdate();
-
-
             preparedStatement.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return "errore";
         }
-       return "successo";
+        return "successo";
     }
 }

@@ -13,6 +13,11 @@ public class HomeController {
     public String getHomepage() {
         return "Homepage";
     }
+    @GetMapping("/visualizzaTabelle")
+    public String getVisualizzaTabelle() {
+        return "visualizzaTabelle/VisualizzaTabelle";
+    }
+
 
 
 

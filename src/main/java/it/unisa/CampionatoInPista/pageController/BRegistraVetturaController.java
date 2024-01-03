@@ -1,9 +1,7 @@
 package it.unisa.CampionatoInPista.pageController;
 
 import it.unisa.CampionatoInPista.database.DatabaseConnection;
-import it.unisa.CampionatoInPista.domain.Componente;
-import it.unisa.CampionatoInPista.domain.Costruttore;
-import it.unisa.CampionatoInPista.domain.Vettura;
+import it.unisa.CampionatoInPista.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +38,7 @@ public class BRegistraVetturaController {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return "errore";
         }
 
         return "2RegistraVettura";
@@ -139,12 +138,9 @@ public class BRegistraVetturaController {
                 nuovoCostruttoreStatement.setString(2, ragioneSociale);
                 nuovoCostruttoreStatement.setString(3, sedeFabbrica);
                 nuovoCostruttoreStatement.setInt(4, costruttore.getNumComponenti());
-
-
                 nuovoCostruttoreStatement.executeUpdate();
                 nuovoCostruttoreStatement.close();
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();

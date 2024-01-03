@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CampionatoInPista | Stampare Finanziamenti</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/tabelle.css">
+</head>
+
+<body>
+<div id="header-placeholder"></div>
+
+<h1> 8.Per ciascuna scuderia, stampare la somma totale dei finanziamenti ricevuti.</h1>
+
+<table class="custom-table">
+        <thead>
+        <tr>
+            <th>Scuderia</th>
+            <th>Totale Finanziamenti</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop attraverso i dati nel modello -->
+        <tr th:each="index : ${#numbers.sequence(0, scuderia.size() - 1)}">
+            <td th:text="${scuderia[index]}"></td>
+            <td th:text="${finanziamento[index]}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+<div id="footer-placeholder"></div>
+<script src="/static/js/struttura.js"></script>
+</body>
+</html>

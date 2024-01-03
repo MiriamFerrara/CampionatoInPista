@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CampionatoInPista | Registra Finanziamento</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/tabelle.css">
+</head>
+
+<body>
+<div id="header-placeholder"></div>
+<h1> 4.Registrazione di un finanziamento per una scuderia.</h1>
+
+<div class="registration-form">
+<form th:action="@{/CampionatoInPista/4RegistraFinanzimento}" method="post">
+
+    <div class="form-group">
+        <label for="IDPilota">Seleziona un Pilota in base al suo ID:</label>
+        <select id="IDPilota" name="IDPilota" required>
+            <option value="Scegli">Scegli</option>
+            <option th:each="pilota : ${IDPilota}" th:value="${pilota}" th:text="${pilota}"></option>
+        </select><br><br>
+
+        <label for="NomeScuderia">Seleziona Nome Scuderia:</label>
+        <select id="NomeScuderia" name="NomeScuderia" required>
+            <option value="Scegli">Scegli</option>
+            <option th:each="scuderia : ${NomeScuderia}" th:value="${scuderia}" th:text="${scuderia}"></option>
+        </select><br><br>
+
+        <label for="data">Data del Finanziamento:</label>
+        <input type="date" id="data" name="data" required><br><br>
+
+        <label for="quantita">Quantita Denaro:</label>
+        <input type="number" id="quantita" name="quantita" step="0.01" placeholder="500.0" required><br><br>
+
+        <button type="submit">Registra Finanziamento</button>
+    </div>
+
+</form>
+</div>
+
+<div id="footer-placeholder"></div>
+<script src="/static/js/struttura.js"></script>
+
+
+<script>
+// Ottieni l'elemento del campo di input data
+var input = document.getElementById('data');
+
+// Imposta la data massima come data odierna
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); // Gennaio è 0!
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+input.setAttribute('max', today);
+</script>
+</body>
+</html>

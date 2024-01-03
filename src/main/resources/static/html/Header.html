@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Header</title>
@@ -7,23 +7,19 @@
 </head>
 <body>
 <header>
-    <a th:href="@{/CampionatoInPista/Homepage}">
-        <img src="/static/logo.jpg" alt="Logo" class="logo">
-    </a>
+    <img src="/static/logo.jpg" alt="Logo" class="logo">
     <h1>Benvenuti<br>Campionato in Pista</h1>
+
+    <nav class="navigation">
+        <!-- Barra di navigazione -->
+        <a href="/CampionatoInPista/Homepage" class="nav-link">
+            <span>Homepage</span>
+        </a>
+
+        <a href="/CampionatoInPista/visualizzaTabelle" class="nav-link">
+            <span>Database</span>
+        </a>
+    </nav>
 </header>
-<!--
-<div>
-     <nav>
-       <ul class="menu">
-           <li><a href="#traccia">Traccia</a></li>
-           <li><a href="#documentazione">Documentazione</a></li>
-           <li><a href="#schemi">Schemi</a></li>
-           <li><a th:href="VisualizzaTabelle.html">Visualizza Tabelle</a></li>
-           <li><a href="#informazioni">Informazioni</a></li>
-       </ul>
-   </nav>
-</div>
--->
 </body>
 </html>

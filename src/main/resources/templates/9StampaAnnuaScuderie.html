@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CampionatoInPista | Stampa Scuderia</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/tabelle.css">
+</head>
+
+<body>
+<div id="header-placeholder"></div>
+
+<h1> 9.Stampa annuale delle scuderie che hanno partecipato al campionato.</h1>
+
+<div class="registration-form">
+<form th:action="@{/CampionatoInPista/9StampaAnnuaScuderie}" method="post">
+    <div class="form-group">
+                <label for="year">Seleziona l'Anno:</label>
+                <select id="year" name="DataEvento">
+                    <option value="Scegli">Scegli</option>
+                    <option th:each="anno : ${anni}" th:value="${anno}" th:text="${anno}"></option>
+                </select>
+
+
+        <button type="submit">Mostra Scuderie</button>
+    </div>
+</form>
+</div>
+<br><br>
+<h2>Scuderie partecipanti nell'anno selezionato:</h2>
+<ul>
+    <li th:each="scuderia : ${scuderieAnnuali}" th:text="${scuderia}"></li>
+</ul>
+
+<div id="footer-placeholder"></div>
+<script src="/static/js/struttura.js"></script>
+</body>
+</html>

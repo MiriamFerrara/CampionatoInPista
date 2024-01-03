@@ -14,33 +14,25 @@ header {
     width: 250px;
     height: auto;
 }
-/* Stile per il menu */
-.menu {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    background-color: #f5f5dc;
-    text-align: center;
-    border-bottom: 2px solid #FF6F61; /* Aggiungi una linea sotto il menu */
+
+/* Altri stili per il menu di navigazione nel header */
+.navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Aggiunge spazio sopra la navigazione */
 }
 
-.menu li {
-    display: inline-block;
-    margin: 0 15px;
-}
-
-.menu li a {
+.nav-link {
     text-decoration: none;
-    color: #404040;
+    color: #333; /* Colore del testo */
+    margin: 0 15px; /* Spazio tra i link */
     font-weight: bold;
-    transition: color 0.3s;
-    padding: 8px 12px; /* Aggiungi spaziatura al testo */
-    border-radius: 5px; /* Bordo arrotondato */
+    transition: color 0.3s ease; /* Effetto di transizione sul colore */
 }
 
-.menu li a:hover {
-    color: #FF6F61;
-    background-color: #FFFFFF; /* Cambia il colore di sfondo al passaggio del mouse */
+.nav-link:hover {
+    color: #FF6F61; /* Cambia il colore al passaggio del mouse */
 }
 
 /* Sfondo corallo dietro al form */
