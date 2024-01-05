@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CampionatoInPista | Report Punti-Minuti</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/tabelle.css">
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<h1>15.Stampare un report che elenchi ciascuna scuderia sulla base del rapporto punti/minuti di gara, mediando tra le macchine appartenenti a ciascuna scuderia;</h1>
+
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome Scuderia</th>
+        <th>Punti Totali</th>
+        <th>Durata Gare (minuti)</th>
+        <th>Rapporto Punti Minuto</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="scuderia, i : ${scuderia}">
+        <td th:text="${scuderia.nome}"></td>
+        <td th:text="${partecipa[i.index].punti}"></td>
+        <td th:text="${gara[i.index].durataOre}"></td>
+        <td th:text="${rapportoPuntiMinuto[i.index]}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div id="footer-placeholder"></div>
+<script src="/static/js/struttura.js"></script>
+</body>
+</html>

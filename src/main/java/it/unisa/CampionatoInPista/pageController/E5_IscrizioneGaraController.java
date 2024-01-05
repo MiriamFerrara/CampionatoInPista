@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/CampionatoInPista")
-public class EIscrizioneGaraController {
+public class E5_IscrizioneGaraController {
     @Autowired
     private DatabaseConnection databaseConnection;
 

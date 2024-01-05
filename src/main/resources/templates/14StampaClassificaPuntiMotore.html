@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CampionatoInPista | Stampa Punti Motore</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/tabelle.css">
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<h1>14.Stampa delle classifiche finali di punti per tipo di motore;</h1>
+
+<h2 style="text-align: center;">Classifica Punti Motore Aspirato</h2>
+<table class="custom-table">
+        <thead>
+        <tr>
+            <th>Tipo Motore</th>
+            <th>Targa Vettura</th>
+            <th>Punti Totali</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="componenteAspirato, idx : ${componenteAspirato}">
+            <td th:text="${componenteAspirato.tipoMotore}"></td>
+            <td th:text="${componenteAspirato.targaVettura}"></td>
+            <td th:text="${partecipaAspirato[idx.index].punti}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+<h2 style="text-align: center;">Classifica Punti Motore Turbo</h2>
+<table class="custom-table">
+        <thead>
+        <tr>
+            <th>Tipo Motore</th>
+            <th>Targa Vettura</th>
+            <th>Punti Totali</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="componenteTurbo, idx : ${componenteTurbo}">
+            <td th:text="${componenteTurbo.tipoMotore}"></td>
+            <td th:text="${componenteTurbo.targaVettura}"></td>
+            <td th:text="${partecipaTurbo[idx.index].punti}"></td>
+        </tr>
+        </tbody>
+
+</table>
+<div id="footer-placeholder"></div>
+<script src="/static/js/struttura.js"></script>
+</body>
+</html>

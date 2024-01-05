@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>CampionatoInPista | Verifica Componente</title>
+    <title>CampionatoInPista | Stampa Punti</title>
     <link rel="icon" href="/static/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/header.css">
     <link rel="stylesheet" href="/static/css/footer.css">
     <link rel="stylesheet" href="/static/css/form.css">
     <link rel="stylesheet" href="/static/css/tabelle.css">
 </head>
-
 <body>
 <div id="header-placeholder"></div>
 
-<h1>7.Verifica della possibilità di montare un componente su una vettura.</h1>
+<h1>13.Stampa della classifica finale dei punti conseguiti da tutte le vetture;</h1>
 
-<div class="registration-form">
-    <form th:action="@{/CampionatoInPista/6RegistraRisultatoGara}" method="post">
-        <div class="form-group">
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Targa</th>
+        <th>Punti Totali</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vettura, vIndex : ${vettura}">
+        <td th:text="${vettura.targa}"></td>
 
+        <td th:each="partecipa : ${partecipa[vIndex.index]}" th:text="${partecipa.punti}"></td>
+    </tr>
+    </tbody>
+</table>
 
-</div>
-</form>
-</div>
 <div id="footer-placeholder"></div>
 <script src="/static/js/struttura.js"></script>
 </body>

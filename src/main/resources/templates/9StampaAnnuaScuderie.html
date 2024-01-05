@@ -12,28 +12,92 @@
 <body>
 <div id="header-placeholder"></div>
 
-<h1> 9.Stampa annuale delle scuderie che hanno partecipato al campionato.</h1>
+<h1>9.Stampa annuale delle scuderie che hanno partecipato al campionato compreso il numero di finanziamenti.</h1>
 
 <div class="registration-form">
 <form th:action="@{/CampionatoInPista/9StampaAnnuaScuderie}" method="post">
     <div class="form-group">
-                <label for="year">Seleziona l'Anno:</label>
-                <select id="year" name="DataEvento">
+                <label for="anno">Seleziona l'Anno:</label>
+                <select id="anno" name="data">
                     <option value="Scegli">Scegli</option>
-                    <option th:each="anno : ${anni}" th:value="${anno}" th:text="${anno}"></option>
+                    <option th:each="anno : ${anno}" th:value="${anno}" th:text="${anno}"></option>
                 </select>
-
 
         <button type="submit">Mostra Scuderie</button>
     </div>
 </form>
 </div>
 <br><br>
-<h2>Scuderie partecipanti nell'anno selezionato:</h2>
-<ul>
-    <li th:each="scuderia : ${scuderieAnnuali}" th:text="${scuderia}"></li>
-</ul>
+<h2 style="text-align: center;" >Scuderie partecipanti nell'anno selezionato:</h2>
 
+<table class="custom-table">
+<thead>
+<tr>
+    <th>Nome Scuderia</th>
+    <th>Sede</th>
+    <th>Paese</th>
+    <th>Numero Finanziamenti</th>
+</thead>
+<tbody>
+<!-- Ciclo attraverso le scuderie -->
+<tr th:each="scuderia : ${scuderieAnnuali}">
+    <td th:text="${scuderia.nome}"></td>
+    <td th:text="${scuderia.sede}"></td>
+    <td th:text="${scuderia.paese}"></td>
+    <td th:text="${scuderia.numFinanziamenti}"></td>
+
+</tr>
+</tbody>
+</table>
+</div>
+
+<div>
+    <h2 style="text-align: center;">Gare partecipate:</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>Nome Gara</th>
+            <th>Data</th>
+            <th>Durata Ore</th>
+            <th>Tipo Gara</th>
+            <th>ID Circuito</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Ciclo attraverso le gare -->
+        <tr th:each="gara : ${gareAnnuali}">
+            <td th:text="${gara.nome}"></td>
+            <td th:text="${gara.dataEvento}"></td>
+            <td th:text="${gara.durataOre}"></td>
+            <td th:text="${gara.tipoGara}"></td>
+            <td th:text="${gara.idCircuito}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h2 style="text-align: center;">Partecipanti:</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>ID Gara</th>
+            <th>Targa Vettura</th>
+            <th>Motivo Ritiro</th>
+            <th>Punti</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Ciclo attraverso le partecipazioni -->
+        <tr th:each="partecipazione : ${partecipazioni}">
+            <td th:text="${partecipazione.idGara}"></td>
+            <td th:text="${partecipazione.targaVettura}"></td>
+            <td th:text="${partecipazione.motivoRitiro}"></td>
+            <td th:text="${partecipazione.punti}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <div id="footer-placeholder"></div>
 <script src="/static/js/struttura.js"></script>
 </body>

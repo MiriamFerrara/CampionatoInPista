@@ -12,7 +12,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/CampionatoInPista")
-public class DRegistaFinanziamentoController {
+public class D4_RegistaFinanziamentoController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
@@ -52,7 +52,7 @@ public class DRegistaFinanziamentoController {
 
 
     @PostMapping("/4RegistraFinanzimento")
-    public String RegistraVettura(final @RequestParam("IDPilota") String IDPilota,
+    public String RegistraFinanziamento(final @RequestParam("IDPilota") String IDPilota,
                                   final @RequestParam("NomeScuderia") String nome,
                                   final @RequestParam("quantita") Float quantita,
                                   final @RequestParam("data") Date data) {

@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Controller
 @RequestMapping("/CampionatoInPista")
-public class FRegistraRisultatoGaraController {
+public class F6_RegistraRisultatoGaraController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
@@ -66,7 +67,6 @@ public class FRegistraRisultatoGaraController {
             } else {
                 preparedStatement.setString(1, MotivoRitiro);
             }
-
             preparedStatement.setInt(2, Punti);
             preparedStatement.setString(3, IDGara);
             preparedStatement.setString(4, targa);

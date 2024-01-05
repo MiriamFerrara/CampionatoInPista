@@ -1,5 +1,7 @@
 package it.unisa.CampionatoInPista.domain;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 
 public class Gara {
@@ -7,15 +9,15 @@ public class Gara {
 
     private int id;
     private String nome;
-    private LocalDate dataEvento;
-    private int durataOre;
+    private Date dataEvento;
+    private double durataOre;
     private String tipoGara;
     private int idCircuito;
 
     public Gara() {
     }
 
-    public Gara(int id, String nome, LocalDate dataEvento, int durataOre, String tipoGara, int idCircuito) {
+    public Gara(int id, String nome, Date dataEvento, double durataOre, String tipoGara, int idCircuito) {
         this.id = id;
         this.nome = nome;
         this.dataEvento = dataEvento;
@@ -40,19 +42,19 @@ public class Gara {
         this.nome = nome;
     }
 
-    public LocalDate getDataEvento() {
+    public Date getDataEvento() {
         return dataEvento;
     }
 
-    public void setDataEvento(LocalDate dataEvento) {
+    public void setDataEvento(Date dataEvento) {
         this.dataEvento = dataEvento;
     }
 
-    public int getDurataOre() {
+    public double getDurataOre() {
         return durataOre;
     }
 
-    public void setDurataOre(int durataOre) {
+    public void setDurataOre(double durataOre) {
         this.durataOre = durataOre;
     }
 

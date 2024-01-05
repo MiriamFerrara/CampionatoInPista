@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CampionatoInPista | Visualizza Piloti</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/tabelle.css">
+</head>
+
+<body>
+<div id="header-placeholder"></div>
+
+<h1>10.Visualizzare i piloti che hanno vinto nel circuito di casa.</h1>
+
+
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Pilota</th>
+        <th>Nome Pilota</th>
+        <th>Cognome Pilota</th>
+        <th>Nazionalità Pilota</th>
+        <th>ID Circuito</th>
+        <th>Nome Circuito</th>
+        <th>Paese Residenza Circuito</th>
+        <th>Punti Totali</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pilota, i: ${pilota}">
+        <td th:text="${pilota.ID}"></td>
+        <td th:text="${pilota.nome}"></td>
+        <td th:text="${pilota.cognome}"></td>
+        <td th:text="${pilota.nazionalita}"></td>
+        <td th:text="${circuito[i.index].ID_Circuito}"></td>
+        <td th:text="${circuito[i.index].nome}"></td>
+        <td th:text="${circuito[i.index].paeseResidenza}"></td>
+        <td th:text="${partecipa[i.index].punti}"></td>
+        <td th:text="${partecipa[i.index].targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div id="footer-placeholder"></div>
+<script src="/static/js/struttura.js"></script>
+</body>
+</html>

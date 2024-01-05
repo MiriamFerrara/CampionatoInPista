@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/CampionatoInPista")
-public class HStampaSommaFinanziamentiController {
+public class H8_StampaSommaFinanziamentiController {
 
 
         @Autowired

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CampionatoInPista | Visualizza GentlemanDriver</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/tabelle.css">
+</head>
+
+<body>
+<div id="header-placeholder"></div>
+
+<h1>11.Per ciascuna scuderia, visualizzare la percentuale di gentleman driver di cui si compone l’equipaggio;</h1>
+<h2 style="text-align: center;">Scuderie</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome Scuderia</th>
+        <th>Numero Finanziamenti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Ciclo attraverso i dati della scuderia -->
+    <tr th:each="s : ${scuderia}">
+        <td th:text="${s.nome}"></td>
+        <td th:text="${s.numFinanziamenti}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 style="text-align: center;">Piloti</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome Pilota</th>
+        <th>Tipo Pilota</th>
+        <th>Finanziatore GD</th>
+        <!--<th>Numero Gentleman Driver</th>
+       <th>Percentuale Gentleman Driver</th> -->
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Ciclo attraverso i dati dei piloti -->
+    <tr th:each="p : ${pilota}">
+        <td th:text="${p.nome}"></td>
+        <td th:text="${p.tipoPilota}"></td>
+        <td th:text="${p.finanziatoreGD}"></td>
+        <!--<td th:text="${p.Num_Gentleman_Driver}"></td>
+        <td th:text="${p.Percentuale_Gentleman_Driver}"></td> -->
+    </tr>
+    </tbody>
+</table>
+
+    <div id="footer-placeholder"></div>
+    <script src="/static/js/struttura.js"></script>
+</body>
+</html>

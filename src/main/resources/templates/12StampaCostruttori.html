@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CampionatoInPista | Stampa Costruttori</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/tabelle.css">
+</head>
+
+<body>
+<div id="header-placeholder"></div>
+
+<h1>12.Stampa mensile dei costruttori compreso il numero di componenti che ha fornito;</h1>
+
+<div class="registration-form">
+<form th:action="@{/CampionatoInPista/12StampaCostruttori}" method="post">
+    <div class="form-group">
+    <label for="mesi">Seleziona il mese:</label>
+    <select id="mesi" name="mesi">
+        <option value="Scegli">Scegli</option>
+        <option th:each="mese : ${mese}" th:value="${mese}" th:text="${mese}"></option>
+    </select>
+    <button type="submit">Visualizza Costruttori</button>
+        </div>
+    </form>
+</div>
+<br><br>
+
+<!-- Tabella per visualizzare i dati dei costruttori -->
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome Costruttore</th>
+        <th>Ragione Sociale</th>
+        <th>Sede Fabbrica</th>
+        <th>Numero Componenti Forniti</th>
+        <th>Data Installazione Componente</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="costruttore : ${costruttore}">
+        <td th:text="${costruttore.nome}"></td>
+        <td th:text="${costruttore.ragioneSociale}"></td>
+        <td th:text="${costruttore.sedeFabbrica}"></td>
+        <td th:text="${costruttore.numComponenti}"></td>
+        <td>
+            <span th:each="componente : ${componente}">
+                <span th:text="${componente.dataInstallazione}"></span>
+                <br/>
+            </span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<div id="footer-placeholder"></div>
+<script src="/static/js/struttura.js"></script>
+</body>
+</html>

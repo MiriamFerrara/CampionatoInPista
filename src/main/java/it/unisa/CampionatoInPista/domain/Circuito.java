@@ -2,7 +2,7 @@ package it.unisa.CampionatoInPista.domain;
 
 public class Circuito {
     //CIRCUITO (ID, Nome, PaeseResidenza, Lunghezza, #Curve)
-    private String ID; //(Primary Key)
+    private Integer ID_Circuito; //(Primary Key)
     private String nome;
     private String paeseResidenza;
     private int lunghezza;
@@ -11,20 +11,20 @@ public class Circuito {
     public Circuito() {
     }
 
-    public Circuito(String ID, String nome, String paeseResidenza, int lunghezza, int numero_Curve) {
-        this.ID = ID;
+    public Circuito(Integer ID_Circuito, String nome, String paeseResidenza, int lunghezza, int numero_Curve) {
+        this.ID_Circuito = ID_Circuito;
         this.nome = nome;
         this.paeseResidenza = paeseResidenza;
         this.lunghezza = lunghezza;
         this.numero_Curve = numero_Curve;
     }
 
-    public String getID() {
-        return ID;
+    public Integer getID_Circuito() {
+        return ID_Circuito;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setID_Circuito(Integer ID_Circuito) {
+        this.ID_Circuito = ID_Circuito;
     }
 
     public String getNome() {
@@ -62,7 +62,7 @@ public class Circuito {
     @Override
     public String toString() {
         return "Circuito{" +
-                "ID='" + ID + '\'' +
+                "ID_Circuito='" + ID_Circuito + '\'' +
                 ", nome='" + nome + '\'' +
                 ", paeseResidenza='" + paeseResidenza + '\'' +
                 ", lunghezza=" + lunghezza +

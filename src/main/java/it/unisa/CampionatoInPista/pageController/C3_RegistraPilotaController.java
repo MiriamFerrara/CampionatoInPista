@@ -13,12 +13,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/CampionatoInPista")
-public class CRegistraPilotaController {
+public class C3_RegistraPilotaController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
     @GetMapping("/3AggiungiPilota")
-    public String getRegistraVettura(Model model) {
+    public String getRegistraPilota(Model model) {
         List<String[]> datiVettura = new ArrayList<>();
         List<String[]> datiPilota = new ArrayList<>();
         List<String> targhe = new ArrayList<>();
@@ -91,7 +91,7 @@ public class CRegistraPilotaController {
         return "3AggiungiPilota";
     }
     @PostMapping("/3AggiungiPilota")
-    public String RegistraVettura(final @RequestParam("targa") String targa,
+    public String RegistraPilota(final @RequestParam("targa") String targa,
                                   final @RequestParam("IDPilota") String IDPilota,
                                   final @RequestParam("numComponenti") Integer componenti) {
 

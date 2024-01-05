@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/CampionatoInPista")
-public class ARegistraScuderiaController {
+public class A1_RegistraScuderiaController {
     @Autowired
     private DatabaseConnection databaseConnection;
 

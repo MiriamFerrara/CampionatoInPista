@@ -16,7 +16,7 @@ import static java.sql.Types.NULL;
 
 @Controller
 @RequestMapping("/CampionatoInPista")
-public class BRegistraVetturaController {
+public class B2_RegistraVetturaController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
