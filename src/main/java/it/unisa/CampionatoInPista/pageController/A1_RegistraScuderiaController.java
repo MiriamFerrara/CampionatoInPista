@@ -31,9 +31,7 @@ public class A1_RegistraScuderiaController {
                 targhe.add(resultSet.getString("Targa"));
             }
             model.addAttribute("targa", targhe);
-           /* for(int i=0; i< targhe.size(); i++) {
-                System.out.println("Lista Vetture: " + targhe.get(i));
-            }*/
+
             resultSet.close();
             preparedStatement.close();
 

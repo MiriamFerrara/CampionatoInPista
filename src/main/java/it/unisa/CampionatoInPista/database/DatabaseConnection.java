@@ -1,4 +1,5 @@
 package it.unisa.CampionatoInPista.database;
+import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -25,7 +26,8 @@ public class DatabaseConnection {
         return con;
     }
 
-    public void closeConnessione() throws SQLException{
+    //@PreDestroy
+    public void closeConnessione() throws SQLException {
         try {
             if (con != null) {
                 con.close();

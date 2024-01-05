@@ -1,6 +1,36 @@
-/* Stile per il footer */
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #FFFFFF;
-}
+/* Stili per il footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #FFFFFF;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .left-section,
+        .right-section,
+        .center-section {
+            flex: 1;
+        }
+
+        .left-section p,
+        .right-section p,
+        .center-section p {
+            margin: 5px 0;
+        }
+
+        .center-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .center-section p {
+            margin: 5px 0;
+            font-weight: bold;
+            text-align: center;
+        }

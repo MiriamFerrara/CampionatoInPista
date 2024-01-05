@@ -10,14 +10,14 @@ public class Gara {
     private int id;
     private String nome;
     private Date dataEvento;
-    private double durataOre;
+    private Time durataOre;
     private String tipoGara;
     private int idCircuito;
 
     public Gara() {
     }
 
-    public Gara(int id, String nome, Date dataEvento, double durataOre, String tipoGara, int idCircuito) {
+    public Gara(int id, String nome, Date dataEvento, Time durataOre, String tipoGara, int idCircuito) {
         this.id = id;
         this.nome = nome;
         this.dataEvento = dataEvento;
@@ -50,11 +50,11 @@ public class Gara {
         this.dataEvento = dataEvento;
     }
 
-    public double getDurataOre() {
+    public Time getDurataOre() {
         return durataOre;
     }
 
-    public void setDurataOre(double durataOre) {
+    public void setDurataOre(Time durataOre) {
         this.durataOre = durataOre;
     }
 

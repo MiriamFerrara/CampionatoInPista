@@ -25,18 +25,31 @@ public class M11_VisualizzaGentlemanDriverController {
     public String getVisualizzaGentlemanDriver(Model model) {
         List<Pilota> datiPilota = new ArrayList<>();
         List<Scuderia> datiScuderia = new ArrayList<>();
-
+        List<Double> percentuale = new ArrayList<>();
 
         try {
+            PreparedStatement contaStatement = databaseConnection.getConnection().prepareStatement(
+                    "SELECT COUNT(*) AS NumeroTotalePiloti, " +
+                            "SUM(CASE WHEN FinanziatoreGD = 'SI' THEN 1 ELSE 0 END) AS NumeroFinanziatoriSI " +
+                            "FROM pilota;");
+
+            ResultSet resultSet1 = contaStatement.executeQuery();
+            int numeroPiloti = 0;
+            int numeroFinanziatoriSI = 0;
+            if (resultSet1.next()) {
+                numeroPiloti = resultSet1.getInt("NumeroTotalePiloti");
+                numeroFinanziatoriSI = resultSet1.getInt("NumeroFinanziatoriSI");
+            }
+            resultSet1.close();
+            contaStatement.close();
+
+
             PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
-                    "SELECT s.Nome AS Nome_Scuderia, s.NumFinanziamenti, p.Nome AS Nome_Pilota, p.TipoPilota, p.FinanziatoreGD," +
-                            "COUNT(*) AS tuttiPiloti, " +
-                            "(COUNT(CASE WHEN p.FinanziatoreGD = 'SI' THEN 1 END) / COUNT(*)) * 100 AS Percentuale_Gentleman_Driver " +
+                    "SELECT s.Nome AS Nome_Scuderia, s.NumFinanziamenti, p.Nome AS Nome_Pilota, p.TipoPilota, p.FinanziatoreGD " +
                             "FROM scuderia s " +
-                            "LEFT JOIN Finanziare f ON s.Nome = f.NomeScuderia " +
+                            "LEFT JOIN finanziare f ON s.Nome = f.NomeScuderia " +
                             "LEFT JOIN pilota p ON f.id_Pilota = p.ID " +
-                            "GROUP BY s.Nome, p.Nome " +
-                            "HAVING p.FinanziatoreGD = 'SI';");
+                            "WHERE p.FinanziatoreGD = 'SI';");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -51,9 +64,15 @@ public class M11_VisualizzaGentlemanDriverController {
                 pilota.setTipoPilota(resultSet.getString("TipoPilota"));
                 pilota.setFinanziatoreGD("SI".equals(resultSet.getString("FinanziatoreGD")));
                 datiPilota.add(pilota);
+
+                double percentualeGentlemanDriver = (double) numeroFinanziatoriSI / numeroPiloti * 100;
+
+                percentuale.add(percentualeGentlemanDriver);
             }
+
             model.addAttribute("pilota", datiPilota);
             model.addAttribute("scuderia", datiScuderia);
+            model.addAttribute("percentuale", percentuale);
             resultSet.close();
             preparedStatement.close();
 

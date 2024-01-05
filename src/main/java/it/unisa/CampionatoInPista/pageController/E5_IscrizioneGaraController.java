@@ -20,11 +20,11 @@ public class E5_IscrizioneGaraController {
     @GetMapping("/5IscrizioneGara")
     public String getIscrizioneGara(Model model) {
         List<String> targhe = new ArrayList<>();
-        List<String> gare = new ArrayList<>();
+        List<Integer> gare = new ArrayList<>();
 
         try {
             PreparedStatement selezionaVStatement = databaseConnection.getConnection().prepareStatement(
-                    "SELECT Targa FROM vettura");
+                    "SELECT Targa FROM vettura;");
             ResultSet resultSet = selezionaVStatement.executeQuery();
             while (resultSet.next()) {
                 targhe.add(resultSet.getString("Targa"));
@@ -37,7 +37,7 @@ public class E5_IscrizioneGaraController {
                     "SELECT ID_Gara FROM gara");
             ResultSet resultSetG = selezionaGStatement.executeQuery();
             while (resultSetG.next()) {
-                gare.add(resultSetG.getString("ID_Gara"));
+                gare.add(resultSetG.getInt("ID_Gara"));
             }
             model.addAttribute("IDGara", gare);
             resultSetG.close();
@@ -52,18 +52,31 @@ public class E5_IscrizioneGaraController {
     }
 
     @PostMapping("/5IscrizioneGara")
-    public String IscrizioneGara(final @RequestParam("IDGara") String IDGara,
+    public String IscrizioneGara(final @RequestParam("IDGara") Integer IDGara,
                                   final @RequestParam("targa") String targa) {
 
         try{
-            PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
-                    "INSERT INTO partecipa (id_Gara, targa_Vettura) VALUES (?, ?);");
-            preparedStatement.setString(1, IDGara);
-            preparedStatement.setString(2, targa);
+            PreparedStatement verificaStatement = databaseConnection.getConnection().prepareStatement(
+                    "SELECT * FROM partecipa p " +
+                            "WHERE p.id_Gara = ? AND p.targa_Vettura = ?;");
+            verificaStatement.setInt(1, IDGara);
+            verificaStatement.setString(2, targa);
+            ResultSet resultSet = verificaStatement.executeQuery();
+            if(resultSet.next()){
+                resultSet.close();
+                verificaStatement.close();
+                return "pagina_errore_La_vettura_iscritta gia";
+            }else {
 
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
+                PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
+                        "INSERT INTO partecipa (id_Gara, targa_Vettura) VALUES (?, ?);");
+                preparedStatement.setInt(1, IDGara);
+                preparedStatement.setString(2, targa);
 
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return "errore";

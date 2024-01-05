@@ -85,10 +85,9 @@ public class I9_StampaAnnuaScuderieController {
                 Gara gara = new Gara();
                 gara.setNome(resultSet.getString("NomeG"));
                 gara.setDataEvento(resultSet.getDate("DataEvento"));
-                gara.setDurataOre(resultSet.getDouble("DurataOre"));
+                gara.setDurataOre(resultSet.getTime("DurataOre"));
                 gara.setTipoGara(resultSet.getString("TipoGara"));
                 gara.setIdCircuito(resultSet.getInt("id_Circuito"));
-                datiScuderia.add(scuderia);
                 datiGara.add(gara);
 
             }

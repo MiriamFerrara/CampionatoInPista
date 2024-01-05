@@ -14,14 +14,198 @@
 
 <h1>7.Verifica della possibilità di montare un componente su una vettura.</h1>
 
+
 <div class="registration-form">
-    <form th:action="@{/CampionatoInPista/6RegistraRisultatoGara}" method="post">
+    <form th:action="@{/CampionatoInPista/7VerificaComponente}" method="post">
+        <div class="form-group">
+            <label for="targa">Seleziona targa:</label>
+            <select id="targa" name="targhe" required>
+                <option value="Scegli">Scegli una targa</option>
+                <option th:each="targa : ${targhe}" th:text="${targa}"></option>
+            </select>
+
+            <button type="submit">Verifica Componenti</button>
+        </div>
+    </form>
+</div>
+
+<h2 style="text-align: center;">Componenti trovati:</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Codice</th>
+        <th>Data Installazione</th>
+        <th>Costo</th>
+        <th>Tipo Componente</th>
+        <th>Tipo Materiale</th>
+        <th>Peso</th>
+        <th>Numero Marce</th>
+        <th>Cilindrata</th>
+        <th>Tipo Motore</th>
+        <th>Numero Cilindri</th>
+        <th>Targa Vettura</th>
+        <th>Nome Costruttore</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="componente : ${daticomponente}">
+        <td th:text="${componente.codice}"></td>
+        <td th:text="${componente.dataInstallazione}"></td>
+        <td th:text="${componente.costo}"></td>
+        <td th:text="${componente.tipoComponente}"></td>
+        <td th:text="${componente.tipoMateriale}"></td>
+        <td th:text="${componente.peso}"></td>
+        <td th:text="${componente.numMarce}"></td>
+        <td th:text="${componente.cilindrata}"></td>
+        <td th:text="${componente.tipoMotore}"></td>
+        <td th:text="${componente.numCilindri}"></td>
+        <td th:text="${componente.targaVettura}"></td>
+        <td th:text="${componente.nomeCostruttore}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="registration-form">
+    <form th:action="@{/CampionatoInPista/7VerificaComponenteInserire}"  method="post">
         <div class="form-group">
 
+            <input type="hidden" th:value="${targhe}" name="targhe">
+            <label for="dataInstallazione">Data Installazione:</label>
+    <input type="date" id="dataInstallazione" name="dataInstallazione" required><br><br>
 
+    <label for="costo">Costo:</label>
+    <input type="number" id="costo" name="costo" step="0.01" placeholder="10.0" required><br><br>
+
+    <label for="tipoComponente">Tipo Componente:</label>
+    <select id="tipoComponente" name="tipoComponente" required>
+        <option value="Scegli">Scegli</option>
+        <option th:each="tipoComponente : ${TipoComponente}" th:text="${tipoComponente}"></option>
+    </select><br><br>
+
+    <!-- Campi per Telaio -->
+    <div id="campiTelaio" style="display: none;">
+        <label for="tipoMateriale">Tipo Materiale:</label>
+        <input type="text" id="tipoMateriale" name="tipoMateriale" placeholder="Alluminio"><br><br>
+
+        <label for="peso">Peso:</label>
+        <input type="number" id="peso" name="peso" min="0" step="0.1"><br><br>
+    </div>
+
+    <!-- Campi per Cambio -->
+    <div id="campiCambio" style="display: none;">
+        <label for="numMarce">Numero Marce:</label>
+        <select id="numMarce" name="numMarce">
+            <option value="Scegli">Scegli</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </select><br><br>
+    </div>
+
+    <!-- Campi per Motore -->
+    <div id="campiMotore" style="display: none;">
+        <label for="cilindrata">Cilindrata:</label>
+        <input type="text" id="cilindrata" name="cilindrata" placeholder="2000 cc"><br><br>
+
+        <label for="tipoMotore">Tipo Motore:</label>
+        <select id="tipoMotore" name="tipoMotore">
+            <option value="Scegli">Scegli</option>
+            <option value="Turbo">Turbo</option>
+            <option value="Aspirato">Aspirato</option>
+        </select><br><br>
+
+        <label for="numCilindri">Numero Cilindri:</label>
+        <input type="number" id="numCilindri" name="numCilindri" min="1" max="12" placeholder="max 12">
+
+    </div>
+
+    <label>Seleziona o inserisci il Nome Costruttore:</label><br>
+
+    <label for="existing">
+        <input type="radio" id="existing" name="costruttoreType" value="existing" checked>Seleziona un costruttore esistente</label><br>
+    <label for="new">
+        <input type="radio" id="new" name="costruttoreType" value="new">Inserisci un nuovo costruttore</label><br>
+
+    <div id="existingCostruttore">
+        <label for="nomeCostruttore">Seleziona Nome Costruttore:</label>
+        <select id="nomeCostruttore" name="nomeCostruttore">
+            <option th:each="nomeCostruttore : ${nomeCostruttore}" th:value="${nomeCostruttore}" th:text="${nomeCostruttore}"></option>
+        </select><br><br>
+    </div>
+
+    <div id="newCostruttore" style="display: none;">
+        <label for="nomeNuovoCostruttore">Nome Nuovo Costruttore:</label>
+        <input type="text" id="nomeNuovoCostruttore" name="nomeNuovoCostruttore" placeholder="Porsche"><br><br>
+        <label for="ragioneSociale">Ragione Sociale:</label>
+        <input type="text" id="ragioneSociale" name="ragioneSociale" placeholder="Porsche S.p.A."><br><br>
+        <label for="sedeFabbrica">Sede Fabbrica:</label>
+        <input type="text" id="sedeFabbrica" name="sedeFabbrica" placeholder="Torino"><br><br>
+        <label for="numComponenti">Numero Componenti:</label>
+        <input type="number" id="numComponenti" name="numComponenti" min="1" max="50000" placeholder="11"><br><br>
+
+    </div>
+<button type="submit">Registra Vettura</button>
 </div>
 </form>
 </div>
+
+
+
+<script>
+    // Codice JavaScript per mostrare/nascondere campi in base al tipo di componente selezionato
+    document.getElementById("tipoComponente").addEventListener("change", function() {
+        var tipoComponente = this.value;
+
+        var campiTelaio = document.getElementById("campiTelaio");
+        var campiCambio = document.getElementById("campiCambio");
+        var campiMotore = document.getElementById("campiMotore");
+
+        campiTelaio.style.display = "none";
+        campiCambio.style.display = "none";
+        campiMotore.style.display = "none";
+
+        if (tipoComponente === "Telaio") {
+            campiTelaio.style.display = "block";
+        } else if (tipoComponente === "Cambio") {
+            campiCambio.style.display = "block";
+        } else if (tipoComponente === "Motore") {
+            campiMotore.style.display = "block";
+        }
+    });
+
+
+   // Selezione di tutti gli input con attributo 'name' uguale a 'costruttoreType'
+    document.querySelectorAll('input[name="costruttoreType"]').forEach(function (element) {
+    // Aggiunta di un ascoltatore di eventi di cambio a ciascun input
+    element.addEventListener('change', function () {
+        // Recupero degli elementi HTML per gli ID specificati
+        var existingCostruttore = document.getElementById('existingCostruttore');
+        var newCostruttore = document.getElementById('newCostruttore');
+
+        // Verifica quale input radio è stato selezionato
+        if (this.value === 'existing') {
+            // Se è stato selezionato 'existing', mostra l'elemento con ID 'existingCostruttore' e nascondi 'newCostruttore'
+            existingCostruttore.style.display = 'block';
+            newCostruttore.style.display = 'none';
+        } else if (this.value === 'new') {
+            // Se è stato selezionato 'new', mostra l'elemento con ID 'newCostruttore' e nascondi 'existingCostruttore'
+            existingCostruttore.style.display = 'none';
+            newCostruttore.style.display = 'block';
+        }
+    });
+});
+   // Ottieni l'elemento del campo di input dataInstallazione
+    var input = document.getElementById('dataInstallazione');
+
+    // Imposta la data massima come data odierna
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // Gennaio è 0!
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    input.setAttribute('max', today);
+</script>
+
 <div id="footer-placeholder"></div>
 <script src="/static/js/struttura.js"></script>
 </body>

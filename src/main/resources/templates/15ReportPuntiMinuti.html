@@ -26,7 +26,7 @@
     <tr th:each="scuderia, i : ${scuderia}">
         <td th:text="${scuderia.nome}"></td>
         <td th:text="${partecipa[i.index].punti}"></td>
-        <td th:text="${gara[i.index].durataOre}"></td>
+        <td th:text="${DurataGareMinuti[i.index]}"></td>
         <td th:text="${rapportoPuntiMinuto[i.index]}"></td>
     </tr>
     </tbody>

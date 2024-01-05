@@ -29,6 +29,7 @@ public class Q15_ReportPuntiMinutiController {
             List<Scuderia> datiScuderia = new ArrayList<>();
             List<Gara> datiGara = new ArrayList<>();
             List<Partecipa> datiPartecipa = new ArrayList<>();
+            List<Double> durata = new ArrayList<>();
             List<Double> datirapportoPuntiMinuto = new ArrayList<>();
 
             try {
@@ -57,7 +58,7 @@ public class Q15_ReportPuntiMinutiController {
                     datiPartecipa.add(partecipa);
 
                     Gara gara = new Gara();
-                     gara.setDurataOre(resultSet.getDouble("Durata_Gare_Minuti"));
+                    durata.add(resultSet.getDouble("Durata_Gare_Minuti"));
                     datiGara.add(gara);
 
                     datirapportoPuntiMinuto.add(resultSet.getDouble("Rapporto_Punti_Minuto"));
@@ -66,6 +67,7 @@ public class Q15_ReportPuntiMinutiController {
                 model.addAttribute("scuderia", datiScuderia);
                 model.addAttribute("partecipa", datiPartecipa);
                 model.addAttribute("gara", datiGara);
+                model.addAttribute("DurataGareMinuti", durata);
                 model.addAttribute("rapportoPuntiMinuto", datirapportoPuntiMinuto);
                 resultSet.close();
                 preparedStatement.close();

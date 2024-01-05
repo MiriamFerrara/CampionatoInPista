@@ -17,6 +17,7 @@ public class C3_RegistraPilotaController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
+
     @GetMapping("/3AggiungiPilota")
     public String getRegistraPilota(Model model) {
         List<String[]> datiVettura = new ArrayList<>();
@@ -92,23 +93,31 @@ public class C3_RegistraPilotaController {
     }
     @PostMapping("/3AggiungiPilota")
     public String RegistraPilota(final @RequestParam("targa") String targa,
-                                  final @RequestParam("IDPilota") String IDPilota,
-                                  final @RequestParam("numComponenti") Integer componenti) {
+                                  final @RequestParam("IDPilota") String IDPilota) {
 
         try{
-            PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
-                    "INSERT INTO guidare (targa_Vettura, id_Pilota, NumComponentiPiloti) VALUES (?, ?, ?);");
-            preparedStatement.setString(1, targa);
-            preparedStatement.setString(2, IDPilota);
-            preparedStatement.setInt(3, componenti);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
+                PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
+                        "INSERT INTO guidare (targa_Vettura, id_Pilota, NumComponentiPiloti) VALUES (?, ?, ?);");
+                preparedStatement.setString(1, targa);
+                preparedStatement.setString(2, IDPilota);
+                preparedStatement.setInt(3, 0);
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return "errore";
+                // Aggiornamento del contatore NumComponentiPiloti
+                PreparedStatement updateStatement = databaseConnection.getConnection().prepareStatement(
+                        "UPDATE guidare SET NumComponentiPiloti = NumComponentiPiloti + 1 " +
+                                "WHERE targa_vettura = ? AND id_Pilota = ?");
+                updateStatement.setString(1, targa);
+                updateStatement.setString(2, IDPilota);
+                updateStatement.executeUpdate();
+                updateStatement.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return "errore";
+            }
+            return "successo";
         }
-        return "successo";
-    }
 }
 
