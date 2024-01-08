@@ -40,5 +40,6 @@ Questa webapp è il risultato di un progetto corsista del Corso di Basi di Dati 
 
 
 5. **Apri il browser:**
+   
    Apri il tuo browser web preferito e vai all'indirizzo 
     `localhost:8080/CampionatoInPista/Homepage`.
