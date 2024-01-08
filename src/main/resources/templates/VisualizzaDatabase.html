@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CampionatoInPista | Database</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/tabelle.css">
+</head>
+
+<body>
+<div id="header-placeholder"></div>
+
+
+    <h1 class="section-header">DataBase</h1>
+<br><br>
+<h2 class="section-header">Tabella Circuito</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>ID Circuito</th>
+            <th>Nome</th>
+            <th>Paese Residenza</th>
+            <th>Lunghezza</th>
+            <th>Numero Curve</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="circuito : ${datiCircuito}">
+            <td th:text="${circuito.ID_Circuito}"></td>
+            <td th:text="${circuito.Nome}"></td>
+            <td th:text="${circuito.PaeseResidenza}"></td>
+            <td th:text="${circuito.Lunghezza}"></td>
+            <td th:text="${circuito.numero_Curve}"></td>
+        </tr>
+        </tbody>
+    </table>
+<br><br>
+<h2 class="section-header">Tabella Gara</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Nome</th>
+        <th>Data Evento</th>
+        <th>Durata Ore</th>
+        <th>Tipo Gara</th>
+        <th>ID Circuito</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="gara : ${datiGara}">
+        <td th:text="${gara.id}"></td>
+        <td th:text="${gara.nome}"></td>
+        <td th:text="${gara.dataEvento}"></td>
+        <td th:text="${gara.durataOre}"></td>
+        <td th:text="${gara.tipoGara}"></td>
+        <td th:text="${gara.idCircuito}"></td>
+    </tr>
+    </tbody>
+    <br><br>
+
+</table>
+<h2 class="section-header">Tabella Vettura</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Targa</th>
+        <th>Numero Gara</th>
+        <th>Modello</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vettura : ${vetture}">
+        <td th:text="${vettura.targa}"></td>
+        <td th:text="${vettura.numGara}"></td>
+        <td th:text="${vettura.modello}"></td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+
+<h2 class="section-header">Tabella Costruttore</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Ragione Sociale</th>
+        <th>Sede Fabbrica</th>
+        <th>Numero Componenti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="costruttore : ${costruttori}">
+        <td th:text="${costruttore.nome}"></td>
+        <td th:text="${costruttore.ragioneSociale}"></td>
+        <td th:text="${costruttore.sedeFabbrica}"></td>
+        <td th:text="${costruttore.numComponenti}"></td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+
+<h2 class="section-header">Tabella Componente</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Codice</th>
+        <th>Data Installazione</th>
+        <th>Costo</th>
+        <th>Tipo Componente</th>
+        <th>Tipo Materiale</th>
+        <th>Peso</th>
+        <th>Num. Marce</th>
+        <th>Cilindrata</th>
+        <th>Tipo Motore</th>
+        <th>Num. Cilindri</th>
+        <th>Nome Costruttore</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="componente : ${componenti}">
+        <td th:text="${componente.codice}"></td>
+        <td th:text="${componente.dataInstallazione}"></td>
+        <td th:text="${componente.costo}"></td>
+        <td th:text="${componente.tipoComponente}"></td>
+        <td th:text="${componente.tipoMateriale}"></td>
+        <td th:text="${componente.peso}"></td>
+        <td th:text="${componente.numMarce}"></td>
+        <td th:text="${componente.cilindrata}"></td>
+        <td th:text="${componente.tipoMotore}"></td>
+        <td th:text="${componente.numCilindri}"></td>
+        <td th:text="${componente.nomeCostruttore}"></td>
+        <td th:text="${componente.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+
+<h2 class="section-header">Tabella Pilota</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Data di nascita</th>
+        <th>Nazionalità</th>
+        <th>Tipo Pilota</th>
+        <th>Licenze Possedute</th>
+        <th>Data Licenza</th>
+        <th>Finanziatore GD</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pilota : ${datiPilota}">
+        <td th:text="${pilota.ID}"></td>
+        <td th:text="${pilota.nome}"></td>
+        <td th:text="${pilota.cognome}"></td>
+        <td th:text="${pilota.dataNascita}"></td>
+        <td th:text="${pilota.nazionalita}"></td>
+        <td th:text="${pilota.tipoPilota}"></td>
+        <td th:text="${pilota.licenzePossedute}"></td>
+        <td th:text="${pilota.dataLicenza}"></td>
+        <td th:text="${pilota.finanziatoreGD}"></td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+
+<h2 class="section-header">Tabella Scuderia</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Sede</th>
+        <th>Paese</th>
+        <th>Numero Finanziamenti</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="scuderia : ${scuderieInserite}">
+        <td th:text="${scuderia.nome}"></td>
+        <td th:text="${scuderia.sede}"></td>
+        <td th:text="${scuderia.paese}"></td>
+        <td th:text="${scuderia.numFinanziamenti}"></td>
+        <td th:text="${scuderia.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+
+<h2 class="section-header">Tabella Partecipa</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Targa Vettura</th>
+        <th>Motivo Ritiro</th>
+        <th>Punti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="partecipa : ${datiPartecipa}">
+        <td th:text="${partecipa.idGara}"></td>
+        <td th:text="${partecipa.targaVettura}"></td>
+        <td th:text="${partecipa.motivoRitiro}"></td>
+        <td th:text="${partecipa.punti}"></td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+
+<h2 class="section-header">Tabella Guidare</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Pilota</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="guidare : ${guidare}">
+        <td th:text="${guidare.idPilota}"></td>
+        <td th:text="${guidare.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+
+<h2 class="section-header">Tabella Finanziare</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Quantità Denaro</th>
+        <th>Data</th>
+        <th>ID Pilota</th>
+        <th>Nome Scuderia</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="finanziare : ${datiFinanziare}">
+        <td th:text="${finanziare.quantitaDenaro}"></td>
+        <td th:text="${finanziare.data}"></td>
+        <td th:text="${finanziare.idPilota}"></td>
+        <td th:text="${finanziare.nomeScuderia}"></td>
+    </tr>
+    </tbody>
+</table>
+<br><br>
+
+<div id="footer-placeholder"></div>
+
+<script src="/static/js/struttura.js"></script>
+</body>
+</html>

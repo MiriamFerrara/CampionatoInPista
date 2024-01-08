@@ -71,20 +71,19 @@ INSERT INTO partecipa
 		   (4, 'STU901', null, 100),
 		   (5, 'VWX234', 'Incidente', 5);       
            
-#Inserimento della Tabella Guidare(Targa_vettura, id_Pilota, NumComponentiPiloti)
+#Inserimento della Tabella Guidare(Targa_vettura, id_Pilota)
 INSERT INTO guidare
-	VALUES ('JKL012', 1, 20),
-		   ('MNO345', 2, 18),
-		   ('PQR678', 3, 22),
-		   ('STU901', 4, 21),
-		   ('VWX234', 5, 19);        
-           
+	VALUES ('JKL012', 1),
+		   ('MNO345', 2),
+		   ('PQR678', 3),
+		   ('STU901', 4),
+		   ('VWX234', 5);
+
  #Inserimento della Tabella Finanziare(QuantitaDenaro, data, id_Pilota, NomeScuderia)
 INSERT INTO finanziare
 	VALUES (50000, '2023-01-10', 1, 'Scuderia Ferrari'),
 		   (60000, '2023-02-15', 2, 'Red Bull Racing'),
 		   (45000, '2023-03-20', 3, 'McLaren Racing'),
 		   (55000, '2023-04-25', 4, 'Mercedes Team'),
-		   (40000, '2023-05-30', 5, 'Bugatti Motorsport');        
-           
-          
+		   (40000, '2023-05-30', 5, 'Bugatti Motorsport');
+

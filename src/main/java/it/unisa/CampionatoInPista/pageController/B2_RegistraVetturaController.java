@@ -113,19 +113,24 @@ public class B2_RegistraVetturaController {
                     componenteStatement.executeUpdate();
                     componenteStatement.close();
 
-                    if (costruttoreType.equals("existing")) {
+            if (costruttoreType.equals("existing")) {
                 // Recupera i dettagli del costruttore esistente usando il nome
                 PreparedStatement recuperaCostruttoreStatement = databaseConnection.getConnection().prepareStatement(
-                        "SELECT * FROM costruttore WHERE Nome = ?");
+                        "SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ?");
                 recuperaCostruttoreStatement.setString(1, nome);
                 ResultSet costruttoreResultSet = recuperaCostruttoreStatement.executeQuery();
-
 
                 if (costruttoreResultSet.next()) {
                     costruttore.setNome(costruttoreResultSet.getString("Nome"));
                     costruttore.setRagioneSociale(costruttoreResultSet.getString("RagioneSociale"));
                     costruttore.setSedeFabbrica(costruttoreResultSet.getString("SedeFabbrica"));
-                    costruttore.setNumComponenti(costruttoreResultSet.getInt("NumComponenti"));
+
+                    PreparedStatement updateNumComponentiStatement = databaseConnection.getConnection().prepareStatement(
+                            "UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ?");
+                    updateNumComponentiStatement.setString(1, nome);
+                    updateNumComponentiStatement.executeUpdate();
+                    updateNumComponentiStatement.close();
+                    //costruttore.setNumComponenti(costruttoreResultSet.getInt("NumComponenti"));
                     costruttoreResultSet.close();
                     recuperaCostruttoreStatement.close();
                 }
@@ -141,6 +146,7 @@ public class B2_RegistraVetturaController {
                 nuovoCostruttoreStatement.executeUpdate();
                 nuovoCostruttoreStatement.close();
             }
+
 
         } catch (SQLException e) {
             e.printStackTrace();

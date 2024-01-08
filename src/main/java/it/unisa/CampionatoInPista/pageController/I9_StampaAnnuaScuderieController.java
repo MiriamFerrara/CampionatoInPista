@@ -92,7 +92,7 @@ public class I9_StampaAnnuaScuderieController {
 
             }
             model.addAttribute("scuderieAnnuali", datiScuderia);
-            model.addAttribute("partecipazioni", datiPartecipa);
+            model.addAttribute("partecipa", datiPartecipa);
             model.addAttribute("gareAnnuali", datiGara);
 
             resultSet.close();

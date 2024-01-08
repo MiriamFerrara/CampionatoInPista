@@ -11,7 +11,7 @@ public class Pilota {
     private String tipoPilota;
     private int licenzePossedute;
     private Date dataLicenza;
-    private boolean finanziatoreGD;
+    private String finanziatoreGD;
 
     public Pilota() {
     }
@@ -28,7 +28,7 @@ public class Pilota {
      * @param dataLicenza
      * @param finanziatoreGD
      */
-    public Pilota(int ID, String nome, String cognome, Date dataNascita, String nazionalita, String tipoPilota, int licenzePossedute, Date dataLicenza, boolean finanziatoreGD) {
+    public Pilota(int ID, String nome, String cognome, Date dataNascita, String nazionalita, String tipoPilota, int licenzePossedute, Date dataLicenza, String finanziatoreGD) {
         this.ID = ID;
         this.nome = nome;
         this.cognome = cognome;
@@ -104,11 +104,11 @@ public class Pilota {
         this.dataLicenza = dataLicenza;
     }
 
-    public boolean isFinanziatoreGD() {
+    public String getFinanziatoreGD() {
         return finanziatoreGD;
     }
 
-    public void setFinanziatoreGD(boolean finanziatoreGD) {
+    public void setFinanziatoreGD(String finanziatoreGD) {
         this.finanziatoreGD = finanziatoreGD;
     }
 

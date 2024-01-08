@@ -8,11 +8,33 @@
     <link rel="stylesheet" href="/static/css/form.css">
     <link rel="stylesheet" href="/static/css/tabelle.css">
 </head>
-
 <body>
 <div id="header-placeholder"></div>
 <h1>3.Aggiunta di un nuovo pilota ad un equipaggio.</h1>
-<div class="pilota-data">
+<div class="registration-form">
+    <form th:action="@{/CampionatoInPista/3AggiungiPilota}" method="post">
+
+        <div class="form-group">
+            <label for="targa">Seleziona una Vettura in base alla Targa:</label>
+            <select id="targa" name="targa" required>
+                <option value="Scegli">Scegli</option>
+                <option th:each="targa : ${targa}" th:value="${targa}" th:text="${targa}"></option>
+            </select><br><br>
+
+            <label for="IDPilota">Seleziona un Pilota in base al suo ID:</label>
+            <select id="IDPilota" name="IDPilota" required>
+                <option value="Scegli">Scegli</option>
+                <option th:each="pilota : ${IDPilota}" th:value="${pilota}" th:text="${pilota}"></option>
+            </select><br><br>
+
+
+            <button type="submit">Aggiungi Pilota</button>
+        </div>
+
+    </form>
+</div>
+
+
     <h2 class="section-header">Dati delle Vetture</h2>
     <table class="custom-table">
             <tr>
@@ -23,14 +45,14 @@
 
             <th:block th:each="vettura : ${datiVettura}">
                 <tr>
-                    <td th:text="${vettura[0]}"></td>
-                    <td th:text="${vettura[1]}"></td>
-                    <td th:text="${vettura[2]}"></td>
+                    <td th:text="${vettura.Targa}"></td>
+                    <td th:text="${vettura.NumGara}"></td>
+                    <td th:text="${vettura.Modello}"></td>
                 </tr>
             </th:block>
         </table>
-</div>
-<div class="pilota-data">
+
+
     <h2 class="section-header">Dati dei Piloti</h2>
     <table class="custom-table">
     <thead>
@@ -49,42 +71,18 @@
         <tbody>
         <th:block th:each="pilota : ${datiPilota}">
             <tr>
-                <td th:text="${pilota[0]}"></td>
-                <td th:text="${pilota[1]}"></td>
-                <td th:text="${pilota[2]}"></td>
-                <td th:text="${pilota[3]}"></td>
-                <td th:text="${pilota[4]}"></td>
-                <td th:text="${pilota[5]}"></td>
-                <td th:text="${pilota[6]}"></td>
-                <td th:text="${pilota[7]}"></td>
-                <td th:text="${pilota[8]}"></td>
+                <td th:text="${pilota.ID}"></td>
+                <td th:text="${pilota.Nome}"></td>
+                <td th:text="${pilota.Cognome}"></td>
+                <td th:text="${pilota.DataNascita}"></td>
+                <td th:text="${pilota.Nazionalita}"></td>
+                <td th:text="${pilota.TipoPilota}"></td>
+                <td th:text="${pilota.LicenzePossedute}"></td>
+                <td th:text="${pilota.DataLicenza}"></td>
+                <td th:text="${pilota.FinanziatoreGD}"></td>
             </tr>
         </th:block>
     </table>
-</div>
-
-<div class="registration-form">
-<form th:action="@{/CampionatoInPista/3AggiungiPilota}" method="post">
-
-    <div class="form-group">
-    <label for="targa">Seleziona una Vettura in base alla Targa:</label>
-    <select id="targa" name="targa" required>
-        <option value="Scegli">Scegli</option>
-        <option th:each="targa : ${targa}" th:value="${targa}" th:text="${targa}"></option>
-    </select><br><br>
-
-        <label for="IDPilota">Seleziona un Pilota in base al suo ID:</label>
-        <select id="IDPilota" name="IDPilota" required>
-            <option value="Scegli">Scegli</option>
-            <option th:each="pilota : ${IDPilota}" th:value="${pilota}" th:text="${pilota}"></option>
-        </select><br><br>
-
-
-        <button type="submit">Aggiungi Pilota</button>
-    </div>
-
-</form>
-</div>
 
 
 <div id="footer-placeholder"></div>

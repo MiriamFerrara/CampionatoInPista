@@ -1,6 +1,8 @@
 package it.unisa.CampionatoInPista.pageController;
 
 import it.unisa.CampionatoInPista.database.DatabaseConnection;
+import it.unisa.CampionatoInPista.domain.Pilota;
+import it.unisa.CampionatoInPista.domain.Vettura;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +22,8 @@ public class C3_RegistraPilotaController {
 
     @GetMapping("/3AggiungiPilota")
     public String getRegistraPilota(Model model) {
-        List<String[]> datiVettura = new ArrayList<>();
-        List<String[]> datiPilota = new ArrayList<>();
+        List<Vettura> datiVettura = new ArrayList<>();
+        List<Pilota> datiPilota = new ArrayList<>();
         List<String> targhe = new ArrayList<>();
         List<String> piloti = new ArrayList<>();
 
@@ -29,14 +31,16 @@ public class C3_RegistraPilotaController {
             // Carica dati della vettura
             PreparedStatement vetturaStatement = databaseConnection.getConnection().prepareStatement(
                     "SELECT * FROM vettura");
+
             ResultSet resultSetV = vetturaStatement.executeQuery();
             while (resultSetV.next()) {
-                datiVettura.add(new String[]{
-                        resultSetV.getString("Targa"),
-                        String.valueOf(resultSetV.getInt("NumGara")),
-                        resultSetV.getString("Modello")
-                });
+                Vettura vettura = new Vettura();
+                vettura.setTarga(resultSetV.getString("Targa"));
+                vettura.setNumGara(resultSetV.getInt("NumGara"));
+                vettura.setModello(resultSetV.getString("Modello"));
+                datiVettura.add(vettura);
             }
+
             model.addAttribute("datiVettura", datiVettura);
 
             resultSetV.close();
@@ -47,17 +51,17 @@ public class C3_RegistraPilotaController {
                     "SELECT * FROM pilota");
             ResultSet resultSetP = pilotaStatement.executeQuery();
             while (resultSetP.next()) {
-                datiPilota.add(new String[]{
-                        resultSetP.getString("ID"),
-                        resultSetP.getString("Nome"),
-                        resultSetP.getString("Cognome"),
-                        String.valueOf(resultSetP.getDate("DataNascita")),
-                        resultSetP.getString("Nazionalita"),
-                        resultSetP.getString("TipoPilota"),
-                        resultSetP.getString("LicenzePossedute"),
-                        String.valueOf(resultSetP.getDate("DataLicenza")),
-                        resultSetP.getString("FinanziatoreGD")
-                });
+                Pilota pilota = new Pilota();
+                        pilota.setID(resultSetP.getInt("ID"));
+                        pilota.setNome(resultSetP.getString("Nome"));
+                        pilota.setCognome(resultSetP.getString("Cognome"));
+                        pilota.setDataNascita(resultSetP.getDate("DataNascita"));
+                        pilota.setNazionalita(resultSetP.getString("Nazionalita"));
+                        pilota.setTipoPilota(resultSetP.getString("TipoPilota"));
+                        pilota.setLicenzePossedute(resultSetP.getInt("LicenzePossedute"));
+                        pilota.setDataLicenza(resultSetP.getDate("DataLicenza"));
+                        pilota.setFinanziatoreGD(resultSetP.getString("FinanziatoreGD"));
+                datiPilota.add(pilota);
             }
             model.addAttribute("datiPilota", datiPilota);
             resultSetP.close();
@@ -97,21 +101,11 @@ public class C3_RegistraPilotaController {
 
         try{
                 PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
-                        "INSERT INTO guidare (targa_Vettura, id_Pilota, NumComponentiPiloti) VALUES (?, ?, ?);");
+                        "INSERT INTO guidare (targa_Vettura, id_Pilota) VALUES (?, ?);");
                 preparedStatement.setString(1, targa);
                 preparedStatement.setString(2, IDPilota);
-                preparedStatement.setInt(3, 0);
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
-
-                // Aggiornamento del contatore NumComponentiPiloti
-                PreparedStatement updateStatement = databaseConnection.getConnection().prepareStatement(
-                        "UPDATE guidare SET NumComponentiPiloti = NumComponentiPiloti + 1 " +
-                                "WHERE targa_vettura = ? AND id_Pilota = ?");
-                updateStatement.setString(1, targa);
-                updateStatement.setString(2, IDPilota);
-                updateStatement.executeUpdate();
-                updateStatement.close();
 
             } catch (SQLException e) {
                 e.printStackTrace();

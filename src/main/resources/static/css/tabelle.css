@@ -6,7 +6,7 @@
         background-color: #fff; /* Sfondo bianco */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombra per evidenziare */
         margin-bottom: 20px; /* Margine inferiore */
-        width: 60%; /* Larghezza del 80% del contenitore genitore */
+        width: 90%; /* Larghezza del 80% del contenitore genitore */
             margin-right: auto;
             margin-left: auto;
     }

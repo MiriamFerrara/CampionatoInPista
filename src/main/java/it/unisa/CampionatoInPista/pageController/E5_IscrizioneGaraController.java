@@ -65,7 +65,7 @@ public class E5_IscrizioneGaraController {
             if(resultSet.next()){
                 resultSet.close();
                 verificaStatement.close();
-                return "pagina_errore_La_vettura_iscritta gia";
+                return "erroreOP5";
             }else {
 
                 PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
@@ -76,6 +76,11 @@ public class E5_IscrizioneGaraController {
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
 
+                PreparedStatement updateStatement = databaseConnection.getConnection().prepareStatement(
+                        "UPDATE vettura SET NumGara = NumGara+1  WHERE Targa = ?");
+                updateStatement.setString(1, targa);
+                updateStatement.executeUpdate();
+                updateStatement.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();

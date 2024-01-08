@@ -37,14 +37,16 @@
     <th>Sede</th>
     <th>Paese</th>
     <th>Numero Finanziamenti</th>
+    <th>Targa Vettura Partecipa</th>
 </thead>
 <tbody>
 <!-- Ciclo attraverso le scuderie -->
-<tr th:each="scuderia : ${scuderieAnnuali}">
+<tr th:each="scuderia, i : ${scuderieAnnuali}">
     <td th:text="${scuderia.nome}"></td>
     <td th:text="${scuderia.sede}"></td>
     <td th:text="${scuderia.paese}"></td>
     <td th:text="${scuderia.numFinanziamenti}"></td>
+    <td th:text="${partecipa[i.index].targaVettura}"></td>
 
 </tr>
 </tbody>
@@ -56,48 +58,33 @@
     <table class="custom-table">
         <thead>
         <tr>
+            <th>ID Gara Partecipa</th>
             <th>Nome Gara</th>
             <th>Data</th>
             <th>Durata Ore</th>
             <th>Tipo Gara</th>
             <th>ID Circuito</th>
+            <th>Motivo Ritiro Partecipa</th>
+            <th>Punti Partecipa</th>
+
         </tr>
         </thead>
         <tbody>
         <!-- Ciclo attraverso le gare -->
-        <tr th:each="gara : ${gareAnnuali}">
+        <tr th:each="gara, i: ${gareAnnuali}">
+            <td th:text="${partecipa[i.index].idGara}"></td>
             <td th:text="${gara.nome}"></td>
             <td th:text="${gara.dataEvento}"></td>
             <td th:text="${gara.durataOre}"></td>
             <td th:text="${gara.tipoGara}"></td>
             <td th:text="${gara.idCircuito}"></td>
+            <td th:text="${partecipa[i.index].motivoRitiro}"></td>
+            <td th:text="${partecipa[i.index].punti}"></td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<div>
-    <h2 style="text-align: center;">Partecipanti:</h2>
-    <table class="custom-table">
-        <thead>
-        <tr>
-            <th>ID Gara</th>
-            <th>Targa Vettura</th>
-            <th>Motivo Ritiro</th>
-            <th>Punti</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Ciclo attraverso le partecipazioni -->
-        <tr th:each="partecipazione : ${partecipazioni}">
-            <td th:text="${partecipazione.idGara}"></td>
-            <td th:text="${partecipazione.targaVettura}"></td>
-            <td th:text="${partecipazione.motivoRitiro}"></td>
-            <td th:text="${partecipazione.punti}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 <div id="footer-placeholder"></div>
 <script src="/static/js/struttura.js"></script>
 </body>

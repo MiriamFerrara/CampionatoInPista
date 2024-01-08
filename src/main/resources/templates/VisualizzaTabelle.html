@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CampionatoInPista | Visualizza Tabelle</title>
+    <link rel="icon" href="/static/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/tabelle.css">
+</head>
+
+<body>
+<div id="header-placeholder"></div>
+
+<div style="margin: 60px;">
+<h1>DataBase</h1>
+    <h2>1.Registrazione di una scuderia.</h2>
+   <h3>Query Utilizzata:</h3>
+    <ul><li>INSERT INTO scuderia (Nome, Sede, Paese, NumFinanziamenti, TargaVettura) VALUES (?, ?, ?, ?, ?)</li></ul>
+</div>
+<h2 class="section-header">Dati Scuderia</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Sede</th>
+        <th>Paese</th>
+        <th>Numero di Finanziamenti</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="scuderia : ${scuderieInserite}">
+        <td th:text="${scuderia.nome}"></td>
+        <td th:text="${scuderia.sede}"></td>
+        <td th:text="${scuderia.paese}"></td>
+        <td th:text="${scuderia.numFinanziamenti}"></td>
+        <td th:text="${scuderia.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<div style="margin: 60px;">
+    <h2>2. Inserimento dei dati di un’autovettura, compresi i componenti di cui è composta.</h2>
+
+            <h3>Query Utilizzata:</h3>
+            <ul>
+                <li>INSERT INTO vettura (Targa, NumGara, Modello) VALUES (?, ?, ?)</li>
+                <li>INSERT INTO componente (DataInstallazione, Costo, TipoComponente, TipoMateriale, Peso, NumMarce, Cilindrata, TipoMotore, NumCilindri, NomeCostruttore, TargaVettura) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)</li>
+                <li>SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ?</li>
+                <li>UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ?</li>
+                <li>INSERT INTO costruttore (Nome, RagioneSociale, SedeFabbrica, NumComponenti) VALUES (?, ?, ?, ?)</li>
+            </ul>
+</div>
+<h2 class="section-header">Dati Vetture</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Targa</th>
+        <th>Numero Gara</th>
+        <th>Modello</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vettura : ${vetture}">
+        <td th:text="${vettura.targa}"></td>
+        <td th:text="${vettura.numGara}"></td>
+        <td th:text="${vettura.modello}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Componenti</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Codice</th>
+        <th>Data Installazione</th>
+        <th>Costo</th>
+        <th>Tipo Componente</th>
+        <th>Tipo Materiale</th>
+        <th>Peso</th>
+        <th>Numero Marce</th>
+        <th>Cilindrata</th>
+        <th>Tipo Motore</th>
+        <th>Numero Cilindri</th>
+        <th>Nome Costruttore</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="componente : ${componenti}">
+        <td th:text="${componente.Codice}"></td>
+        <td th:text="${componente.dataInstallazione}"></td>
+        <td th:text="${componente.costo}"></td>
+        <td th:text="${componente.tipoComponente}"></td>
+        <td th:text="${componente.tipoMateriale}"></td>
+        <td th:text="${componente.peso}"></td>
+        <td th:text="${componente.numMarce}"></td>
+        <td th:text="${componente.cilindrata}"></td>
+        <td th:text="${componente.tipoMotore}"></td>
+        <td th:text="${componente.numCilindri}"></td>
+        <td th:text="${componente.nomeCostruttore}"></td>
+        <td th:text="${componente.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Costruttori</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Ragione Sociale</th>
+        <th>Sede Fabbrica</th>
+        <th>Numero Componenti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="costruttore : ${costruttori}">
+        <td th:text="${costruttore.nome}"></td>
+        <td th:text="${costruttore.ragioneSociale}"></td>
+        <td th:text="${costruttore.sedeFabbrica}"></td>
+        <td th:text="${costruttore.numComponenti}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<div style="margin: 60px;">
+    <h2>3. Aggiunta di un nuovo pilota ad un equipaggio.</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>INSERT INTO guidare (targa_Vettura, id_Pilota) VALUES (?, ?)</li>
+    </ul>
+</div>
+<table class="custom-table">
+    <h2 class="section-header">Dati Guidare</h2>
+    <thead>
+    <tr>
+        <th>ID Pilota</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="guidare : ${guidare}">
+        <td th:text="${guidare.idPilota}"></td>
+        <td th:text="${guidare.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Vetture</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>Targa</th>
+            <th>Numero Gara</th>
+            <th>Modello</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="vettura : ${vetture}">
+            <td th:text="${vettura.targa}"></td>
+            <td th:text="${vettura.numGara}"></td>
+            <td th:text="${vettura.modello}"></td>
+        </tr>
+        </tbody>
+</table>
+
+    <h2 class="section-header">Dati dei Piloti</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Data di Nascita</th>
+            <th>Nazionalita</th>
+            <th>Tipo Pilota</th>
+            <th>Licenze Possedute</th>
+            <th>Data Licenza</th>
+            <th>Finanziatore GD</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pilota : ${datiPilota}">
+                <td th:text="${pilota.ID}"></td>
+                <td th:text="${pilota.Nome}"></td>
+                <td th:text="${pilota.Cognome}"></td>
+                <td th:text="${pilota.DataNascita}"></td>
+                <td th:text="${pilota.Nazionalita}"></td>
+                <td th:text="${pilota.TipoPilota}"></td>
+                <td th:text="${pilota.LicenzePossedute}"></td>
+                <td th:text="${pilota.DataLicenza}"></td>
+                <td th:text="${pilota.FinanziatoreGD}"></td>
+            </tr>
+    </table>
+
+
+
+
+
+<div style="margin: 60px;">
+    <h2>4. Registrazione di un finanziamento per una scuderia.</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>INSERT INTO Finanziare (QuantitaDenaro, Data, id_Pilota, NomeScuderia) VALUES (?, ?, ?, ?);</li>
+        <li>UPDATE scuderia SET NumFinanziamenti = NumFinanziamenti + 1 WHERE Nome = ?</li>
+    </ul>
+</div>
+
+<h2 class="section-header">Dati Finanziare</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Pilota</th>
+        <th>Nome Scuderia</th>
+        <th>Quantità Denaro</th>
+        <th>Data</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="finanziare : ${datiFinanziare}">
+            <td th:text="${finanziare.idPilota}"></td>
+            <td th:text="${finanziare.nomeScuderia}"></td>
+            <td th:text="${finanziare.quantitaDenaro}"></td>
+            <td th:text="${finanziare.data}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Scuderia</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Sede</th>
+        <th>Paese</th>
+        <th>Numero di Finanziamenti</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="scuderia : ${scuderieInserite}">
+        <td th:text="${scuderia.nome}"></td>
+        <td th:text="${scuderia.sede}"></td>
+        <td th:text="${scuderia.paese}"></td>
+        <td th:text="${scuderia.numFinanziamenti}"></td>
+        <td th:text="${scuderia.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+<h2 class="section-header">Dati dei Piloti</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Data di Nascita</th>
+        <th>Nazionalita</th>
+        <th>Tipo Pilota</th>
+        <th>Licenze Possedute</th>
+        <th>Data Licenza</th>
+        <th>Finanziatore GD</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pilota : ${datiPilota}">
+        <td th:text="${pilota.ID}"></td>
+        <td th:text="${pilota.Nome}"></td>
+        <td th:text="${pilota.Cognome}"></td>
+        <td th:text="${pilota.DataNascita}"></td>
+        <td th:text="${pilota.Nazionalita}"></td>
+        <td th:text="${pilota.TipoPilota}"></td>
+        <td th:text="${pilota.LicenzePossedute}"></td>
+        <td th:text="${pilota.DataLicenza}"></td>
+        <td th:text="${pilota.FinanziatoreGD}"></td>
+    </tr>
+</table>
+
+
+<div style="margin: 60px;">
+    <h2>5. Iscrizione di una vettura ad una gara.</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>SELECT * FROM partecipa p WHERE p.id_Gara = ? AND p.targa_Vettura = ?</li>
+        <li>INSERT INTO partecipa (id_Gara, targa_Vettura) VALUES (?, ?)</li>
+        <li>UPDATE vettura SET NumGara = NumGara+1  WHERE Targa = ?</li>
+    </ul>
+</div>
+<h2 class="section-header">Dati Partecipa</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Targa Vettura</th>
+        <th>Motivo Ritiro</th>
+        <th>Punti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="partecipa : ${datiPartecipa}">
+            <td th:text="${partecipa.idGara}"></td>
+            <td th:text="${partecipa.targaVettura}"></td>
+            <td th:text="${partecipa.motivoRitiro}"></td>
+            <td th:text="${partecipa.punti}"></td>
+        </tr>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Gara</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Nome</th>
+        <th>Data Evento</th>
+        <th>Durata Ore</th>
+        <th>Tipo Gara</th>
+        <th>ID Circuito</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="gara : ${datiGara}">
+        <td th:text="${gara.id}"></td>
+        <td th:text="${gara.nome}"></td>
+        <td th:text="${gara.dataEvento}"></td>
+        <td th:text="${gara.durataOre}"></td>
+        <td th:text="${gara.tipoGara}"></td>
+        <td th:text="${gara.idCircuito}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Vettura</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Targa</th>
+        <th>Numero Gara</th>
+        <th>Modello</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vettura : ${vetture}">
+        <td th:text="${vettura.targa}"></td>
+        <td th:text="${vettura.numGara}"></td>
+        <td th:text="${vettura.modello}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<div style="margin: 60px;">
+    <h2>6.Registrazione del risultato conseguito da ciascuna vettura iscritta ad una gara.</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>UPDATE partecipa SET MotivoRitiro = ?, Punti = ? WHERE id_Gara = ? AND targa_Vettura = ?</li>
+    </ul>
+</div>
+<h2 class="section-header">Dati Partecipa</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>ID Gara</th>
+            <th>Targa Vettura</th>
+            <th>Motivo Ritiro</th>
+            <th>Punti</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="partecipa : ${datiPartecipa}">
+            <td th:text="${partecipa.idGara}"></td>
+            <td th:text="${partecipa.targaVettura}"></td>
+            <td th:text="${partecipa.motivoRitiro}"></td>
+            <td th:text="${partecipa.punti}"></td>
+        </tr>
+        </tbody>
+    </table>
+<h2 class="section-header">Dati Gara</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Nome</th>
+        <th>Data Evento</th>
+        <th>Durata Ore</th>
+        <th>Tipo Gara</th>
+        <th>ID Circuito</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="gara : ${datiGara}">
+        <td th:text="${gara.id}"></td>
+        <td th:text="${gara.nome}"></td>
+        <td th:text="${gara.dataEvento}"></td>
+        <td th:text="${gara.durataOre}"></td>
+        <td th:text="${gara.tipoGara}"></td>
+        <td th:text="${gara.idCircuito}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Vettura</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Targa</th>
+        <th>Numero Gara</th>
+        <th>Modello</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vettura : ${vetture}">
+        <td th:text="${vettura.targa}"></td>
+        <td th:text="${vettura.numGara}"></td>
+        <td th:text="${vettura.modello}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<div style="margin: 60px;">
+    <h2>7.Verifica della possibilità di montare un componente su una vettura.</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>SELECT * FROM componente  WHERE TargaVettura = ?</li>
+        <li>SELECT DISTINCT TipoComponente FROM componente WHERE TipoComponente NOT IN (SELECT TipoComponente FROM componente WHERE TargaVettura = ?)</li>
+        <li>INSERT INTO componente (DataInstallazione, Costo, TipoComponente, TipoMateriale, Peso,NumMarce, Cilindrata, TipoMotore, NumCilindri, NomeCostruttore, TargaVettura) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) </li>
+        <li>SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ? </li>
+        <li>UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ? </li>
+        <li>INSERT INTO costruttore (Nome, RagioneSociale, SedeFabbrica, NumComponenti) VALUES (?, ?, ?, ?)</li>
+    </ul>
+</div>
+<h2 class="section-header">Dati Componenti</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>Codice</th>
+            <th>Data Installazione</th>
+            <th>Costo</th>
+            <th>Tipo Componente</th>
+            <th>Tipo Materiale</th>
+            <th>Peso</th>
+            <th>Numero Marce</th>
+            <th>Cilindrata</th>
+            <th>Tipo Motore</th>
+            <th>Numero Cilindri</th>
+            <th>Nome Costruttore</th>
+            <th>Targa Vettura</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="componente : ${componenti}">
+            <td th:text="${componente.Codice}"></td>
+            <td th:text="${componente.dataInstallazione}"></td>
+            <td th:text="${componente.costo}"></td>
+            <td th:text="${componente.tipoComponente}"></td>
+            <td th:text="${componente.tipoMateriale}"></td>
+            <td th:text="${componente.peso}"></td>
+            <td th:text="${componente.numMarce}"></td>
+            <td th:text="${componente.cilindrata}"></td>
+            <td th:text="${componente.tipoMotore}"></td>
+            <td th:text="${componente.numCilindri}"></td>
+            <td th:text="${componente.nomeCostruttore}"></td>
+            <td th:text="${componente.targaVettura}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-header">Dati Costruttori</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Ragione Sociale</th>
+            <th>Sede Fabbrica</th>
+            <th>Numero Componenti</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="costruttore : ${costruttori}">
+            <td th:text="${costruttore.nome}"></td>
+            <td th:text="${costruttore.ragioneSociale}"></td>
+            <td th:text="${costruttore.sedeFabbrica}"></td>
+            <td th:text="${costruttore.numComponenti}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+<div style="margin: 60px;">
+    <h2>8.Per ciascuna scuderia, stampare la somma totale dei finanziamenti ricevuti.</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>SELECT s.Nome, SUM(f.QuantitaDenaro) AS TotaleFinanziamenti FROM scuderia s LEFT JOIN finanziare f ON s.Nome = f.NomeScuderia GROUP BY s.Nome</li>
+    </ul>
+</div>
+    <h2 class="section-header">Dati Finanziare</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>ID Pilota</th>
+            <th>Nome Scuderia</th>
+            <th>Quantità Denaro</th>
+            <th>Data</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="finanziare : ${datiFinanziare}">
+            <td th:text="${finanziare.idPilota}"></td>
+            <td th:text="${finanziare.nomeScuderia}"></td>
+            <td th:text="${finanziare.quantitaDenaro}"></td>
+            <td th:text="${finanziare.data}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-header">Dati Scuderia</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Sede</th>
+            <th>Paese</th>
+            <th>Numero di Finanziamenti</th>
+            <th>Targa Vettura</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="scuderia : ${scuderieInserite}">
+            <td th:text="${scuderia.nome}"></td>
+            <td th:text="${scuderia.sede}"></td>
+            <td th:text="${scuderia.paese}"></td>
+            <td th:text="${scuderia.numFinanziamenti}"></td>
+            <td th:text="${scuderia.targaVettura}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2 class="section-header">Dati dei Piloti</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Data di Nascita</th>
+            <th>Nazionalita</th>
+            <th>Tipo Pilota</th>
+            <th>Licenze Possedute</th>
+            <th>Data Licenza</th>
+            <th>Finanziatore GD</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pilota : ${datiPilota}">
+            <td th:text="${pilota.ID}"></td>
+            <td th:text="${pilota.Nome}"></td>
+            <td th:text="${pilota.Cognome}"></td>
+            <td th:text="${pilota.DataNascita}"></td>
+            <td th:text="${pilota.Nazionalita}"></td>
+            <td th:text="${pilota.TipoPilota}"></td>
+            <td th:text="${pilota.LicenzePossedute}"></td>
+            <td th:text="${pilota.DataLicenza}"></td>
+            <td th:text="${pilota.FinanziatoreGD}"></td>
+        </tr>
+    </table>
+
+
+
+
+<div style="margin: 60px;">
+    <h2>9.Stampa annuale delle scuderie che hanno partecipato al campionato compreso il numero di finanziamenti.</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>SELECT DISTINCT YEAR(DataEvento) FROM gara</li>
+        <li>SELECT DISTINCT p.*, s.Nome, s.Sede, s.Paese, s.NumFinanziamenti, g.NomeG, g.DataEvento, g.DurataOre, g.TipoGara, g.id_Circuito
+            FROM scuderia s JOIN vettura v ON s.TargaVettura = v.Targa JOIN partecipa p ON v.Targa = p.targa_Vettura JOIN gara g ON p.id_Gara = g.ID_Gara
+            WHERE YEAR(g.DataEvento) = ?</li> </ul>
+</div>
+
+<h2 class="section-header">Dati Partecipa</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Targa Vettura</th>
+        <th>Motivo Ritiro</th>
+        <th>Punti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="partecipa : ${datiPartecipa}">
+        <td th:text="${partecipa.idGara}"></td>
+        <td th:text="${partecipa.targaVettura}"></td>
+        <td th:text="${partecipa.motivoRitiro}"></td>
+        <td th:text="${partecipa.punti}"></td>
+    </tr>
+    </tbody>
+</table>
+<h2 class="section-header">Dati Gara</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Nome</th>
+        <th>Data Evento</th>
+        <th>Durata Ore</th>
+        <th>Tipo Gara</th>
+        <th>ID Circuito</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="gara : ${datiGara}">
+        <td th:text="${gara.id}"></td>
+        <td th:text="${gara.nome}"></td>
+        <td th:text="${gara.dataEvento}"></td>
+        <td th:text="${gara.durataOre}"></td>
+        <td th:text="${gara.tipoGara}"></td>
+        <td th:text="${gara.idCircuito}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Vettura</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Targa</th>
+        <th>Numero Gara</th>
+        <th>Modello</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vettura : ${vetture}">
+        <td th:text="${vettura.targa}"></td>
+        <td th:text="${vettura.numGara}"></td>
+        <td th:text="${vettura.modello}"></td>
+    </tr>
+    </tbody>
+</table>
+<h2 class="section-header">Dati Scuderia</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Sede</th>
+        <th>Paese</th>
+        <th>Numero di Finanziamenti</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="scuderia : ${scuderieInserite}">
+        <td th:text="${scuderia.nome}"></td>
+        <td th:text="${scuderia.sede}"></td>
+        <td th:text="${scuderia.paese}"></td>
+        <td th:text="${scuderia.numFinanziamenti}"></td>
+        <td th:text="${scuderia.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<div style="margin: 60px;">
+    <h2>10.Visualizzare i piloti che hanno vinto nel «circuito di casa».</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>SELECT p.ID, p.Nome, p.Cognome, p.Nazionalita,
+            c.ID_Circuito, c.PaeseResidenza, c.NomeC, pa.targa_vettura, SUM(pa.Punti) AS PuntiTotali
+            FROM pilota p INNER JOIN guidare g ON p.ID = g.id_Pilota
+            INNER JOIN partecipa pa ON g.targa_vettura = pa.targa_vettura
+            INNER JOIN gara ga ON pa.id_Gara = ga.ID_Gara
+            INNER JOIN circuito c ON ga.id_Circuito = c.ID_Circuito
+            WHERE p.Nazionalita = c.PaeseResidenza
+            GROUP BY p.ID, p.Nome, p.Cognome, p.Nazionalita, c.ID_Circuito, c.PaeseResidenza, c.NomeC, pa.targa_vettura
+            HAVING SUM(pa.Punti) != 0 AND SUM(pa.Punti) IS NOT NULL</li>
+    </ul>
+</div>
+
+<h2 class="section-header">Dati Partecipa</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Targa Vettura</th>
+        <th>Motivo Ritiro</th>
+        <th>Punti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="partecipa : ${datiPartecipa}">
+        <td th:text="${partecipa.idGara}"></td>
+        <td th:text="${partecipa.targaVettura}"></td>
+        <td th:text="${partecipa.motivoRitiro}"></td>
+        <td th:text="${partecipa.punti}"></td>
+    </tr>
+    </tbody>
+</table>
+<h2 class="section-header">Dati Gara</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Nome</th>
+        <th>Data Evento</th>
+        <th>Durata Ore</th>
+        <th>Tipo Gara</th>
+        <th>ID Circuito</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="gara : ${datiGara}">
+        <td th:text="${gara.id}"></td>
+        <td th:text="${gara.nome}"></td>
+        <td th:text="${gara.dataEvento}"></td>
+        <td th:text="${gara.durataOre}"></td>
+        <td th:text="${gara.tipoGara}"></td>
+        <td th:text="${gara.idCircuito}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="custom-table">
+    <h2 class="section-header">Dati Guidare</h2>
+    <thead>
+    <tr>
+        <th>ID Pilota</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="guidare : ${guidare}">
+        <td th:text="${guidare.idPilota}"></td>
+        <td th:text="${guidare.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+
+    <h2 class="section-header">Dati Circuito</h2>
+    <table class="custom-table">
+        <thead>
+        <tr>
+            <th>ID Circuito</th>
+            <th>Nome</th>
+            <th>Paese Residenza</th>
+            <th>Lunghezza</th>
+            <th>Numero Curve</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="circuito : ${datiCircuito}">
+            <td th:text="${circuito.ID_Circuito}"></td>
+            <td th:text="${circuito.nome}"></td>
+            <td th:text="${circuito.paeseResidenza}"></td>
+            <td th:text="${circuito.lunghezza}"></td>
+            <td th:text="${circuito.numero_Curve}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+<h2 class="section-header">Dati Pilota</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Data di Nascita</th>
+        <th>Nazionalita</th>
+        <th>Tipo Pilota</th>
+        <th>Licenze Possedute</th>
+        <th>Data Licenza</th>
+        <th>Finanziatore GD</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pilota : ${datiPilota}">
+        <td th:text="${pilota.ID}"></td>
+        <td th:text="${pilota.Nome}"></td>
+        <td th:text="${pilota.Cognome}"></td>
+        <td th:text="${pilota.DataNascita}"></td>
+        <td th:text="${pilota.Nazionalita}"></td>
+        <td th:text="${pilota.TipoPilota}"></td>
+        <td th:text="${pilota.LicenzePossedute}"></td>
+        <td th:text="${pilota.DataLicenza}"></td>
+        <td th:text="${pilota.FinanziatoreGD}"></td>
+    </tr>
+</table>
+
+
+
+
+<div style="margin: 60px;">
+    <h2>11.Per ciascuna scuderia, visualizzare la percentuale di gentleman driver di cui si compone l’equipaggio</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>SELECT COUNT(*) AS NumeroTotalePiloti,
+            SUM(CASE WHEN FinanziatoreGD = 'SI' THEN 1 ELSE 0 END) AS NumeroFinanziatoriSI
+            FROM pilota</li>
+        <li>SELECT s.Nome AS Nome_Scuderia, s.NumFinanziamenti, p.Nome AS Nome_Pilota, p.TipoPilota, p.FinanziatoreGD
+            FROM scuderia s
+            LEFT JOIN finanziare f ON s.Nome = f.NomeScuderia
+            LEFT JOIN pilota p ON f.id_Pilota = p.ID
+            WHERE p.FinanziatoreGD = 'SI'</li>
+    </ul>
+</div>
+
+<h2 class="section-header">Dati Pilota</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Data di Nascita</th>
+        <th>Nazionalita</th>
+        <th>Tipo Pilota</th>
+        <th>Licenze Possedute</th>
+        <th>Data Licenza</th>
+        <th>Finanziatore GD</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pilota : ${datiPilota}">
+        <td th:text="${pilota.ID}"></td>
+        <td th:text="${pilota.Nome}"></td>
+        <td th:text="${pilota.Cognome}"></td>
+        <td th:text="${pilota.DataNascita}"></td>
+        <td th:text="${pilota.Nazionalita}"></td>
+        <td th:text="${pilota.TipoPilota}"></td>
+        <td th:text="${pilota.LicenzePossedute}"></td>
+        <td th:text="${pilota.DataLicenza}"></td>
+        <td th:text="${pilota.FinanziatoreGD}"></td>
+    </tr>
+</table>
+<h2 class="section-header">Dati Scuderia</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Sede</th>
+        <th>Paese</th>
+        <th>Numero di Finanziamenti</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="scuderia : ${scuderieInserite}">
+        <td th:text="${scuderia.nome}"></td>
+        <td th:text="${scuderia.sede}"></td>
+        <td th:text="${scuderia.paese}"></td>
+        <td th:text="${scuderia.numFinanziamenti}"></td>
+        <td th:text="${scuderia.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+<h2 class="section-header">Dati Finanziare</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Pilota</th>
+        <th>Nome Scuderia</th>
+        <th>Quantità Denaro</th>
+        <th>Data</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="finanziare : ${datiFinanziare}">
+        <td th:text="${finanziare.idPilota}"></td>
+        <td th:text="${finanziare.nomeScuderia}"></td>
+        <td th:text="${finanziare.quantitaDenaro}"></td>
+        <td th:text="${finanziare.data}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Circuito</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Circuito</th>
+        <th>Nome</th>
+        <th>Paese Residenza</th>
+        <th>Lunghezza</th>
+        <th>Numero Curve</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="circuito : ${datiCircuito}">
+        <td th:text="${circuito.ID_Circuito}"></td>
+        <td th:text="${circuito.nome}"></td>
+        <td th:text="${circuito.paeseResidenza}"></td>
+        <td th:text="${circuito.lunghezza}"></td>
+        <td th:text="${circuito.numero_Curve}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<div style="margin: 60px;">
+    <h2>11.Per ciascuna scuderia, visualizzare la percentuale di gentleman driver di cui si compone l’equipaggio</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>SELECT DISTINCT MONTH(DataInstallazione) FROM componente</li>
+        <li>SELECT c.*, (cm.DataInstallazione) AS DataMensileInstallazione
+            FROM costruttore c
+            LEFT JOIN componente cm ON c.Nome = cm.NomeCostruttore
+            WHERE MONTH(cm.DataInstallazione) = ?
+            GROUP BY c.Nome, DataMensileInstallazione; </li>
+    </ul>
+</div>
+
+
+
+
+
+    <div id="footer-placeholder"></div>
+
+<script src="/static/js/struttura.js"></script>
+</body>
+</html>

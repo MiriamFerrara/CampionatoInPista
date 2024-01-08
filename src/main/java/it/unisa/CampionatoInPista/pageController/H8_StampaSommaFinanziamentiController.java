@@ -27,9 +27,9 @@ public class H8_StampaSommaFinanziamentiController {
             List<Double> datiFinanziamento = new ArrayList<>();
             try {
                 PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
-                        "SELECT s.Nome, SUM(f.QuantitaDenaro) AS TotaleFinanziamenti\n" +
-                                "FROM scuderia s\n" +
-                                "LEFT JOIN finanziare f ON s.Nome = f.NomeScuderia\n" +
+                        "SELECT s.Nome, SUM(f.QuantitaDenaro) AS TotaleFinanziamenti " +
+                                "FROM scuderia s " +
+                                "LEFT JOIN finanziare f ON s.Nome = f.NomeScuderia " +
                                 "GROUP BY s.Nome;");
 
                 ResultSet risultati = preparedStatement.executeQuery();

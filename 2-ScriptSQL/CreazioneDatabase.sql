@@ -103,11 +103,10 @@ CREATE TABLE partecipa (
 );
 
 
-#Creazione della Tabella Guidare(Targa_vettura, id_Pilota, NumComponentiPiloti)
+#Creazione della Tabella Guidare(Targa_vettura, id_Pilota)
 CREATE TABLE guidare (
 	targa_vettura VARCHAR(10),
     id_Pilota INT,
-    NumComponentiPiloti INT, 
     FOREIGN KEY (targa_Vettura) REFERENCES vettura(Targa) ON UPDATE CASCADE ON DELETE SET NULL,
     FOREIGN KEY (id_Pilota) REFERENCES pilota(ID) ON UPDATE CASCADE ON DELETE SET NULL
 );
@@ -122,3 +121,5 @@ CREATE TABLE Finanziare (
     FOREIGN KEY (id_Pilota) REFERENCES pilota(ID) ON UPDATE CASCADE ON DELETE SET NULL,
     FOREIGN KEY (NomeScuderia) REFERENCES scuderia(Nome) ON UPDATE CASCADE ON DELETE SET NULL
 );
+
+

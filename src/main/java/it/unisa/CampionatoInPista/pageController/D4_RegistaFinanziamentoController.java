@@ -67,6 +67,18 @@ public class D4_RegistaFinanziamentoController {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
+            PreparedStatement updateStatement = databaseConnection.getConnection().prepareStatement(
+                    "UPDATE scuderia SET NumFinanziamenti = NumFinanziamenti + 1 WHERE Nome = ?");
+            updateStatement.setString(1, nome);
+            updateStatement.executeUpdate();
+            updateStatement.close();
+
+            PreparedStatement updateFinanziatoreStatement = databaseConnection.getConnection().prepareStatement(
+                    "UPDATE pilota SET FinanziatoreGD = 'SI' WHERE ID = ?");
+            updateFinanziatoreStatement.setString(1, IDPilota);
+            updateFinanziatoreStatement.executeUpdate();
+            updateFinanziatoreStatement.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
             return "errore";

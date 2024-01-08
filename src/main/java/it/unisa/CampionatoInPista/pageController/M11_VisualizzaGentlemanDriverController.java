@@ -40,6 +40,7 @@ public class M11_VisualizzaGentlemanDriverController {
                 numeroPiloti = resultSet1.getInt("NumeroTotalePiloti");
                 numeroFinanziatoriSI = resultSet1.getInt("NumeroFinanziatoriSI");
             }
+            System.out.println("tot:  " +numeroPiloti + " piu " + numeroFinanziatoriSI);
             resultSet1.close();
             contaStatement.close();
 
@@ -52,7 +53,7 @@ public class M11_VisualizzaGentlemanDriverController {
                             "WHERE p.FinanziatoreGD = 'SI';");
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
+            double percentualeGentlemanDriver = ((double) numeroFinanziatoriSI / numeroPiloti) * 100;
             while (resultSet.next()) {
                 Scuderia scuderia = new Scuderia();
                 scuderia.setNome(resultSet.getString("Nome_Scuderia"));
@@ -62,12 +63,12 @@ public class M11_VisualizzaGentlemanDriverController {
                 Pilota pilota = new Pilota();
                 pilota.setNome(resultSet.getString("Nome_Pilota"));
                 pilota.setTipoPilota(resultSet.getString("TipoPilota"));
-                pilota.setFinanziatoreGD("SI".equals(resultSet.getString("FinanziatoreGD")));
+                pilota.setFinanziatoreGD(resultSet.getString("FinanziatoreGD"));
                 datiPilota.add(pilota);
 
-                double percentualeGentlemanDriver = (double) numeroFinanziatoriSI / numeroPiloti * 100;
-
+                System.out.println("totole: " + percentualeGentlemanDriver);
                 percentuale.add(percentualeGentlemanDriver);
+
             }
 
             model.addAttribute("pilota", datiPilota);

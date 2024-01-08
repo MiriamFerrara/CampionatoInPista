@@ -54,7 +54,7 @@ public class G7_VerificaComponenteController {
 
         try {
             PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
-                    "SELECT * FROM componente c " +
+                    "SELECT * FROM componente " +
                             "WHERE TargaVettura = ? ;");
 
             preparedStatement.setString(1, targa);
@@ -171,7 +171,7 @@ public class G7_VerificaComponenteController {
                     break;
             }
             componenteStatement.setString(10, nome);
-            System.out.println("Targhe "+ targa);
+            //System.out.println("Targhe "+ targa);
             componenteStatement.setString(11, targa);
 
             componenteStatement.executeUpdate();
@@ -180,16 +180,20 @@ public class G7_VerificaComponenteController {
             if (costruttoreType.equals("existing")) {
                 // Recupera i dettagli del costruttore esistente usando il nome
                 PreparedStatement recuperaCostruttoreStatement = databaseConnection.getConnection().prepareStatement(
-                        "SELECT * FROM costruttore WHERE Nome = ?");
+                        "SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ?");
                 recuperaCostruttoreStatement.setString(1, nome);
                 ResultSet costruttoreResultSet = recuperaCostruttoreStatement.executeQuery();
 
+                PreparedStatement updateNumComponentiStatement = databaseConnection.getConnection().prepareStatement(
+                        "UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ?");
+                updateNumComponentiStatement.setString(1, nome);
+                updateNumComponentiStatement.executeUpdate();
+                updateNumComponentiStatement.close();
 
                 if (costruttoreResultSet.next()) {
                     costruttore.setNome(costruttoreResultSet.getString("Nome"));
                     costruttore.setRagioneSociale(costruttoreResultSet.getString("RagioneSociale"));
                     costruttore.setSedeFabbrica(costruttoreResultSet.getString("SedeFabbrica"));
-                    costruttore.setNumComponenti(costruttoreResultSet.getInt("NumComponenti"));
                     costruttoreResultSet.close();
                     recuperaCostruttoreStatement.close();
                 }
