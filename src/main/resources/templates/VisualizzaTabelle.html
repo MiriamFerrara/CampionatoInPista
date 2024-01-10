@@ -912,7 +912,7 @@
 
 
 <div style="margin: 60px;">
-    <h2>11.Per ciascuna scuderia, visualizzare la percentuale di gentleman driver di cui si compone l’equipaggio</h2>
+    <h2>12.Stampa mensile dei costruttori compreso il numero di componenti che ha fornito</h2>
     <h3>Query Utilizzata:</h3>
     <ul>
         <li>SELECT DISTINCT MONTH(DataInstallazione) FROM componente</li>
@@ -920,11 +920,315 @@
             FROM costruttore c
             LEFT JOIN componente cm ON c.Nome = cm.NomeCostruttore
             WHERE MONTH(cm.DataInstallazione) = ?
-            GROUP BY c.Nome, DataMensileInstallazione; </li>
+            GROUP BY c.Nome, DataMensileInstallazione</li>
+    </ul>
+</div>
+<h2 class="section-header">Dati Componenti</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Codice</th>
+        <th>Data Installazione</th>
+        <th>Costo</th>
+        <th>Tipo Componente</th>
+        <th>Tipo Materiale</th>
+        <th>Peso</th>
+        <th>Numero Marce</th>
+        <th>Cilindrata</th>
+        <th>Tipo Motore</th>
+        <th>Numero Cilindri</th>
+        <th>Nome Costruttore</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="componente : ${componenti}">
+        <td th:text="${componente.Codice}"></td>
+        <td th:text="${componente.dataInstallazione}"></td>
+        <td th:text="${componente.costo}"></td>
+        <td th:text="${componente.tipoComponente}"></td>
+        <td th:text="${componente.tipoMateriale}"></td>
+        <td th:text="${componente.peso}"></td>
+        <td th:text="${componente.numMarce}"></td>
+        <td th:text="${componente.cilindrata}"></td>
+        <td th:text="${componente.tipoMotore}"></td>
+        <td th:text="${componente.numCilindri}"></td>
+        <td th:text="${componente.nomeCostruttore}"></td>
+        <td th:text="${componente.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Costruttori</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Ragione Sociale</th>
+        <th>Sede Fabbrica</th>
+        <th>Numero Componenti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="costruttore : ${costruttori}">
+        <td th:text="${costruttore.nome}"></td>
+        <td th:text="${costruttore.ragioneSociale}"></td>
+        <td th:text="${costruttore.sedeFabbrica}"></td>
+        <td th:text="${costruttore.numComponenti}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<div style="margin: 60px;">
+    <h2>13.Stampa della classifica finale dei punti conseguiti da tutte le vetture</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>SELECT DISTINCT v.Targa, SUM(p.Punti) AS PuntiTotali
+            FROM vettura v
+            LEFT JOIN partecipa p ON v.Targa = p.targa_Vettura
+            GROUP BY v.Targa
+            ORDER BY PuntiTotali DESC;</li>
+    </ul>
+</div>
+
+<h2 class="section-header">Dati Partecipa</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Targa Vettura</th>
+        <th>Motivo Ritiro</th>
+        <th>Punti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="partecipa : ${datiPartecipa}">
+        <td th:text="${partecipa.idGara}"></td>
+        <td th:text="${partecipa.targaVettura}"></td>
+        <td th:text="${partecipa.motivoRitiro}"></td>
+        <td th:text="${partecipa.punti}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Vettura</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Targa</th>
+        <th>Numero Gara</th>
+        <th>Modello</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vettura : ${vetture}">
+        <td th:text="${vettura.targa}"></td>
+        <td th:text="${vettura.numGara}"></td>
+        <td th:text="${vettura.modello}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<div style="margin: 60px;">
+    <h2>14.Stampa delle classifiche finali di punti per tipo di motore;</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>SELECT c.TipoMotore, c.TargaVettura, SUM(p.Punti) AS PuntiTotali
+            FROM partecipa p
+            JOIN vettura v ON p.targa_Vettura = v.Targa
+            JOIN componente c ON p.targa_Vettura = c.TargaVettura
+            WHERE c.TipoComponente = 'Motore' AND c.TipoMotore = 'Aspirato'
+            GROUP BY c.TipoMotore, c.TargaVettura
+            ORDER BY PuntiTotali DESC</li>
+        <li>SELECT c.TipoMotore, c.TargaVettura, SUM(p.Punti) AS PuntiTotali
+            FROM partecipa p
+            JOIN vettura v ON p.targa_Vettura = v.Targa
+            JOIN componente c ON p.targa_Vettura = c.TargaVettura
+            WHERE c.TipoComponente = 'Motore' AND c.TipoMotore = 'Turbo'
+            ORDER BY PuntiTotali DESC</li>
+    </ul>
+</div>
+
+<h2 class="section-header">Dati Partecipa</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Targa Vettura</th>
+        <th>Motivo Ritiro</th>
+        <th>Punti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="partecipa : ${datiPartecipa}">
+        <td th:text="${partecipa.idGara}"></td>
+        <td th:text="${partecipa.targaVettura}"></td>
+        <td th:text="${partecipa.motivoRitiro}"></td>
+        <td th:text="${partecipa.punti}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Vettura</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Targa</th>
+        <th>Numero Gara</th>
+        <th>Modello</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vettura : ${vetture}">
+        <td th:text="${vettura.targa}"></td>
+        <td th:text="${vettura.numGara}"></td>
+        <td th:text="${vettura.modello}"></td>
+    </tr>
+    </tbody>
+</table>
+<h2 class="section-header">Dati Componenti</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Codice</th>
+        <th>Data Installazione</th>
+        <th>Costo</th>
+        <th>Tipo Componente</th>
+        <th>Tipo Materiale</th>
+        <th>Peso</th>
+        <th>Numero Marce</th>
+        <th>Cilindrata</th>
+        <th>Tipo Motore</th>
+        <th>Numero Cilindri</th>
+        <th>Nome Costruttore</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="componente : ${componenti}">
+        <td th:text="${componente.Codice}"></td>
+        <td th:text="${componente.dataInstallazione}"></td>
+        <td th:text="${componente.costo}"></td>
+        <td th:text="${componente.tipoComponente}"></td>
+        <td th:text="${componente.tipoMateriale}"></td>
+        <td th:text="${componente.peso}"></td>
+        <td th:text="${componente.numMarce}"></td>
+        <td th:text="${componente.cilindrata}"></td>
+        <td th:text="${componente.tipoMotore}"></td>
+        <td th:text="${componente.numCilindri}"></td>
+        <td th:text="${componente.nomeCostruttore}"></td>
+        <td th:text="${componente.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+
+<div style="margin: 60px;">
+    <h2>15.Stampare un report che elenchi ciascuna scuderia sulla base del rapporto punti/minuti di gara, mediando tra le macchine appartenenti a ciascuna scuderia</h2>
+    <h3>Query Utilizzata:</h3>
+    <ul>
+        <li>SELECT s.Nome AS Nome_Scuderia,
+            SUM(p.Punti) AS Punti_Totali,
+            SUM(TIME_TO_SEC(g.DurataOre))/60 AS Durata_Gare_Minuti,
+            SUM(p.Punti) / (SUM(TIME_TO_SEC(g.DurataOre))/60) AS Rapporto_Punti_Minuto
+            FROM scuderia s
+            INNER JOIN vettura v ON s.TargaVettura = v.Targa
+            LEFT JOIN partecipa pa ON v.Targa = pa.targa_Vettura
+            LEFT JOIN gara g ON pa.id_Gara = g.ID_Gara
+            LEFT JOIN partecipa p ON p.id_Gara = g.ID_Gara AND p.targa_Vettura = v.Targa
+            GROUP BY s.Nome
+            ORDER BY Rapporto_Punti_Minuto DESC</li>
     </ul>
 </div>
 
 
+<h2 class="section-header">Dati Partecipa</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Targa Vettura</th>
+        <th>Motivo Ritiro</th>
+        <th>Punti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="partecipa : ${datiPartecipa}">
+        <td th:text="${partecipa.idGara}"></td>
+        <td th:text="${partecipa.targaVettura}"></td>
+        <td th:text="${partecipa.motivoRitiro}"></td>
+        <td th:text="${partecipa.punti}"></td>
+    </tr>
+    </tbody>
+</table>
+<h2 class="section-header">Dati Gara</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>ID Gara</th>
+        <th>Nome</th>
+        <th>Data Evento</th>
+        <th>Durata Ore</th>
+        <th>Tipo Gara</th>
+        <th>ID Circuito</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="gara : ${datiGara}">
+        <td th:text="${gara.id}"></td>
+        <td th:text="${gara.nome}"></td>
+        <td th:text="${gara.dataEvento}"></td>
+        <td th:text="${gara.durataOre}"></td>
+        <td th:text="${gara.tipoGara}"></td>
+        <td th:text="${gara.idCircuito}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 class="section-header">Dati Vettura</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Targa</th>
+        <th>Numero Gara</th>
+        <th>Modello</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vettura : ${vetture}">
+        <td th:text="${vettura.targa}"></td>
+        <td th:text="${vettura.numGara}"></td>
+        <td th:text="${vettura.modello}"></td>
+    </tr>
+    </tbody>
+</table>
+<h2 class="section-header">Dati Scuderia</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Sede</th>
+        <th>Paese</th>
+        <th>Numero di Finanziamenti</th>
+        <th>Targa Vettura</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="scuderia : ${scuderieInserite}">
+        <td th:text="${scuderia.nome}"></td>
+        <td th:text="${scuderia.sede}"></td>
+        <td th:text="${scuderia.paese}"></td>
+        <td th:text="${scuderia.numFinanziamenti}"></td>
+        <td th:text="${scuderia.targaVettura}"></td>
+    </tr>
+    </tbody>
+</table>
 
 
 

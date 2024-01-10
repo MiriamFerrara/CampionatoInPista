@@ -17,22 +17,17 @@
 <table class="custom-table">
         <thead>
         <tr>
-            <th>Nome Scuderia</th>
-            <th>Numero Finanziamenti</th>
-            <th>Nome Pilota</th>
-            <th>Tipo Pilota</th>
-            <th>Finanziatore Gentleman Driver</th>
-            <th>Percentuale Gentleman Driver</th>
-
+            <th>Scuderia</th>
+            <th>Totale Piloti</th>
+            <th>Gentleman Driver</th>
+            <th>Gentleman Driver Percentuale</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="scuderia, i : ${scuderia}">
             <td th:text="${scuderia.nome}"></td>
-            <td th:text="${scuderia.numFinanziamenti}"></td>
-            <td th:text="${pilota[i.index].nome}"></td>
-            <td th:text="${pilota[i.index].tipoPilota}"></td>
-            <td th:text="${pilota[i.index].finanziatoreGD}"></td>
+            <td th:text="${totalePiloti[i.index]}"></td>
+            <td th:text="${numFinanziatoriSI[i.index]}"></td>
             <td th:text="${percentuale[i.index]}"></td>
         </tr>
         </tbody>

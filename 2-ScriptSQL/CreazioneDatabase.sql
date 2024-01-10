@@ -122,4 +122,3 @@ CREATE TABLE Finanziare (
     FOREIGN KEY (NomeScuderia) REFERENCES scuderia(Nome) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
-

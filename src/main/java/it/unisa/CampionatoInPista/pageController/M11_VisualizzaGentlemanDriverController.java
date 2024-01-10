@@ -23,66 +23,50 @@ public class M11_VisualizzaGentlemanDriverController {
 
     @GetMapping("/11VisualizzaGentlemanDriver")
     public String getVisualizzaGentlemanDriver(Model model) {
-        List<Pilota> datiPilota = new ArrayList<>();
         List<Scuderia> datiScuderia = new ArrayList<>();
+        List<Integer> numPiloti = new ArrayList<>();
+        List<Integer> numGD = new ArrayList<>();
         List<Double> percentuale = new ArrayList<>();
 
         try {
-            PreparedStatement contaStatement = databaseConnection.getConnection().prepareStatement(
-                    "SELECT COUNT(*) AS NumeroTotalePiloti, " +
-                            "SUM(CASE WHEN FinanziatoreGD = 'SI' THEN 1 ELSE 0 END) AS NumeroFinanziatoriSI " +
-                            "FROM pilota;");
 
-            ResultSet resultSet1 = contaStatement.executeQuery();
-            int numeroPiloti = 0;
-            int numeroFinanziatoriSI = 0;
-            if (resultSet1.next()) {
-                numeroPiloti = resultSet1.getInt("NumeroTotalePiloti");
-                numeroFinanziatoriSI = resultSet1.getInt("NumeroFinanziatoriSI");
-            }
-            System.out.println("tot:  " +numeroPiloti + " piu " + numeroFinanziatoriSI);
-            resultSet1.close();
-            contaStatement.close();
+        PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
+                "SELECT s.Nome AS NomeScuderia, COUNT(DISTINCT g.id_Pilota) AS NumeroTotalePiloti, " +
+                        "SUM(CASE WHEN p.FinanziatoreGD = 'SI' THEN 1 ELSE 0 END) AS NumeroFinanziatoriSI " +
+                        "FROM scuderia s " +
+                        "LEFT JOIN guidare g ON s.TargaVettura = g.targa_vettura " +
+                        "LEFT JOIN pilota p ON g.id_Pilota = p.ID " +
+                        "GROUP BY s.Nome;");
 
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-            PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
-                    "SELECT s.Nome AS Nome_Scuderia, s.NumFinanziamenti, p.Nome AS Nome_Pilota, p.TipoPilota, p.FinanziatoreGD " +
-                            "FROM scuderia s " +
-                            "LEFT JOIN finanziare f ON s.Nome = f.NomeScuderia " +
-                            "LEFT JOIN pilota p ON f.id_Pilota = p.ID " +
-                            "WHERE p.FinanziatoreGD = 'SI';");
+        while (resultSet.next()) {
+            Scuderia scuderia = new Scuderia();
+            scuderia.setNome(resultSet.getString("NomeScuderia"));
+            datiScuderia.add(scuderia);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            double percentualeGentlemanDriver = ((double) numeroFinanziatoriSI / numeroPiloti) * 100;
-            while (resultSet.next()) {
-                Scuderia scuderia = new Scuderia();
-                scuderia.setNome(resultSet.getString("Nome_Scuderia"));
-                scuderia.setNumFinanziamenti(resultSet.getInt("NumFinanziamenti"));
-                datiScuderia.add(scuderia);
+            int numeroPiloti = resultSet.getInt("NumeroTotalePiloti");
+            int numeroFinanziatoriSI = resultSet.getInt("NumeroFinanziatoriSI");
 
-                Pilota pilota = new Pilota();
-                pilota.setNome(resultSet.getString("Nome_Pilota"));
-                pilota.setTipoPilota(resultSet.getString("TipoPilota"));
-                pilota.setFinanziatoreGD(resultSet.getString("FinanziatoreGD"));
-                datiPilota.add(pilota);
+            double percentualeGentlemanDriver =  ((double) numeroFinanziatoriSI / numeroPiloti) * 100;
 
-                System.out.println("totole: " + percentualeGentlemanDriver);
-                percentuale.add(percentualeGentlemanDriver);
-
-            }
-
-            model.addAttribute("pilota", datiPilota);
-            model.addAttribute("scuderia", datiScuderia);
-            model.addAttribute("percentuale", percentuale);
-            resultSet.close();
-            preparedStatement.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return "errore";
+            numPiloti.add(numeroPiloti);
+            numGD.add(numeroFinanziatoriSI);
+            percentuale.add(percentualeGentlemanDriver);
         }
-        return "11VisualizzaGentlemanDriver";
 
+        model.addAttribute("scuderia", datiScuderia);
+        model.addAttribute("totalePiloti", numPiloti);
+        model.addAttribute("numFinanziatoriSI", numGD);
+        model.addAttribute("percentuale", percentuale);
+
+        resultSet.close();
+        preparedStatement.close();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return "errore";
     }
-
+    return "11VisualizzaGentlemanDriver";
+    }
 }
