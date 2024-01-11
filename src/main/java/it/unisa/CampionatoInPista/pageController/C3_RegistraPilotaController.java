@@ -19,7 +19,9 @@ public class C3_RegistraPilotaController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
+    /** OPERAZIONE 3. Aggiunta di un nuovo pilota ad un equipaggio.*/
 
+    // Ottiene i dati delle vetture e dei piloti per renderli disponibili nella pagina di aggiunta del pilota
     @GetMapping("/3AggiungiPilota")
     public String getRegistraPilota(Model model) {
         List<Vettura> datiVettura = new ArrayList<>();
@@ -30,7 +32,7 @@ public class C3_RegistraPilotaController {
         try {
             // Carica dati della vettura
             PreparedStatement vetturaStatement = databaseConnection.getConnection().prepareStatement(
-                    "SELECT * FROM vettura");
+                    "SELECT * FROM vettura;");
 
             ResultSet resultSetV = vetturaStatement.executeQuery();
             while (resultSetV.next()) {
@@ -48,7 +50,7 @@ public class C3_RegistraPilotaController {
 
             // Carica dati del pilota
             PreparedStatement pilotaStatement = databaseConnection.getConnection().prepareStatement(
-                    "SELECT * FROM pilota");
+                    "SELECT * FROM pilota;");
             ResultSet resultSetP = pilotaStatement.executeQuery();
             while (resultSetP.next()) {
                 Pilota pilota = new Pilota();
@@ -67,9 +69,9 @@ public class C3_RegistraPilotaController {
             resultSetP.close();
             pilotaStatement.close();
 
-
+            // Carica le targhe delle vetture
             PreparedStatement selezionaVStatement = databaseConnection.getConnection().prepareStatement(
-                    "SELECT Targa FROM vettura");
+                    "SELECT Targa FROM vettura;");
             ResultSet resultSet = selezionaVStatement.executeQuery();
             while (resultSet.next()) {
                 targhe.add(resultSet.getString("Targa"));
@@ -79,7 +81,7 @@ public class C3_RegistraPilotaController {
             selezionaVStatement.close();
 
             PreparedStatement selezionaPStatement = databaseConnection.getConnection().prepareStatement(
-                    "SELECT ID FROM Pilota");
+                    "SELECT ID FROM Pilota;");
             ResultSet resultSet1 = selezionaPStatement.executeQuery();
             while (resultSet1.next()) {
                 piloti.add(resultSet1.getString("ID"));
@@ -95,6 +97,8 @@ public class C3_RegistraPilotaController {
 
         return "3AggiungiPilota";
     }
+
+    // Registra l'associazione del pilota con la vettura selezionata
     @PostMapping("/3AggiungiPilota")
     public String RegistraPilota(final @RequestParam("targa") String targa,
                                   final @RequestParam("IDPilota") String IDPilota) {

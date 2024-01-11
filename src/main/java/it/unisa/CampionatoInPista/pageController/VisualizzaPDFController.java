@@ -63,5 +63,27 @@ public class VisualizzaPDFController {
                     .body(pdfBytes);
         }
 
+        @GetMapping("/visualizzaPresentazione")
+        @ResponseBody
+        public ResponseEntity<byte[]> visualizzaPresentazione() throws IOException {
+            String pathToPDF = "C:/Users/Utente/IdeaProjects/CampionatoInPista/1-Documentazione/[BD][FerraraMiriam]Presentazione.pdf";
+            Resource resource = new FileSystemResource(pathToPDF);
+
+            if (!resource.exists()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("File non trovato".getBytes());
+            }
+
+            byte[] pdfBytes;
+            try {
+                pdfBytes = Files.readAllBytes(Path.of(resource.getURI()));
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore nella lettura del file".getBytes());
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(pdfBytes);
+        }
+
 }
 

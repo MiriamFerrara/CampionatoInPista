@@ -20,11 +20,13 @@ public class I9_StampaAnnuaScuderieController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
+    /** OPERAZIONE 9. Stampa annuale delle scuderie che hanno partecipato al campionato compreso il numero di finanziamenti. */
     @GetMapping ("/9StampaAnnuaScuderie")
     public String getStampaAnnuaScuderie(Model model) {
         List<String> anni = new ArrayList<>();
 
         try {
+            //Recupero di un elenco distinto degli anni in cui si desidera ottenere i dettagli delle scuderie partecipanti.
             PreparedStatement preparedStatement1 = databaseConnection.getConnection().prepareStatement(
                     "SELECT DISTINCT YEAR(DataEvento) FROM gara;");
             ResultSet resultSet1 = preparedStatement1.executeQuery();
@@ -53,6 +55,8 @@ public class I9_StampaAnnuaScuderieController {
 
 
         try {
+            /* Recupero dei dettagli delle scuderie partecipanti al campionato in un anno specifico.
+             L'anno specifico viene indicato nella clausola WHERE tramite la funzione YEAR() che estrae l'anno dalla data dell'evento di gara.*/
             PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
                     "SELECT DISTINCT p.*, s.Nome, s.Sede, s.Paese, s.NumFinanziamenti, " +
                             "g.NomeG, g.DataEvento, g.DurataOre, g.TipoGara, g.id_Circuito " +

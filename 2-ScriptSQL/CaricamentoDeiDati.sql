@@ -81,9 +81,8 @@ INSERT INTO guidare
 
  #Inserimento della Tabella Finanziare(QuantitaDenaro, data, id_Pilota, NomeScuderia)
 INSERT INTO finanziare
-	VALUES (50000, '2023-01-10', 2, 'Scuderia Ferrari'),
-		   (60000, '2023-02-15', 2, 'Red Bull Racing'),
-		   (45000, '2023-03-20', 3, 'McLaren Racing'),
-		   (55000, '2023-04-25', 4, 'Mercedes Team'),
-		   (40000, '2023-05-30', 3, 'Bugatti Motorsport');
-
+	VALUES (5000, '2023-01-10', 2, 'Scuderia Ferrari'),
+		   (6000, '2023-02-15', 2, 'Red Bull Racing'),
+		   (4500, '2023-03-20', 3, 'McLaren Racing'),
+		   (5500, '2023-04-25', 4, 'Mercedes Team'),
+		   (5000, '2023-05-30', 3, 'Bugatti Motorsport');

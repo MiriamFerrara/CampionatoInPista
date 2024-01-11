@@ -22,13 +22,14 @@ public class N12_StampaCostruttoriController {
 
     @Autowired
     private DatabaseConnection databaseConnection;
-
+/** OPERAZIONE 12. Stampa mensile dei costruttori compreso il numero di componenti che ha fornito.*/
     @GetMapping("/12StampaCostruttori")
     public String getStampaCostruttori(Model model) {
 
         List<String> mesi = new ArrayList<>();
 
         try {
+            //Recupera i mesi in cui sono state installate componenti.
             PreparedStatement preparedStatement1 = databaseConnection.getConnection().prepareStatement(
                     "SELECT DISTINCT MONTH(DataInstallazione) FROM componente;");
             ResultSet resultSet1 = preparedStatement1.executeQuery();
@@ -55,6 +56,8 @@ public class N12_StampaCostruttoriController {
         List<Componente> datiComponente = new ArrayList<>();
 
         try {
+            /* Recupera i costruttori insieme al numero di componenti che hanno fornito in un mese specifico.
+            Il risultato è raggruppato per nome del costruttore e data mensile di installazione delle componenti.*/
             PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
                     "SELECT c.*, " +
                             "(cm.DataInstallazione) AS DataMensileInstallazione " +

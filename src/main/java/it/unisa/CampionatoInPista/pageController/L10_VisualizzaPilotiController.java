@@ -21,12 +21,19 @@ public class L10_VisualizzaPilotiController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
+/** OPERAZIONE 10. Visualizzare i piloti che hanno vinto nel «circuito di casa». */
     @GetMapping("/10VisualizzaPiloti")
     public String getVisualizzaPiloti(Model model) {
         List<Pilota> datiPilota = new ArrayList<>();
         List<Partecipa> datiPartecipa = new ArrayList<>();
         List<Circuito> datiCircuito = new ArrayList<>();
+
         try {
+
+           /* Questa query restituisce l'elenco dei piloti che hanno gareggiato e vinto nel "circuito di casa".
+           Filtra i dati confrontando la nazionalità del pilota con il paese del circuito,
+           mostrando solo i piloti che hanno effettivamente ottenuto punti e classificandoli
+           in base ai punti totali ottenuti nelle gare.*/
             PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
                     "SELECT p.ID, p.Nome, p.Cognome, p.Nazionalita,  " +
                             "c.ID_Circuito, c.PaeseResidenza, c.NomeC, pa.targa_vettura, SUM(pa.Punti) AS PuntiTotali " +
@@ -37,7 +44,8 @@ public class L10_VisualizzaPilotiController {
                             "INNER JOIN circuito c ON ga.id_Circuito = c.ID_Circuito  " +
                             "WHERE p.Nazionalita = c.PaeseResidenza  " +
                             "GROUP BY p.ID, p.Nome, p.Cognome, p.Nazionalita, c.ID_Circuito, c.PaeseResidenza, c.NomeC, pa.targa_vettura " +
-                            "HAVING SUM(pa.Punti) <> 0 AND SUM(pa.Punti) IS NOT NULL;");
+                            "HAVING SUM(pa.Punti) <> 0 AND SUM(pa.Punti) IS NOT NULL " +
+                            "ORDER BY PuntiTotali DESC;");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

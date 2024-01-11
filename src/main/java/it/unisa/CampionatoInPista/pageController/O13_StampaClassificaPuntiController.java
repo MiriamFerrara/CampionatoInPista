@@ -21,13 +21,15 @@ public class O13_StampaClassificaPuntiController {
 
         @Autowired
         private DatabaseConnection databaseConnection;
-
+        /**OPERAZIONE 13. Stampa della classifica finale dei punti conseguiti da tutte le vetture.*/
         @GetMapping("/13StampaClassificaPunti")
         public String getStampaClassificaPunti(Model model) {
             List<Vettura> datiVettura = new ArrayList<>();
             List<Partecipa> datiPartecipa = new ArrayList<>();
 
             try {
+                /* Recupera la targa di ogni vettura insieme alla somma totale dei punti conseguiti da quella vettura attraverso la partecipazione alle gare.
+                    Il risultato è ordinato in modo descendente in base ai PuntiTotali, creando così la classifica finale.*/
                 PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
                         "SELECT DISTINCT v.Targa, SUM(p.Punti) AS PuntiTotali " +
                                 "FROM vettura v " +

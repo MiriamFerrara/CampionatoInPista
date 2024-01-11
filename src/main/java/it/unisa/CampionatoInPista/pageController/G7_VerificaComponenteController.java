@@ -22,10 +22,15 @@ public class G7_VerificaComponenteController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
+    /**OPERAZIONE 7. Verifica della possibilità di montare un componente su una vettura.*/
+
+
     @GetMapping("/7VerificaComponente")
     public String getVerificaComponente(Model model) {
         List<String> targhe = new ArrayList<>();
         try {
+            /*Ottiene l'elenco delle 'TargaVettura' dei componenti registrati
+            per la selezione delle vetture su cui montare un componente.*/
             PreparedStatement selezionaVStatement = databaseConnection.getConnection().prepareStatement(
                     "SELECT TargaVettura FROM componente;");
             ResultSet resultSet = selezionaVStatement.executeQuery();
@@ -53,9 +58,10 @@ public class G7_VerificaComponenteController {
         List<String> tipoComponente = new ArrayList<>();
 
         try {
+           // Recupera i dettagli dei componenti basati su una specifica 'TargaVettura'.
             PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
                     "SELECT * FROM componente " +
-                            "WHERE TargaVettura = ? ;");
+                            "WHERE TargaVettura = ?;");
 
             preparedStatement.setString(1, targa);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -81,6 +87,7 @@ public class G7_VerificaComponenteController {
             resultSet.close();
             preparedStatement.close();
 
+            //Ottiene i tipi di componenti non ancora montati su una specifica vettura.
             PreparedStatement tipiStatement = databaseConnection.getConnection().prepareStatement(
                     "SELECT DISTINCT TipoComponente FROM componente " +
                             "WHERE TipoComponente NOT IN ( " +
@@ -93,9 +100,9 @@ public class G7_VerificaComponenteController {
                 tipoComponente.add(resultSetTipi.getString("TipoComponente"));
             }
 
-
+            // Recupera l'elenco dei nomi dei costruttori registrati.
             PreparedStatement preparedStatement1 = databaseConnection.getConnection().prepareStatement(
-                    "SELECT nome FROM costruttore");
+                    "SELECT nome FROM costruttore;");
             ResultSet resultSet1 = preparedStatement1.executeQuery();
             while (resultSet1.next()) {
                 nomeCostruttori.add(resultSet1.getString("Nome"));
@@ -128,10 +135,11 @@ public class G7_VerificaComponenteController {
 
 
             try{
+                //Inserisce i dettagli di un nuovo componente montato su una vettura.
                 PreparedStatement componenteStatement = databaseConnection.getConnection().prepareStatement(
                     "INSERT INTO componente (DataInstallazione, Costo, TipoComponente, TipoMateriale, Peso, " +
                             "NumMarce, Cilindrata, TipoMotore, NumCilindri, NomeCostruttore, TargaVettura) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
             componenteStatement.setDate(1, componenteM.getDataInstallazione());
             componenteStatement.setFloat(2, componenteM.getCosto());
@@ -178,14 +186,15 @@ public class G7_VerificaComponenteController {
             componenteStatement.close();
 
             if (costruttoreType.equals("existing")) {
-                // Recupera i dettagli del costruttore esistente usando il nome
+                //Recupera i dettagli di un costruttore esistente basandosi sul nome.
                 PreparedStatement recuperaCostruttoreStatement = databaseConnection.getConnection().prepareStatement(
-                        "SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ?");
+                        "SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ?;");
                 recuperaCostruttoreStatement.setString(1, nome);
                 ResultSet costruttoreResultSet = recuperaCostruttoreStatement.executeQuery();
 
+                //Aggiorna il numero di componenti associati a un costruttore specifico.
                 PreparedStatement updateNumComponentiStatement = databaseConnection.getConnection().prepareStatement(
-                        "UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ?");
+                        "UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ?;");
                 updateNumComponentiStatement.setString(1, nome);
                 updateNumComponentiStatement.executeUpdate();
                 updateNumComponentiStatement.close();
@@ -199,8 +208,9 @@ public class G7_VerificaComponenteController {
                 }
 
             } else if (costruttoreType.equals("new")) {
+                //Inserisce i dettagli di un nuovo costruttore nel database.
                 PreparedStatement nuovoCostruttoreStatement = databaseConnection.getConnection().prepareStatement(
-                        "INSERT INTO costruttore (Nome, RagioneSociale, SedeFabbrica, NumComponenti) VALUES (?, ?, ?, ?)");
+                        "INSERT INTO costruttore (Nome, RagioneSociale, SedeFabbrica, NumComponenti) VALUES (?, ?, ?, ?);");
 
                 nuovoCostruttoreStatement.setString(1, nomeNuovoCostruttore);
                 nuovoCostruttoreStatement.setString(2, ragioneSociale);

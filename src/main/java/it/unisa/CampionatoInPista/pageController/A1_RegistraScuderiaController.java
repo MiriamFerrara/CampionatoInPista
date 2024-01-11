@@ -13,15 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//
 @Controller
 @RequestMapping("/CampionatoInPista")
 public class A1_RegistraScuderiaController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
-    /** getRegistraScuderia()
-     *Ottiene un elenco di targhe di vetture dal database e li passa al modello per renderli disponibili nella pagina 1RegistraScuderia.html*/
+    /** OPERAZIONE 1. Registrazione di una scuderia. */
+
+    /**
+     * Ottiene un elenco di targhe di vetture dal database e li aggiunge al modello per renderli disponibili nella pagina 1RegistraScuderia.html.
+     * Visualizza la lista delle targhe disponibili nella tabella vettura.
+     */
     @GetMapping("/1RegistraScuderia")
     public String getRegistraScuderia(Model model) {
 
@@ -29,7 +32,7 @@ public class A1_RegistraScuderiaController {
 
         try {
             PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
-                    "SELECT Targa FROM vettura");
+                    "SELECT Targa FROM vettura;");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 targhe.add(resultSet.getString("Targa"));
@@ -47,15 +50,16 @@ public class A1_RegistraScuderiaController {
         return "1RegistraScuderia";
     }
 
-    /**registraScuderia()
-     * Esegue l'inserimento di una nuova scuderia nel database utilizzando i dati ricevuti dal form.
-     * Successivamente, recupera tutti i dati della scuderia appena inserita usando il suo nome e li memorizza in una lista di oggetti Scuderia.*/
+    /**
+     * Registra una nuova scuderia nel database utilizzando i dati ricevuti dal form.
+     * Successivamente, recupera tutti i dati della scuderia appena inserita usando il suo nome e li memorizza in una lista di oggetti Scuderia.
+     */
     @PostMapping("/1RegistraScuderia")
     public String registraScuderia(Model model, Scuderia scuderia, final @RequestParam("targa") String targa) {
 
         try{
             PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
-                    "INSERT INTO scuderia (Nome, Sede, Paese, NumFinanziamenti, TargaVettura) VALUES (?, ?, ?, ?, ?)");
+                    "INSERT INTO scuderia (Nome, Sede, Paese, NumFinanziamenti, TargaVettura) VALUES (?, ?, ?, ?, ?);");
             preparedStatement.setString(1, scuderia.getNome());
             preparedStatement.setString(2, scuderia.getSede());
             preparedStatement.setString(3, scuderia.getPaese());

@@ -20,6 +20,7 @@ public class P14_StampaClassificaPuntiMotoreController {
         @Autowired
         private DatabaseConnection databaseConnection;
 
+        /**OPERAZIONE 14.Stampa delle classifiche finali di punti per tipo di motore.*/
         @GetMapping("/14StampaClassificaPuntiMotore")
         public String getStampaClassificaPuntiMotore(Model model) {
 
@@ -29,6 +30,10 @@ public class P14_StampaClassificaPuntiMotoreController {
             List<Partecipa> datiPartecipaTurbo = new ArrayList<>();
 
             try {
+                /*Recupera il tipo di motore (Aspirato),
+            la targa della vettura e la somma totale dei punti conseguiti attraverso la partecipazione alle gare.
+            I risultati sono raggruppati per tipo di motore e targa della vettura e ordinati in modo descendente in base ai PuntiTotali,
+            creando così la classifica dei motori aspirati.*/
                 PreparedStatement preparedStatementAspirato = databaseConnection.getConnection().prepareStatement(
                         "SELECT c.TipoMotore, c.TargaVettura, SUM(p.Punti) AS PuntiTotali " +
                                 "FROM partecipa p " +
@@ -57,6 +62,10 @@ public class P14_StampaClassificaPuntiMotoreController {
                 resultSetAspirato.close();
                 preparedStatementAspirato.close();
 
+                /*Recupera il tipo di motore (Turbo),
+            la targa della vettura e la somma totale dei punti conseguiti attraverso la partecipazione alle gare.
+            I risultati sono raggruppati per tipo di motore e targa della vettura e ordinati in modo discendente
+            in base ai PuntiTotali, creando così la classifica dei motori turbo.*/
                 PreparedStatement preparedStatementTurbo = databaseConnection.getConnection().prepareStatement(
                         "SELECT c.TipoMotore, c.TargaVettura, SUM(p.Punti) AS PuntiTotali " +
                                 "FROM partecipa p " +

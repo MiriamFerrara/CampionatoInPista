@@ -20,13 +20,15 @@ public class B2_RegistraVetturaController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
+    /** OPERAZIONE 2. Inserimento dei dati di un’autovettura, compresi i componenti di cui è composta.*/
     @GetMapping("/2RegistraVettura")
     public String getRegistraVettura(Model model) {
         List<String> nomeCostruttori = new ArrayList<>();
 
         try {
+            // Query per ottenere i nomi dei costruttori e aggiungerli al modello
             PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
-                    "SELECT nome FROM costruttore");
+                    "SELECT nome FROM costruttore;");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 nomeCostruttori.add(resultSet.getString("Nome"));
@@ -57,8 +59,9 @@ public class B2_RegistraVetturaController {
                                   ) {
 
         try {
+            // Query per inserire i dati della vettura nel database
             PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
-                    "INSERT INTO vettura (Targa, NumGara, Modello) VALUES (?, ?, ?)");
+                    "INSERT INTO vettura (Targa, NumGara, Modello) VALUES (?, ?, ?);");
             preparedStatement.setString(1, vettura.getTarga());
             preparedStatement.setInt(2, vettura.getNumGara());
             preparedStatement.setString(3, vettura.getModello());
@@ -66,9 +69,10 @@ public class B2_RegistraVetturaController {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
+            // Query per inserire i dati del componente nel database
                     PreparedStatement componenteStatement = databaseConnection.getConnection().prepareStatement(
                             "INSERT INTO componente (DataInstallazione, Costo, TipoComponente, TipoMateriale, Peso, NumMarce, Cilindrata, TipoMotore, NumCilindri, NomeCostruttore, TargaVettura) " +
-                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
                     componenteStatement.setDate(1, componente.getDataInstallazione());
                     componenteStatement.setFloat(2, componente.getCosto());
@@ -116,7 +120,7 @@ public class B2_RegistraVetturaController {
             if (costruttoreType.equals("existing")) {
                 // Recupera i dettagli del costruttore esistente usando il nome
                 PreparedStatement recuperaCostruttoreStatement = databaseConnection.getConnection().prepareStatement(
-                        "SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ?");
+                        "SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ?;");
                 recuperaCostruttoreStatement.setString(1, nome);
                 ResultSet costruttoreResultSet = recuperaCostruttoreStatement.executeQuery();
 
@@ -126,18 +130,18 @@ public class B2_RegistraVetturaController {
                     costruttore.setSedeFabbrica(costruttoreResultSet.getString("SedeFabbrica"));
 
                     PreparedStatement updateNumComponentiStatement = databaseConnection.getConnection().prepareStatement(
-                            "UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ?");
+                            "UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ?;");
                     updateNumComponentiStatement.setString(1, nome);
                     updateNumComponentiStatement.executeUpdate();
                     updateNumComponentiStatement.close();
-                    //costruttore.setNumComponenti(costruttoreResultSet.getInt("NumComponenti"));
                     costruttoreResultSet.close();
                     recuperaCostruttoreStatement.close();
                 }
 
             } else if (costruttoreType.equals("new")) {
+                // Query per inserire i dati di un nuovo costruttore
                 PreparedStatement nuovoCostruttoreStatement = databaseConnection.getConnection().prepareStatement(
-                        "INSERT INTO costruttore (Nome, RagioneSociale, SedeFabbrica, NumComponenti) VALUES (?, ?, ?, ?)");
+                        "INSERT INTO costruttore (Nome, RagioneSociale, SedeFabbrica, NumComponenti) VALUES (?, ?, ?, ?);");
 
                 nuovoCostruttoreStatement.setString(1, nomeNuovoCostruttore);
                 nuovoCostruttoreStatement.setString(2, ragioneSociale);

@@ -16,7 +16,16 @@ public class DatabaseConnection {
             String username = "root";
             String pwd = "12345678";
             con = DriverManager.getConnection(url, username, pwd);
-            System.out.println("Connessione Accettata.\nCARICAMENTO IN CORSO...");
+            System.out.println("Connessione Accettata.");
+
+            /**
+             * Shutdown Hook:
+             * La chiamata a Runtime.getRuntime().addShutdownHook viene utilizzata per registrare un thread
+             * che verrà eseguito prima della chiusura dell'applicazione.
+             * In questo caso, il thread eseguirà il metodo closeConnection, responsabile della chiusura
+             * corretta della connessione al database quando l'applicazione viene terminata.
+             */
+            Runtime.getRuntime().addShutdownHook(new Thread(this::closeConnection));
         } catch (Exception e) {
             System.out.println("Connessione Fallita");
         }
@@ -26,16 +35,16 @@ public class DatabaseConnection {
         return con;
     }
 
-    //@PreDestroy
-    public void closeConnessione() throws SQLException {
+
+public void closeConnection() {
+    if (con != null) {
         try {
-            if (con != null) {
-                con.close();
-                System.out.println("Connessione chiusa correttamente.");
-            }
+            con.close();
+            System.out.println("Connessione chiusa correttamente.");
         } catch (SQLException e) {
             System.out.println("Errore durante la chiusura della connessione.");
             e.printStackTrace();
         }
     }
+}
 }

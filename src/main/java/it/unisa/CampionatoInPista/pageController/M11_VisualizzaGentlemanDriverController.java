@@ -21,6 +21,7 @@ public class M11_VisualizzaGentlemanDriverController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
+    /** OPERAZIONE 11. Per ciascuna scuderia, visualizzare la percentuale di gentleman driver di cui si compone l’equipaggio.*/
     @GetMapping("/11VisualizzaGentlemanDriver")
     public String getVisualizzaGentlemanDriver(Model model) {
         List<Scuderia> datiScuderia = new ArrayList<>();
@@ -29,7 +30,10 @@ public class M11_VisualizzaGentlemanDriverController {
         List<Double> percentuale = new ArrayList<>();
 
         try {
-
+        /*Calcola il numero totale di piloti per ogni scuderia
+          e conta quante di queste persone sono classificate come "gentleman driver" (piloti non professionisti)
+          basandosi sul campo 'FinanziatoreGD' uguale a 'SI' nella tabella dei piloti.
+          Il risultato viene raggruppato per il nome della scuderia.*/
         PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
                 "SELECT s.Nome AS NomeScuderia, COUNT(DISTINCT g.id_Pilota) AS NumeroTotalePiloti, " +
                         "SUM(CASE WHEN p.FinanziatoreGD = 'SI' THEN 1 ELSE 0 END) AS NumeroFinanziatoriSI " +

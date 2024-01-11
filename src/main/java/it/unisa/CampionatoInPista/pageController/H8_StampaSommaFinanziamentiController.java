@@ -20,12 +20,15 @@ public class H8_StampaSommaFinanziamentiController {
 
         @Autowired
         private DatabaseConnection databaseConnection;
-
+/** OPERAZIONE 8. Per ciascuna scuderia, stampare la somma totale dei finanziamenti ricevuti. */
         @GetMapping("/8StampaSommaFinanziamenti")
         public String getStampaSommaFinanziamenti(Model model) {
             List<String> datiScuderia  = new ArrayList<>();
             List<Double> datiFinanziamento = new ArrayList<>();
             try {
+                /*Calcola la somma totale dei finanziamenti ricevuti per ogni scuderia partecipante nel campionato.
+                        Utilizzando una combinazione dei dati delle tabelle "scuderia" e "finanziare",
+                        la query somma la quantità di denaro dei finanziamenti per ciascuna scuderia*/
                 PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
                         "SELECT s.Nome, SUM(f.QuantitaDenaro) AS TotaleFinanziamenti " +
                                 "FROM scuderia s " +

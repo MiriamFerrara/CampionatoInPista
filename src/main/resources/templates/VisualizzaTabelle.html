@@ -12,12 +12,27 @@
 <body>
 <div id="header-placeholder"></div>
 
+
+<h1 style="text-align: center;">Visualizza Tabelle</h1>
+
+<!-- OPERAZIONE 1. Registrazione di una scuderia. -->
 <div style="margin: 60px;">
-<h1>DataBase</h1>
-    <h2>1.Registrazione di una scuderia.</h2>
-   <h3>Query Utilizzata:</h3>
-    <ul><li>INSERT INTO scuderia (Nome, Sede, Paese, NumFinanziamenti, TargaVettura) VALUES (?, ?, ?, ?, ?)</li></ul>
+        <h2>1. Registrazione di una scuderia.</h2>
+        <div style="margin-left: 20px;">
+            <h3>Query Utilizzate:</h3>
+            <ul>
+                <li><h4>SELECT Targa FROM vettura;
+                    <br>Visualizza la lista delle targhe disponibili nella tabella vettura.</h4></li>
+
+                <li><h4>INSERT INTO scuderia (Nome, Sede, Paese, NumFinanziamenti, TargaVettura) VALUES (?, ?, ?, ?, ?);
+                    <br>Registra una nuova scuderia nel database utilizzando i dati ricevuti dal form.</h4></li>
+
+                <li><h4>SELECT * FROM scuderia WHERE Nome = ?;
+                    <br>Recupera tutti i dati della scuderia appena inserita.</h4></li>
+            </ul>
+        </div>
 </div>
+
 <h2 class="section-header">Dati Scuderia</h2>
 <table class="custom-table">
     <thead>
@@ -40,20 +55,51 @@
     </tbody>
 </table>
 
+<h2 class="section-header">Dati Vetture</h2>
+<table class="custom-table">
+    <thead>
+    <tr>
+        <th>Targa</th>
+        <th>Numero Gara</th>
+        <th>Modello</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vettura : ${vetture}">
+        <td th:text="${vettura.targa}"></td>
+        <td th:text="${vettura.numGara}"></td>
+        <td th:text="${vettura.modello}"></td>
+    </tr>
+    </tbody>
+</table>
 
 
+<!-- OPERAZIONE 2. Inserimento dei dati di un’autovettura, compresi i componenti di cui è composta. -->
 <div style="margin: 60px;">
     <h2>2. Inserimento dei dati di un’autovettura, compresi i componenti di cui è composta.</h2>
+    <div style="margin-left: 20px;">
+        <h3>Query Utilizzate:</h3>
+    <ul>
+        <li><h4>SELECT nome FROM costruttore;<br>
+                Ottiene i nomi dei costruttori.</h4></li>
 
-            <h3>Query Utilizzata:</h3>
-            <ul>
-                <li>INSERT INTO vettura (Targa, NumGara, Modello) VALUES (?, ?, ?)</li>
-                <li>INSERT INTO componente (DataInstallazione, Costo, TipoComponente, TipoMateriale, Peso, NumMarce, Cilindrata, TipoMotore, NumCilindri, NomeCostruttore, TargaVettura) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)</li>
-                <li>SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ?</li>
-                <li>UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ?</li>
-                <li>INSERT INTO costruttore (Nome, RagioneSociale, SedeFabbrica, NumComponenti) VALUES (?, ?, ?, ?)</li>
-            </ul>
+        <li><h4>INSERT INTO vettura (Targa, NumGara, Modello) VALUES (?, ?, ?);<br>
+                Registra una nuova vettura nel database utilizzando i dati ricevuti dal form.</h4></li>
+
+        <li><h4>INSERT INTO componente (DataInstallazione, Costo, TipoComponente, TipoMateriale, Peso, NumMarce, Cilindrata, TipoMotore, NumCilindri, NomeCostruttore, TargaVettura) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);<br>
+                Registra una nuova componente nel database utilizzando i dati ricevuti dal form.</h4></li>
+
+        <li><h4>SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ?;<br>
+                Recupera i dettagli del costruttore esistente usando il nome.<br>
+                UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ?;<br>
+                Aggiorna il numero di componenti di un costruttore esistente nella tabella costruttore.</h4></li>
+
+        <li><h4>INSERT INTO costruttore (Nome, RagioneSociale, SedeFabbrica, NumComponenti) VALUES (?, ?, ?, ?);<br>
+                Registra un nuovo costruttore nel database utilizzando i dati ricevuti dal form.</h4></li>
+    </ul>
 </div>
+</div>
+
 <h2 class="section-header">Dati Vetture</h2>
 <table class="custom-table">
     <thead>
@@ -129,14 +175,24 @@
 </table>
 
 
-
+<!-- OPERAZIONE 3. Aggiunta di un nuovo pilota ad un equipaggio. -->
 <div style="margin: 60px;">
     <h2>3. Aggiunta di un nuovo pilota ad un equipaggio.</h2>
-    <h3>Query Utilizzata:</h3>
-    <ul>
-        <li>INSERT INTO guidare (targa_Vettura, id_Pilota) VALUES (?, ?)</li>
-    </ul>
+    <div style="margin-left: 20px;">
+        <h3>Query Utilizzate:</h3>
+        <ul>
+            <li><h4>SELECT * FROM vettura;<br>SELECT * FROM pilota;
+                    <br>Per visualizzare le informazioni delle tabelle vettura e pilota.</h4></li>
+
+            <li><h4>SELECT Targa FROM vettura;<br>SELECT ID FROM Pilota;
+                    <br>Per selezionare una vettura e un pilota.</h4></li>
+
+            <li><h4>INSERT INTO guidare (targa_Vettura, id_Pilota) VALUES (?, ?);
+                    <br>Registra l'associazione del pilota con la vettura selezionata.</h4></li>
+        </ul>
+    </div>
 </div>
+
 <table class="custom-table">
     <h2 class="section-header">Dati Guidare</h2>
     <thead>
@@ -202,16 +258,26 @@
     </table>
 
 
-
-
-
+<!-- OPERAZIONE 4. Registrazione di un finanziamento per una scuderia. -->
 <div style="margin: 60px;">
     <h2>4. Registrazione di un finanziamento per una scuderia.</h2>
-    <h3>Query Utilizzata:</h3>
+    <div style="margin-left: 20px;">
+    <h3>Query Utilizzate:</h3>
     <ul>
-        <li>INSERT INTO Finanziare (QuantitaDenaro, Data, id_Pilota, NomeScuderia) VALUES (?, ?, ?, ?);</li>
-        <li>UPDATE scuderia SET NumFinanziamenti = NumFinanziamenti + 1 WHERE Nome = ?</li>
+        <li><h4>SELECT ID FROM Pilota;<br>
+            SELECT Nome FROM scuderia;<br>
+            Per selezionare gli ID dei piloti dalla tabella Pilota e nomi delle scuderie dalla tabella scuderia.</h4></li>
+
+        <li><h4>INSERT INTO Finanziare (QuantitaDenaro, Data, id_Pilota, NomeScuderia) VALUES (?, ?, ?, ?);<br>
+            Per inserire i dettagli del finanziamento nella tabella Finanziare.</h4></li>
+
+        <li><h4>UPDATE scuderia SET NumFinanziamenti = NumFinanziamenti + 1 WHERE Nome = ?;<br>
+            Per aggiornare il numero di finanziamenti per una scuderia specifica.</h4></li>
+
+        <li><h4>UPDATE pilota SET FinanziatoreGD = 'SI' WHERE ID = ?;<br>
+            Per aggiornare lo stato del campo FinanziatoreGD a 'SI' per un pilota specifico.</h4></li>
     </ul>
+    </div>
 </div>
 
 <h2 class="section-header">Dati Finanziare</h2>
@@ -285,15 +351,29 @@
 </table>
 
 
+<!-- OPERAZIONE 5. Iscrizione di una vettura ad una gara. -->
 <div style="margin: 60px;">
     <h2>5. Iscrizione di una vettura ad una gara.</h2>
+    <div style="margin-left: 20px;">
     <h3>Query Utilizzata:</h3>
     <ul>
-        <li>SELECT * FROM partecipa p WHERE p.id_Gara = ? AND p.targa_Vettura = ?</li>
-        <li>INSERT INTO partecipa (id_Gara, targa_Vettura) VALUES (?, ?)</li>
-        <li>UPDATE vettura SET NumGara = NumGara+1  WHERE Targa = ?</li>
+        <li><h4>SELECT Targa FROM vettura;<br>
+                SELECT ID_Gara FROM gara;<br>
+                Per ottenere la lista delle targhe delle vetture e degli ID delle gare.</h4></li>
+
+        <li><h4>SELECT * FROM partecipa p WHERE p.id_Gara = ? AND p.targa_Vettura = ?;<br>
+                Per controllare se una vettura è già iscritta a una gara specifica.</h4></li>
+
+        <li><h4>INSERT INTO partecipa (id_Gara, targa_Vettura) VALUES (?, ?);<br>
+                Per iscrivere una vettura a una gara specifica.</h4></li>
+
+        <li><h4>UPDATE vettura SET NumGara = NumGara+1  WHERE Targa = ?;<br>
+                Per aggiornare il numero di gare a cui è iscritta una vettura.</h4></li>
     </ul>
+    </div>
 </div>
+
+
 <h2 class="section-header">Dati Partecipa</h2>
 <table class="custom-table">
     <thead>
@@ -358,14 +438,23 @@
 </table>
 
 
-
+<!-- OPERAZIONE 6. Registrazione del risultato conseguito da ciascuna vettura iscritta ad una gara. -->
 <div style="margin: 60px;">
-    <h2>6.Registrazione del risultato conseguito da ciascuna vettura iscritta ad una gara.</h2>
+    <h2>6. Registrazione del risultato conseguito da ciascuna vettura iscritta ad una gara.</h2>
+    <div style="margin-left: 20px;">
     <h3>Query Utilizzata:</h3>
     <ul>
-        <li>UPDATE partecipa SET MotivoRitiro = ?, Punti = ? WHERE id_Gara = ? AND targa_Vettura = ?</li>
+        <li><h4>SELECT Targa FROM vettura;<br>
+            Per ottenere l'elenco delle targhe delle vetture registrate.<br>
+            SELECT ID_Gara FROM gara;<br>
+            Per recuperare l'elenco degli ID delle gare disponibili.</h4></li>
+
+        <li><h4>UPDATE partecipa SET MotivoRitiro = ?, Punti = ? WHERE id_Gara = ? AND targa_Vettura = ?;<br>
+            Per registrare i motivi del ritiro e i punti ottenuti per una specifica vettura in una gara.</h4></li>
     </ul>
+    </div>
 </div>
+
 <h2 class="section-header">Dati Partecipa</h2>
     <table class="custom-table">
         <thead>
@@ -428,19 +517,41 @@
 </table>
 
 
-
+<!-- OPERAZIONE 7. Verifica della possibilità di montare un componente su una vettura. -->
 <div style="margin: 60px;">
-    <h2>7.Verifica della possibilità di montare un componente su una vettura.</h2>
-    <h3>Query Utilizzata:</h3>
+    <h2>7. Verifica della possibilità di montare un componente su una vettura.</h2>
+    <div style="margin-left: 20px;">
+    <h3>Query Utilizzate:</h3>
     <ul>
-        <li>SELECT * FROM componente  WHERE TargaVettura = ?</li>
-        <li>SELECT DISTINCT TipoComponente FROM componente WHERE TipoComponente NOT IN (SELECT TipoComponente FROM componente WHERE TargaVettura = ?)</li>
-        <li>INSERT INTO componente (DataInstallazione, Costo, TipoComponente, TipoMateriale, Peso,NumMarce, Cilindrata, TipoMotore, NumCilindri, NomeCostruttore, TargaVettura) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) </li>
-        <li>SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ? </li>
-        <li>UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ? </li>
-        <li>INSERT INTO costruttore (Nome, RagioneSociale, SedeFabbrica, NumComponenti) VALUES (?, ?, ?, ?)</li>
+        <li><h4>SELECT TargaVettura FROM componente;<br>
+                Ottiene l'elenco delle 'TargaVettura' dei componenti registrati
+                per la selezione delle vetture su cui montare un componente.</h4></li>
+
+        <li><h4>SELECT * FROM componente WHERE TargaVettura = ? ;<br>
+                Recupera i dettagli dei componenti basati su una specifica 'TargaVettura'.</h4></li>
+
+        <li><h4>SELECT DISTINCT TipoComponente FROM componente WHERE TipoComponente
+            <br>NOT IN (SELECT TipoComponente FROM componente WHERE TargaVettura = ?);<br>
+                Ottiene i tipi di componenti non ancora montati su una specifica vettura.</h4></li>
+
+        <li><h4>SELECT nome FROM costruttore;<br>
+                Recupera l'elenco dei nomi dei costruttori registrati.</h4></li>
+
+        <li><h4>INSERT INTO componente (DataInstallazione, Costo, TipoComponente, TipoMateriale, Peso,NumMarce, Cilindrata, TipoMotore, NumCilindri, NomeCostruttore, TargaVettura) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);<br>
+                Inserisce i dettagli di un nuovo componente montato su una vettura.</h4></li>
+
+        <li><h4>SELECT Nome, RagioneSociale, SedeFabbrica FROM costruttore WHERE Nome = ?;<br>
+                Recupera i dettagli di un costruttore esistente basandosi sul nome.</h4></li>
+
+        <li><h4>UPDATE costruttore SET NumComponenti = NumComponenti + 1 WHERE Nome = ?;<br>
+                Aggiorna il numero di componenti associati a un costruttore specifico.</h4></li>
+
+        <li><h4>INSERT INTO costruttore (Nome, RagioneSociale, SedeFabbrica, NumComponenti) VALUES (?, ?, ?, ?);<br>
+                Inserisce i dettagli di un nuovo costruttore nel database.</h4></li>
     </ul>
 </div>
+</div>
+
 <h2 class="section-header">Dati Componenti</h2>
     <table class="custom-table">
         <thead>
@@ -498,13 +609,20 @@
     </table>
 
 
-
+<!-- OPERAZIONE 8. Per ciascuna scuderia, stampare la somma totale dei finanziamenti ricevuti.  -->
 <div style="margin: 60px;">
-    <h2>8.Per ciascuna scuderia, stampare la somma totale dei finanziamenti ricevuti.</h2>
-    <h3>Query Utilizzata:</h3>
+    <h2>8. Per ciascuna scuderia, stampare la somma totale dei finanziamenti ricevuti.</h2>
+    <div style="margin-left: 20px;">
+        <h3>Query Utilizzate:</h3>
     <ul>
-        <li>SELECT s.Nome, SUM(f.QuantitaDenaro) AS TotaleFinanziamenti FROM scuderia s LEFT JOIN finanziare f ON s.Nome = f.NomeScuderia GROUP BY s.Nome</li>
+        <li><h4>SELECT s.Nome, SUM(f.QuantitaDenaro) AS TotaleFinanziamenti FROM scuderia s
+            LEFT JOIN finanziare f ON s.Nome = f.NomeScuderia
+            GROUP BY s.Nome;<br>
+            Calcola la somma totale dei finanziamenti ricevuti per ogni scuderia partecipante nel campionato.<br>
+            Utilizzando una combinazione dei dati delle tabelle "scuderia" e "finanziare",
+            la query somma la quantità di denaro dei finanziamenti per ciascuna scuderia.</h4></li>
     </ul>
+    </div>
 </div>
     <h2 class="section-header">Dati Finanziare</h2>
     <table class="custom-table">
@@ -577,16 +695,27 @@
     </table>
 
 
-
-
+<!-- OPERAZIONE 9. Stampa annuale delle scuderie che hanno partecipato al campionato compreso il numero di finanziamenti.  -->
 <div style="margin: 60px;">
-    <h2>9.Stampa annuale delle scuderie che hanno partecipato al campionato compreso il numero di finanziamenti.</h2>
+    <h2>9. Stampa annuale delle scuderie che hanno partecipato al campionato compreso il numero di finanziamenti.</h2>
+    <div style="margin-left: 20px;">
     <h3>Query Utilizzata:</h3>
     <ul>
-        <li>SELECT DISTINCT YEAR(DataEvento) FROM gara</li>
-        <li>SELECT DISTINCT p.*, s.Nome, s.Sede, s.Paese, s.NumFinanziamenti, g.NomeG, g.DataEvento, g.DurataOre, g.TipoGara, g.id_Circuito
-            FROM scuderia s JOIN vettura v ON s.TargaVettura = v.Targa JOIN partecipa p ON v.Targa = p.targa_Vettura JOIN gara g ON p.id_Gara = g.ID_Gara
-            WHERE YEAR(g.DataEvento) = ?</li> </ul>
+        <li><h4>SELECT DISTINCT YEAR(DataEvento) FROM gara;<br>
+            Recupero di un elenco distinto degli anni in cui si desidera ottenere i dettagli delle scuderie partecipanti.</h4></li>
+
+        <li><h4>SELECT DISTINCT p.*, s.Nome, s.Sede, s.Paese, s.NumFinanziamenti,
+            g.NomeG, g.DataEvento, g.DurataOre, g.TipoGara, g.id_Circuito<br>
+            FROM scuderia s <br>
+            JOIN vettura v ON s.TargaVettura = v.Targa <br>
+            JOIN partecipa p ON v.Targa = p.targa_Vettura <br>
+            JOIN gara g ON p.id_Gara = g.ID_Gara <br>
+            WHERE YEAR(g.DataEvento) = ?;<br>
+            Recupero dei dettagli delle scuderie partecipanti al campionato in un anno specifico.
+            L'anno specifico viene indicato nella clausola WHERE tramite la funzione YEAR()
+            che estrae l'anno dalla data dell'evento di gara.</h4></li>
+    </ul>
+</div>
 </div>
 
 <h2 class="section-header">Dati Partecipa</h2>
@@ -673,20 +802,29 @@
 
 
 
+<!-- OPERAZIONE 10. Visualizzare i piloti che hanno vinto nel «circuito di casa».  -->
 <div style="margin: 60px;">
-    <h2>10.Visualizzare i piloti che hanno vinto nel «circuito di casa».</h2>
-    <h3>Query Utilizzata:</h3>
-    <ul>
-        <li>SELECT p.ID, p.Nome, p.Cognome, p.Nazionalita,
-            c.ID_Circuito, c.PaeseResidenza, c.NomeC, pa.targa_vettura, SUM(pa.Punti) AS PuntiTotali
-            FROM pilota p INNER JOIN guidare g ON p.ID = g.id_Pilota
-            INNER JOIN partecipa pa ON g.targa_vettura = pa.targa_vettura
-            INNER JOIN gara ga ON pa.id_Gara = ga.ID_Gara
-            INNER JOIN circuito c ON ga.id_Circuito = c.ID_Circuito
-            WHERE p.Nazionalita = c.PaeseResidenza
-            GROUP BY p.ID, p.Nome, p.Cognome, p.Nazionalita, c.ID_Circuito, c.PaeseResidenza, c.NomeC, pa.targa_vettura
-            HAVING SUM(pa.Punti) != 0 AND SUM(pa.Punti) IS NOT NULL</li>
+    <h2>10. Visualizzare i piloti che hanno vinto nel «circuito di casa».</h2>
+    <div style="margin-left: 20px;">
+        <h3>Query Utilizzata:</h3>
+        <ul>
+        <li><h4>SELECT p.ID, p.Nome, p.Cognome, p.Nazionalita, c.ID_Circuito, c.PaeseResidenza, c.NomeC, pa.targa_vettura, <br>
+            SUM(pa.Punti) AS PuntiTotali<br>
+            FROM pilota p<br>
+            INNER JOIN guidare g ON p.ID = g.id_Pilota<br>
+            INNER JOIN partecipa pa ON g.targa_vettura = pa.targa_vettura<br>
+            INNER JOIN gara ga ON pa.id_Gara = ga.ID_Gara<br>
+            INNER JOIN circuito c ON ga.id_Circuito = c.ID_Circuito<br>
+            WHERE p.Nazionalita = c.PaeseResidenza<br>
+            GROUP BY p.ID, p.Nome, p.Cognome, p.Nazionalita, c.ID_Circuito, c.PaeseResidenza, c.NomeC, pa.targa_vettura<br>
+            HAVING SUM(pa.Punti) != 0 AND SUM(pa.Punti) IS NOT NULL<br>
+            ORDER BY PuntiTotali DESC;<br>
+            Restituisce l'elenco dei piloti che hanno gareggiato e vinto nel "circuito di casa".<br>
+            Filtra i dati confrontando la nazionalità del pilota con il paese del circuito,
+            mostrando solo i piloti che hanno effettivamente ottenuto punti e classificandoli
+            in base ai punti totali ottenuti nelle gare.</h4></li>
     </ul>
+</div>
 </div>
 
 <h2 class="section-header">Dati Partecipa</h2>
@@ -801,21 +939,24 @@
 </table>
 
 
-
-
+<!-- OPERAZIONE 11. Per ciascuna scuderia, visualizzare la percentuale di gentleman driver di cui si compone l’equipaggio. -->
 <div style="margin: 60px;">
-    <h2>11.Per ciascuna scuderia, visualizzare la percentuale di gentleman driver di cui si compone l’equipaggio</h2>
+    <h2>11. Per ciascuna scuderia, visualizzare la percentuale di gentleman driver di cui si compone l’equipaggio.</h2>
+    <div style="margin-left: 20px;">
     <h3>Query Utilizzata:</h3>
     <ul>
-        <li>SELECT COUNT(*) AS NumeroTotalePiloti,
-            SUM(CASE WHEN FinanziatoreGD = 'SI' THEN 1 ELSE 0 END) AS NumeroFinanziatoriSI
-            FROM pilota</li>
-        <li>SELECT s.Nome AS Nome_Scuderia, s.NumFinanziamenti, p.Nome AS Nome_Pilota, p.TipoPilota, p.FinanziatoreGD
-            FROM scuderia s
-            LEFT JOIN finanziare f ON s.Nome = f.NomeScuderia
-            LEFT JOIN pilota p ON f.id_Pilota = p.ID
-            WHERE p.FinanziatoreGD = 'SI'</li>
+        <li><h4>SELECT s.Nome AS NomeScuderia, COUNT(DISTINCT g.id_Pilota) AS NumeroTotalePiloti,<br>
+                SUM(CASE WHEN p.FinanziatoreGD = 'SI' THEN 1 ELSE 0 END) AS NumeroFinanziatoriSI<br>
+                FROM scuderia s<br>
+                LEFT JOIN guidare g ON s.TargaVettura = g.targa_vettura<br>
+                LEFT JOIN pilota p ON g.id_Pilota = p.ID<br>
+                GROUP BY s.Nome;<br>
+                Calcola il numero totale di piloti per ogni scuderia
+                e conta quante di queste persone sono classificate come "gentleman driver" (piloti non professionisti)
+                basandosi sul campo 'FinanziatoreGD' uguale a 'SI' nella tabella dei piloti.<br>
+                Il risultato viene raggruppato per il nome della scuderia.</h4></li>
     </ul>
+</div>
 </div>
 
 <h2 class="section-header">Dati Pilota</h2>
@@ -911,18 +1052,27 @@
 
 
 
+<!-- OPERAZIONE 12. Stampa mensile dei costruttori compreso il numero di componenti che ha fornito. -->
 <div style="margin: 60px;">
-    <h2>12.Stampa mensile dei costruttori compreso il numero di componenti che ha fornito</h2>
+    <h2>12. Stampa mensile dei costruttori compreso il numero di componenti che ha fornito.</h2>
+    <div style="margin-left: 20px;">
     <h3>Query Utilizzata:</h3>
     <ul>
-        <li>SELECT DISTINCT MONTH(DataInstallazione) FROM componente</li>
-        <li>SELECT c.*, (cm.DataInstallazione) AS DataMensileInstallazione
-            FROM costruttore c
-            LEFT JOIN componente cm ON c.Nome = cm.NomeCostruttore
-            WHERE MONTH(cm.DataInstallazione) = ?
-            GROUP BY c.Nome, DataMensileInstallazione</li>
+        <li><h4>SELECT DISTINCT MONTH(DataInstallazione) FROM componente;<br>
+            Recupera i mesi in cui sono state installate componenti.</h4></li>
+
+        <li><h4>SELECT c.*,<br>
+            (cm.DataInstallazione) AS DataMensileInstallazione<br>
+            FROM costruttore c<br>
+            LEFT JOIN componente cm ON c.Nome = cm.NomeCostruttore<br>
+            WHERE MONTH(cm.DataInstallazione) = ?<br>
+            GROUP BY c.Nome, DataMensileInstallazione;<br>
+            Recupera i costruttori insieme al numero di componenti che hanno fornito in un mese specifico.<br>
+            Il risultato è raggruppato per nome del costruttore e data mensile di installazione delle componenti.</h4></li>
     </ul>
 </div>
+</div>
+
 <h2 class="section-header">Dati Componenti</h2>
 <table class="custom-table">
     <thead>
@@ -980,17 +1130,21 @@
 </table>
 
 
-
+<!-- OPERAZIONE 13. Stampa della classifica finale dei punti conseguiti da tutte le vetture. -->
 <div style="margin: 60px;">
-    <h2>13.Stampa della classifica finale dei punti conseguiti da tutte le vetture</h2>
-    <h3>Query Utilizzata:</h3>
+    <h2>13. Stampa della classifica finale dei punti conseguiti da tutte le vetture.</h2>
+    <div style="margin-left: 20px;">
+        <h3>Query Utilizzata:</h3>
     <ul>
-        <li>SELECT DISTINCT v.Targa, SUM(p.Punti) AS PuntiTotali
-            FROM vettura v
-            LEFT JOIN partecipa p ON v.Targa = p.targa_Vettura
-            GROUP BY v.Targa
-            ORDER BY PuntiTotali DESC;</li>
+        <li><h4>SELECT DISTINCT v.Targa, SUM(p.Punti) AS PuntiTotali <br>
+            FROM vettura v <br>
+            LEFT JOIN partecipa p ON v.Targa = p.targa_Vettura <br>
+            GROUP BY v.Targa <br>
+            ORDER BY PuntiTotali DESC;<br>
+            Recupera la targa di ogni vettura insieme alla somma totale dei punti conseguiti da quella vettura attraverso la partecipazione alle gare.<br>
+            Il risultato è ordinato in modo descendente in base ai PuntiTotali, creando così la classifica finale.</h4></li>
     </ul>
+</div>
 </div>
 
 <h2 class="section-header">Dati Partecipa</h2>
@@ -1031,28 +1185,38 @@
     </tbody>
 </table>
 
-
-
+<!-- OPERAZIONE 14. Stampa delle classifiche finali di punti per tipo di motore. -->
 <div style="margin: 60px;">
-    <h2>14.Stampa delle classifiche finali di punti per tipo di motore;</h2>
+    <h2>14. Stampa delle classifiche finali di punti per tipo di motore.</h2>
+    <div style="margin-left: 20px;">
     <h3>Query Utilizzata:</h3>
     <ul>
-        <li>SELECT c.TipoMotore, c.TargaVettura, SUM(p.Punti) AS PuntiTotali
-            FROM partecipa p
-            JOIN vettura v ON p.targa_Vettura = v.Targa
-            JOIN componente c ON p.targa_Vettura = c.TargaVettura
-            WHERE c.TipoComponente = 'Motore' AND c.TipoMotore = 'Aspirato'
-            GROUP BY c.TipoMotore, c.TargaVettura
-            ORDER BY PuntiTotali DESC</li>
-        <li>SELECT c.TipoMotore, c.TargaVettura, SUM(p.Punti) AS PuntiTotali
-            FROM partecipa p
-            JOIN vettura v ON p.targa_Vettura = v.Targa
-            JOIN componente c ON p.targa_Vettura = c.TargaVettura
-            WHERE c.TipoComponente = 'Motore' AND c.TipoMotore = 'Turbo'
-            ORDER BY PuntiTotali DESC</li>
+        <li><h4>SELECT c.TipoMotore, c.TargaVettura, SUM(p.Punti) AS PuntiTotali <br>
+            FROM partecipa p <br>
+            JOIN vettura v ON p.targa_Vettura = v.Targa <br>
+            JOIN componente c ON p.targa_Vettura = c.TargaVettura <br>
+            WHERE c.TipoComponente = 'Motore' AND c.TipoMotore = 'Aspirato' <br>
+            GROUP BY c.TipoMotore, c.TargaVettura <br>
+            ORDER BY PuntiTotali DESC;<br>
+            Recupera il tipo di motore (Aspirato),
+            la targa della vettura e la somma totale dei punti conseguiti attraverso la partecipazione alle gare. <br>
+            I risultati sono raggruppati per tipo di motore e targa della vettura e ordinati in modo descendente in base ai PuntiTotali,
+            creando così la classifica dei motori aspirati.</h4></li>
+
+        <li><h4>SELECT c.TipoMotore, c.TargaVettura, SUM(p.Punti) AS PuntiTotali <br>
+            FROM partecipa p <br>
+            JOIN vettura v ON p.targa_Vettura = v.Targa <br>
+            JOIN componente c ON p.targa_Vettura = c.TargaVettura <br>
+            WHERE c.TipoComponente = 'Motore' AND c.TipoMotore = 'Turbo' <br>
+            GROUP BY c.TipoMotore, c.TargaVettura <br>
+            ORDER BY PuntiTotali DESC;<br>
+            Recupera il tipo di motore (Turbo),
+            la targa della vettura e la somma totale dei punti conseguiti attraverso la partecipazione alle gare.<br>
+            I risultati sono raggruppati per tipo di motore e targa della vettura e ordinati in modo discendente
+            in base ai PuntiTotali, creando così la classifica dei motori turbo.</h4></li>
     </ul>
 </div>
-
+</div>
 <h2 class="section-header">Dati Partecipa</h2>
 <table class="custom-table">
     <thead>
@@ -1128,25 +1292,31 @@
 
 
 
-
+<!-- OPERAZIONE 15. Stampare un report che elenchi ciascuna scuderia sulla base del rapporto punti/minuti di gara, mediando tra le macchine appartenenti a ciascuna scuderia -->
 <div style="margin: 60px;">
-    <h2>15.Stampare un report che elenchi ciascuna scuderia sulla base del rapporto punti/minuti di gara, mediando tra le macchine appartenenti a ciascuna scuderia</h2>
-    <h3>Query Utilizzata:</h3>
+    <h2>15. Stampare un report che elenchi ciascuna scuderia sulla base del rapporto punti/minuti di gara, mediando tra le macchine appartenenti a ciascuna scuderia.</h2>
+    <div style="margin-left: 20px;">
+        <h3>Query Utilizzata:</h3>
     <ul>
-        <li>SELECT s.Nome AS Nome_Scuderia,
-            SUM(p.Punti) AS Punti_Totali,
-            SUM(TIME_TO_SEC(g.DurataOre))/60 AS Durata_Gare_Minuti,
-            SUM(p.Punti) / (SUM(TIME_TO_SEC(g.DurataOre))/60) AS Rapporto_Punti_Minuto
-            FROM scuderia s
-            INNER JOIN vettura v ON s.TargaVettura = v.Targa
-            LEFT JOIN partecipa pa ON v.Targa = pa.targa_Vettura
-            LEFT JOIN gara g ON pa.id_Gara = g.ID_Gara
-            LEFT JOIN partecipa p ON p.id_Gara = g.ID_Gara AND p.targa_Vettura = v.Targa
-            GROUP BY s.Nome
-            ORDER BY Rapporto_Punti_Minuto DESC</li>
+        <li><h4>SELECT s.Nome AS Nome_Scuderia, <br>
+            SUM(p.Punti) AS Punti_Totali, <br>
+            SUM(TIME_TO_SEC(g.DurataOre))/60 AS Durata_Gare_Minuti, <br>
+            SUM(p.Punti) / (SUM(TIME_TO_SEC(g.DurataOre))/60) AS Rapporto_Punti_Minuto <br>
+            FROM scuderia s <br>
+            INNER JOIN vettura v ON s.TargaVettura = v.Targa <br>
+            LEFT JOIN partecipa pa ON v.Targa = pa.targa_Vettura <br>
+            LEFT JOIN gara g ON pa.id_Gara = g.ID_Gara <br>
+            LEFT JOIN partecipa p ON p.id_Gara = g.ID_Gara AND p.targa_Vettura = v.Targa <br>
+            GROUP BY s.Nome <br>
+            ORDER BY Rapporto_Punti_Minuto DESC;<br>
+            Recupera il nome della scuderia (Nome_Scuderia),
+            somma totale dei punti conseguiti dalla scuderia (Punti_Totali),
+            la durata totale delle gare partecipate dalla scuderia convertita in minuti (Durata_Gare_Minuti),
+            e infine il rapporto tra i punti totali e la durata totale delle gare,
+            espresso in punti al minuto (Rapporto_Punti_Minuto).</h4></li>
     </ul>
 </div>
-
+</div>
 
 <h2 class="section-header">Dati Partecipa</h2>
 <table class="custom-table">

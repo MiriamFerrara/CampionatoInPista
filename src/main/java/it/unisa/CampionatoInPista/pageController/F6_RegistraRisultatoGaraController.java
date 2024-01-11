@@ -16,12 +16,14 @@ public class F6_RegistraRisultatoGaraController {
     @Autowired
     private DatabaseConnection databaseConnection;
 
+    /**OPERAZIONE 6. Registrazione del risultato conseguito da ciascuna vettura iscritta ad una gara.*/
     @GetMapping("/6RegistraRisultatoGara")
     public String getRegistraRisultatoGara(Model model) {
         List<String> targhe = new ArrayList<>();
         List<String> gare = new ArrayList<>();
 
         try {
+            // Ottiene le targhe delle vetture
             PreparedStatement selezionaVStatement = databaseConnection.getConnection().prepareStatement(
                     "SELECT Targa FROM vettura");
             ResultSet resultSet = selezionaVStatement.executeQuery();
@@ -32,6 +34,7 @@ public class F6_RegistraRisultatoGaraController {
             resultSet.close();
             selezionaVStatement.close();
 
+            // Ottiene gli ID delle gare
             PreparedStatement selezionaGStatement = databaseConnection.getConnection().prepareStatement(
                     "SELECT ID_Gara FROM gara");
             ResultSet resultSetG = selezionaGStatement.executeQuery();
@@ -50,6 +53,7 @@ public class F6_RegistraRisultatoGaraController {
         return "6RegistraRisultatoGara";
     }
 
+    // Registra il risultato della gara per una vettura specifica
     @PostMapping("/6RegistraRisultatoGara")
     public String RegistraRisultatoGara(final @RequestParam("IDGara") String IDGara,
                                         final @RequestParam("targa") String targa,
@@ -57,6 +61,7 @@ public class F6_RegistraRisultatoGaraController {
                                         final @RequestParam("Punti") Integer Punti) {
 
         try{
+            // Aggiorna la tabella partecipa con il motivo del ritiro e i punti ottenuti
             PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
                     "UPDATE partecipa " +
                             "SET MotivoRitiro = ?, Punti = ? " +

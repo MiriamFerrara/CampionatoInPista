@@ -23,6 +23,7 @@ public class Q15_ReportPuntiMinutiController {
         @Autowired
         private DatabaseConnection databaseConnection;
 
+        /**OPERAZIONE 15.Stampare un report che elenchi ciascuna scuderia sulla base del rapporto punti/minuti di gara, mediando tra le macchine appartenenti a ciascuna scuderia. */
         @GetMapping("/15ReportPuntiMinuti")
         public String getReportPuntiMinuti(Model model) {
 
@@ -33,6 +34,11 @@ public class Q15_ReportPuntiMinutiController {
             List<Double> datirapportoPuntiMinuto = new ArrayList<>();
 
             try {
+                /*Recupera il nome della scuderia (Nome_Scuderia),
+                somma totale dei punti conseguiti dalla scuderia (Punti_Totali),
+                la durata totale delle gare partecipate dalla scuderia convertita in minuti (Durata_Gare_Minuti),
+                 e infine il rapporto tra i punti totali e la durata totale delle gare,
+               espresso in punti al minuto (Rapporto_Punti_Minuto).*/
                 PreparedStatement preparedStatement = databaseConnection.getConnection().prepareStatement(
                         "SELECT s.Nome AS Nome_Scuderia, " +
                                 "SUM(p.Punti) AS Punti_Totali, " +
