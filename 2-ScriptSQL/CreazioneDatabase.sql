@@ -13,7 +13,7 @@ CREATE TABLE circuito (
 );
 
 
-#Creazione della Tabella Gara (ID, Nome, DataEvento, DurataOre, TipoGara(asciutta o bagnata)) 
+#Creazione della Tabella Gara (ID_Gara, NomeG, DataEvento, DurataOre, TipoGara(asciutta o bagnata), id_Circuito)
 CREATE TABLE gara (
     ID_Gara INT AUTO_INCREMENT NOT NULL,
     NomeG VARCHAR(200) NOT NULL,
@@ -36,11 +36,11 @@ CREATE TABLE vettura (
 
 
 #Creazione della Tabella Costruttore (Nome, RagioneSociale, SedeFabbrica, #Componenti)
-CREATE TABLE costruttore ( 
+CREATE TABLE costruttore (
 Nome VARCHAR(200) NOT NULL,
 RagioneSociale VARCHAR(200) NOT NULL,
 SedeFabbrica VARCHAR(200) NOT NULL,
-NumComponenti INT NOT NULL, 
+NumComponenti INT NOT NULL,
 PRIMARY KEY(Nome)
 );
 
@@ -78,14 +78,14 @@ CREATE TABLE pilota (
     FinanziatoreGD ENUM ("SI", "NO"),
     PRIMARY KEY(ID)
     );
-    
-    
+
+
 #Creazione della Tabella Scuderia(Nome, Sede, Paese, #Finanziamenti, TARGA_VETTURA)
     CREATE TABLE scuderia (
     Nome VARCHAR(200) NOT NULL,
     Sede VARCHAR(200) NOT NULL,
     Paese VARCHAR(200) NOT NULL,
-    NumFinanziamenti INT, 
+    NumFinanziamenti INT,
 	PRIMARY KEY(Nome),
 	TargaVettura VARCHAR(10),
 	FOREIGN KEY (TargaVettura) REFERENCES vettura(Targa) ON UPDATE CASCADE ON DELETE SET NULL

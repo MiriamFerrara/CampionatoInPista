@@ -1,15 +1,17 @@
+
 #INSERIMENTO DEI DATI 
 
-
-#Inserimento della Tabella Circuito(ID, Nome, PaeseResidenza, Lunghezza, #Curve) 
+#Inserimento della Tabella Circuito(ID, NomeC, PaeseResidenza, Lunghezza, #Curve) 
  INSERT INTO circuito
 	VALUES (1, 'Circuito A', 'Italia', 2.5, 5),
 		   (2, 'Circuito B', 'Monaco', 3.0, 6),
 		   (3, 'Circuito C', 'Francia', 3.5, 3),
 		   (4, 'Circuito D', 'Regno Unito', 4.8, 4),
 		   (5, 'Circuito E', 'Spagna', 5.5, 9);   
-           
-#Inserimento della Tabella Gara (ID, Nome, DataEvento, DurataOre, TipoGara(asciutta o bagnata), ID_CIRCUITO) 
+  
+  
+  
+#Inserimento della Tabella Gara (ID_Gara, NomeG, DataEvento, DurataOre, TipoGara(asciutta o bagnata), id_Circuito) 
 INSERT INTO gara
 	VALUES (1, 'Gran Premio d''Italia', '2023-09-01', '02:30:00', 'Asciutta', 1),
 		   (2, 'Gran Premio Monaco', '2024-09-02', '02:45:00', 'Bagnata', 2),
@@ -22,14 +24,14 @@ INSERT INTO gara
 INSERT INTO vettura
 	VALUES ('JKL012', 4, 'Bugatti Chiron'),
 		   ('MNO345', 5, 'Mercedes-AMG GT'),
-		   ('PQR678', 6, 'Ferrari 488 GTB'),
+		   ('PQR678', 6, 'Porsche 911 GT3 RS'),
 		   ('STU901', 7, 'Lamborghini Aventador'),
 		   ('VWX234', 8, 'McLaren 720S');
            
            
 #Inserimento della Tabella Costruttore (Nome, RagioneSociale, SedeFabbrica, #Componenti)
 INSERT INTO costruttore
-	VALUES ('Ferrari','Ferrari S.p.A.', 'Maranello', 10),
+	VALUES ('Porsche','Porsche S.p.A.', 'Torino', 10),
 		   ('Mercedes-Benz', 'Daimler AG', 'Stoccarda', 12),
 		   ('Lamborghini', 'Lamborghini', 'Barcellona', 8),
            ('McLaren Racing', 'McLaren', 'Stoccarda', 3),
@@ -40,7 +42,7 @@ INSERT INTO costruttore
  INSERT INTO componente
 	VALUES (1, '2023-05-20', 500.00, 'Telaio', 'Alluminio', 90.5, NULL, NULL, NULL, NULL, 'Bugatti', 'JKL012'),
 		   (2, '2023-06-10', 1050.50, 'Motore', NULL, NULL, NULL, 1.8, 'Aspirato', 4, 'Mercedes-Benz', 'MNO345'),
-		   (3, '2023-07-15', 750.00, 'Cambio', NULL, NULL, '7', NULL, NULL, NULL, 'Ferrari', 'PQR678'),
+		   (3, '2023-07-15', 750.00, 'Cambio', NULL, NULL, '7', NULL, NULL, NULL, 'Porsche', 'PQR678'),
 		   (4, '2023-08-05', 1500.50, 'Telaio', 'Fibra di carbonio', 85.0, NULL, NULL, NULL, NULL, 'Lamborghini', 'STU901'),
 		   (5, '2023-09-12', 3000.80, 'Motore', NULL, NULL, NULL, 2.2, 'Turbo', 8, 'McLaren Racing', 'VWX234');		
 
@@ -56,7 +58,7 @@ INSERT INTO pilota
       
 #Inserimento della Tabella Scuderia(Nome, Sede, Paese, #Finanziamenti, TARGA_VETTURA)
  INSERT INTO scuderia
-	VALUES ('Scuderia Ferrari', 'Maranello', 'Italia', 3, 'PQR678'),
+	VALUES ('Porsche', 'Torino', 'Italia', 3, 'PQR678'),
 		   ('Mercedes Team', 'Stoccarda', 'Germania', 4, 'MNO345'),
 		   ('Red Bull Racing', 'Barcellona', 'Spagna', 2, 'STU901'),
 		   ('McLaren Racing', 'Londra', 'Regno Unito', 3, 'VWX234'),
@@ -77,12 +79,14 @@ INSERT INTO guidare
 		   ('MNO345', 2),
 		   ('PQR678', 3),
 		   ('STU901', 4),
-		   ('VWX234', 5);
-
- #Inserimento della Tabella Finanziare(QuantitaDenaro, data, id_Pilota, NomeScuderia)
+		   ('VWX234', 5);        
+           
+#Inserimento della Tabella Finanziare(QuantitaDenaro, data, id_Pilota, NomeScuderia)
 INSERT INTO finanziare
-	VALUES (5000, '2023-01-10', 2, 'Scuderia Ferrari'),
+	VALUES (5000, '2023-01-10', 2, 'Porsche'),
 		   (6000, '2023-02-15', 2, 'Red Bull Racing'),
 		   (4500, '2023-03-20', 3, 'McLaren Racing'),
 		   (5500, '2023-04-25', 4, 'Mercedes Team'),
-		   (5000, '2023-05-30', 3, 'Bugatti Motorsport');
+		   (5000, '2023-05-30', 3, 'Bugatti Motorsport');        
+           
+          

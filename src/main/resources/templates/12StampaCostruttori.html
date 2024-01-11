@@ -40,17 +40,12 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="costruttore : ${costruttore}">
+    <tr th:each="costruttore, i : ${costruttore}">
         <td th:text="${costruttore.nome}"></td>
         <td th:text="${costruttore.ragioneSociale}"></td>
         <td th:text="${costruttore.sedeFabbrica}"></td>
         <td th:text="${costruttore.numComponenti}"></td>
-        <td>
-            <span th:each="componente : ${componente}">
-                <span th:text="${componente.dataInstallazione}"></span>
-                <br/>
-            </span>
-        </td>
+        <td th:text="${DataMensileInstallazione[i.index]}"></td>
     </tr>
     </tbody>
 </table>

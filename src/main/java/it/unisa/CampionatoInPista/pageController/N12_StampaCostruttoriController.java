@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,6 +55,7 @@ public class N12_StampaCostruttoriController {
 
         List<Costruttore> datiCostruttore = new ArrayList<>();
         List<Componente> datiComponente = new ArrayList<>();
+        List<Date> listmese = new ArrayList<>();
 
         try {
             /* Recupera i costruttori insieme al numero di componenti che hanno fornito in un mese specifico.
@@ -76,14 +78,16 @@ public class N12_StampaCostruttoriController {
                 costruttore.setRagioneSociale(resultSet.getString("RagioneSociale"));
                 costruttore.setSedeFabbrica(resultSet.getString("SedeFabbrica"));
                 costruttore.setNumComponenti(resultSet.getInt("NumComponenti"));
+                listmese.add(resultSet.getDate("DataMensileInstallazione"));
                 datiCostruttore.add(costruttore);
 
-                Componente componente = new Componente();
+               /* Componente componente = new Componente();
                 componente.setDataInstallazione(resultSet.getDate("DataMensileInstallazione"));
-                datiComponente.add(componente);
+                datiComponente.add(componente);*/
             }
             model.addAttribute("costruttore", datiCostruttore);
-            model.addAttribute("componente", datiComponente);
+           // model.addAttribute("componente", datiComponente);
+            model.addAttribute("DataMensileInstallazione" , listmese);
             resultSet.close();
             preparedStatement.close();
 
